@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+button{
+	border: none;
+ 	outline: none;
+  	background-color: inherit ;
+  	cursor: pointer;
+}
+
+#sns_login button img{
+	width: 40px;
+	object-fit: cover;
+}

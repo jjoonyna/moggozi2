@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'TTLaundryGothicB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2403-2@1.0/TTLaundryGothicB.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+body{background-color: #000; color: #fff;}
+main span{font-family: 'Pretendard-Regular'; font-weight: 400; font-size: 25px; margin: 0 15px;}
+main .file_up{padding:20px 0; display: inline-block;}
+
+.card-header1 h1{text-align:center;font-size: 40px;font-family: 'TTLaundryGothicB';font-weight: 700;margin: 5% 0; }
+.card-header1 h1 a {text-decoration: none; color: #fff;}
+
+.card-write{padding: 20px;}
+
+.card-write input, textarea{margin-left: 10px;padding: 10px;border: 1px solid #999;border-radius: 10px;font-family: 'GangwonEduHyeonokT_OTFMediumA';font-weight: normal; font-size:17px;}
+
+.card-write .myinfo input[type="text"]{width: 28%;margin-right: 50px;}
+.card-write .myinfo select{width: 15%; height: 30px;  }
+.card-write .title-w input[type="text"]{margin-top: 20px; margin-bottom: 20px;width: 88.5%;}
+.card-write .msg textarea{min-width: 88.5%;max-width: 88.5%;min-height: 200px;max-height: 200px;
+/* vertival-align: 텍스트를 수직, 수평 정렬 할 수 있다.*/
+vertical-align: top;}
+.card-write input[type="file"]{border: none; box-shadow: none; margin-left: 40px;align-items: center; }
+
+.btn-w{position: absolute;right: 0;bottom: 0;margin: 2% 7% 2% 2%;padding: 10px;}
+.btn-w button{background-color: tomato;padding: 12px 30px;color: #fff;border-radius: 10px;text-decoration: none; font-size: 15px;}
+
+
+
