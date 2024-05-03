@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -21,10 +22,22 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.choongang.moggozi2.entity.UserDTO;
+import com.choongang.moggozi2.repository.NewUserRepository;
+import com.choongang.moggozi2.service.UserService;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 
 @RestController
 public class NaverController {
 
+	@Autowired
+	private NewUserRepository newrepository;
+	
+	@Autowired
+	private UserService service;
 	
 	
 	@RequestMapping("/naver_login")
@@ -138,11 +151,31 @@ public class NaverController {
 
 	        // Post 방식으로 Http 요청
 	        // 응답 데이터 형식은 Hashmap 으로 지정
-	        ResponseEntity<HashMap> userResult = restTemplate.postForEntity(userInfoURL, userInfoEntity, HashMap.class);
-	        Map<String, String> userResultMap = userResult.getBody();
-
+	        ResponseEntity<String> userResult = restTemplate.postForEntity(userInfoURL, userInfoEntity, String.class);
+	        String userResultMap = userResult.getBody();
+	        
 	        //응답 데이터 확인
 	        System.out.println(userResultMap);
+	        
+	        JsonParser parser = new JsonParser(); 
+	        JsonElement element = parser.parse(userResultMap);
+	        JsonObject respon = element.getAsJsonObject().get("response").getAsJsonObject();
+			String email = respon.getAsJsonObject().get("email").getAsString();;
+			String nickname = respon.getAsJsonObject().get("nickname").getAsString();;
+			String name = respon.getAsJsonObject().get("name").getAsString();;
+			String gender = respon.getAsJsonObject().get("gender").getAsString();;
+			
+			
+			//db 저장
+			UserDTO user = new UserDTO();
+			boolean newUser = newrepository.existsByUsername(email);
+			if(!newUser) {
+				user.setUsername(email);
+				user.setUsernick(nickname);
+				user.setUsergender(gender);
+				user.setNormalname(name);
+				service.snsuserjoin(user);
+			}
 
 	    } catch (Exception e) {
 	        e.printStackTrace();

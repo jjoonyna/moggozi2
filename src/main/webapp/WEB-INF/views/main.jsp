@@ -6,9 +6,9 @@
 <head>
 	<meta charset="UTF-8">
 	<jsp:include page="/resources/header.jsp" />
-    <link rel="stylesheet" type="text/css" href="../css/reset.css">
-    <link rel="stylesheet" type="text/css" href="../css/mocozi.css">
-    <link rel="stylesheet" type="text/css" href="../css/login.css">
+    <link rel="stylesheet" type="text/css" href="./css/reset.css">
+    <link rel="stylesheet" type="text/css" href="./css/mocozi.css">
+    <link rel="stylesheet" type="text/css" href="./css/login.css">
  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>모꼬지</title>
@@ -26,16 +26,16 @@
 			<aside>
 	    	<div class="login-wrapper">
 		        <h2 class="login-text">Login</h2>
-		        <form method="post" action="login" id="login-form">
+		        <form method="post" action="/login" id="login-form">
 		            <input type="text" name="user_id" placeholder="ID">
 		            <input type="password" name="user_pw" placeholder="PW">
 		            <input class="hover-color" type="submit" value="Login">
+		        </form>
 		            <label for="login-menu" class="login-menu">
 		            	 <a href="#" class="hover-color textsmall">ID</a> <div style="font-size: 13px;"> / </div> 
 		            	 <a href="#" class="hover-color textsmall">PW 찾기</a> <div style="font-size: 13px;"> / </div> 
 		            	 <a href="#" class="hover-color textsmall">회원가입</a>
 		            </label>
-		        </form>
 	    	</div>
 		
 		
@@ -158,5 +158,7 @@
 
 	</main>
  <jsp:include page="/resources/footer.jsp" />
+ 
+ 
 </body>
 </html>

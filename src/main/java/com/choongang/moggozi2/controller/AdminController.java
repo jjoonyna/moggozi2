@@ -1,19 +1,88 @@
 package com.choongang.moggozi2.controller;
 
+import java.util.Collection;
+import java.util.Iterator;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.choongang.moggozi2.entity.Admin;
+import com.choongang.moggozi2.repository.MokkojiRepository;
+import com.choongang.moggozi2.service.AdminService;
+import com.choongang.moggozi2.service.MokkojiService;
+
 
 @Controller
 public class AdminController {
+	
+	@Autowired
+	private AdminService adminservice;
 
+	@Autowired
+	private MokkojiService mokkojiService;
+	
+    @Autowired
+    private MokkojiRepository mokkojiRepository;
 
-	/*
-	 * 메인 페이지 
-	 */
-    @GetMapping("/admin")
-    public String adminPage() {
-        return "admin/admin"; 
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    /*
+     * 로그인 페이지 
+     */
+    @GetMapping("/login")
+    public String loginPage() {
+    	return "admin/loginAdmin"; 
+    }  
+
+    /*
+     * 관리자 메인 페이지 
+     */
+    @GetMapping("/mainpage")
+    public String adminMainPage(Model model) {
+    	
+    	String id = SecurityContextHolder.getContext().getAuthentication().getName();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+		Iterator<? extends GrantedAuthority> iter = authorities.iterator();
+		GrantedAuthority auth = iter.next();
+		String role = auth.getAuthority();
+
+        // mokkoji_no 필드의 수를 카운트하여 모델에 추가
+        int mokkojiCount = mokkojiRepository.countMokkojiNo();
+        
+        model.addAttribute("mokkojiCount", mokkojiCount);
+    	model.addAttribute("id", id);
+    	model.addAttribute("role", role);
+    	
+    	return "admin/mainAdmin"; 
+    }  
+
+    @GetMapping("/join")
+    public String joinP() {
+
+        return "join";
     }
+
+
+    @PostMapping("/joinProc")
+    public String joinProcess(Admin admin) {
+
+        System.out.println(admin.getUsername());
+
+        adminservice.joinProcess(admin);
+
+
+        return "redirect:/login";
+    }
+
     /*
      * 404 페이지 
      */
@@ -75,10 +144,4 @@ public class AdminController {
     public String postManagementPage() {
     	return "admin/postManagement"; 
     }
-    
-    
-
-    
-	
-	
 }

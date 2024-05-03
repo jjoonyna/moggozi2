@@ -593,6 +593,13 @@ pre code {
   margin-right: -0.75rem;
   margin-left: -0.75rem;
 }
+.veryrow {
+    display: flex;
+    margin-right: -0.75rem;
+    margin-left: -0.75rem;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
 
 .no-gutters {
   margin-right: 0;
@@ -1366,7 +1373,8 @@ pre code {
   }
   .col-xl-3 {
     flex: 0 0 25%;
-    max-width: 25%;
+    max-width: 80%;
+    align-self: center;
   }
   .col-xl-4 {
     flex: 0 0 33.33333%;
@@ -1491,6 +1499,7 @@ pre code {
   width: 100%;
   margin-bottom: 1rem;
   color: #858796;
+  
 }
 
 .table th,
@@ -1498,20 +1507,24 @@ pre code {
   padding: 0.75rem;
   vertical-align: top;
   border-top: 1px solid #e3e6f0;
+  text-wrap: nowrap;
 }
 
 .table thead th {
   vertical-align: bottom;
   border-bottom: 2px solid #e3e6f0;
+  text-wrap: nowrap;
 }
 
 .table tbody + tbody {
   border-top: 2px solid #e3e6f0;
+  text-wrap: nowrap;
 }
 
 .table-sm th,
 .table-sm td {
   padding: 0.3rem;
+  text-wrap: nowrap;
 }
 
 .table-bordered {
@@ -4759,6 +4772,7 @@ input[type="button"].btn-block {
   padding-left: 0;
   list-style: none;
   border-radius: 0.35rem;
+  justify-content: center;
 }
 
 .page-link {

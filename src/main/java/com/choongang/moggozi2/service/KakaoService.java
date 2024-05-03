@@ -4,13 +4,19 @@ package com.choongang.moggozi2.service;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.choongang.moggozi2.common.Const;
+import com.choongang.moggozi2.entity.UserDTO;
+import com.choongang.moggozi2.repository.NewUserRepository;
 import com.choongang.moggozi2.transformer.Trans;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import lombok.RequiredArgsConstructor;
@@ -20,6 +26,12 @@ import lombok.RequiredArgsConstructor;
 public class KakaoService {
 	
 	private final HttpSession httpSession;	
+	
+	@Autowired
+	private NewUserRepository newrepository;
+	
+	@Autowired
+	private UserService service;
 	
 	@Autowired
 	public HttpCallService httpCallService;
@@ -56,12 +68,37 @@ public class KakaoService {
        return new RedirectView(uri);
 	}	
 	
-	public RedirectView loginCallback(String code) {	
+	public RedirectView loginCallback(String code) throws Exception {	
+		//토큰 가져오기
 		String param = "grant_type=authorization_code&client_id="+REST_API_KEY+"&redirect_uri="+REDIRECT_URI+"&client_secret="+CLIENT_SECRET+"&code="+code;
 		String rtn = httpCallService.Call(Const.POST, TOKEN_URI, Const.EMPTY, param);
-        httpSession.setAttribute("token", Trans.token(rtn, new JsonParser()));     		
+        httpSession.setAttribute("token", Trans.token(rtn, new JsonParser()));  
+        
+        //유저 정보 가져오기
+        String uri = KAKAO_API_HOST + "/v2/user/me";
+        String result = httpCallService.CallwithToken(Const.GET, uri, httpSession.getAttribute("token").toString());
+        
+        //json데이터 파싱
+        JsonParser parser = new JsonParser(); 
+        JsonElement element = parser.parse(result);
+		JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
+		JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
+		String nickname = properties.getAsJsonObject().get("nickname").getAsString();
+		String email = kakao_account.getAsJsonObject().get("email").getAsString();
+		
+		//db 저장
+		UserDTO user = new UserDTO();
+		boolean newUser = newrepository.existsByUsername(email);
+		if(!newUser) {
+			user.setUsername(email);
+			user.setUsernick(nickname);
+			service.snsuserjoin(user);
+		}
+		
 		return new RedirectView("/main");
 	}
+	
+	
 	
 	
 	public String logout() {	

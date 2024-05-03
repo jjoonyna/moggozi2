@@ -1,0 +1,8 @@
+@charset "UTF-8";
+
+footer {outline: 0.1px solid white; border: 20px solid transparent; margin-top: 100px; bottom: 10px; font-family: 'TTLaundryGothicB'; font-size: 12px !important; color: #ffffff; background-color: #000000 !important; text-align: center;}
+footer ul{display: flex; margin-left: 50px; place-content: center; list-style-type: none;}
+footer ul .ftli {margin-left: 50px;}
+footer ul .ftli > a {display: inline-block; color: #ffffff; margin: auto; font-size: 15px; text-decoration: none;}
+footer ul .ftli > a:hover {color: #ffffff;}
+p {line-height: 20px;}
