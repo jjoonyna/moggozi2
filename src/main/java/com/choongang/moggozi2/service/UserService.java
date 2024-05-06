@@ -4,62 +4,47 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.choongang.moggozi2.entity.UserDTO;
-import com.choongang.moggozi2.repository.NewUserRepository;
+import com.choongang.moggozi2.entity.User;
+import com.choongang.moggozi2.repository.UserRepository;
+
 
 @Service
 public class UserService {
 	
 	@Autowired
-	private NewUserRepository newrepository;
+	private UserRepository userrepository;
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-	public void newuserjoin(UserDTO userDTO) {
-		boolean newUser = newrepository.existsByUsername(userDTO.getUsername());
-		if (newUser) {
-			System.out.println("중복된 아이디가 있으니 다른아이디를...");
-		return;
-		}
+	public void newuserjoin(User user) {
+	    // 이미 등록된 사용자인지 확인
+	    boolean isExistingUser = userrepository.existsByUsername(user.getUsername());
+	    if (isExistingUser) {
+	        System.out.println("중복된 아이디가 있으니 다른 아이디를 사용하세요.");
+	        return; // 중복된 아이디가 있으면 처리 중단
+	    }
 
-		
-		UserDTO data = new UserDTO();
-		data.setUsername(userDTO.getUsername());
-		data.setNormalname(userDTO.getNormalname());
-		data.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
-		data.setUseraddress1(userDTO.getUseraddress1());
-		data.setUseraddress2(userDTO.getUseraddress2());
-		data.setUseremail(userDTO.getUseremail());
-		data.setUserph(userDTO.getUserph());
-		data.setUserzip(userDTO.getUserzip());
-		data.setUseryear(userDTO.getUseryear());
-		data.setUsergender(userDTO.getUsergender());
-		data.setUsernick(userDTO.getUsernick());
-		data.setRole("USER");
-		
-		newrepository.save(data);
-		
-		
+	    // 중복된 아이디가 없으면 새로운 사용자를 저장
+	    User newUser = new User();
+	    newUser.setUsername(user.getUsername());
+	    newUser.setUsernick(user.getUsernick());
+	    newUser.setNormalname(user.getNormalname());
+	    newUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+	    newUser.setUseraddress1(user.getUseraddress1());
+	    newUser.setUseraddress2(user.getUseraddress2());
+	    newUser.setUseremail(user.getUseremail());
+	    newUser.setUserph(user.getUserph());
+	    newUser.setUserzip(user.getUserzip());
+	    newUser.setUseryear(user.getUseryear());
+	    newUser.setUsergender(user.getUsergender());
+	    newUser.setUsernick(user.getUsernick());
+	    newUser.setRole("USER");
+	    
+	    // 새로운 사용자 저장
+	    userrepository.save(newUser);
 	}
-	public void snsuserjoin(UserDTO userDTO) {
-		boolean newUser = newrepository.existsByUsername(userDTO.getUsername());
-		if (newUser) {
-			System.out.println("중복된 아이디가 있으니 다른아이디를...");
-			return;
-		}
-		
-		
-		UserDTO data = new UserDTO();
-		data.setUsername(userDTO.getUsername());
-		data.setUsernick(userDTO.getUsernick());
-		data.setUsergender(userDTO.getUsergender());
-		data.setNormalname(userDTO.getNormalname());
-		data.setRole("USER");
-		
-		newrepository.save(data);
-		
-	}
+
 	
 }
 	

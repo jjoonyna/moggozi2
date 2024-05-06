@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -251,7 +250,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${usernick} 님</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${id} 님</span>
                                 <img class="img-profile rounded-circle"
                                     src="./images/undraw_profile.svg">
                             </a>
@@ -295,27 +294,39 @@
 						            <div class="row no-gutters align-items-center">
 						                <div class="col mr-2">
 						                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-						                        * 미답변 / 답변완료 로 상태 구분되어 있습니다.</div>
+						                        * 회원 / 탈퇴 로 상태 구분되어 있습니다.</div>
 						                    <div class="table-responsive">
 						                        <table class="table table-striped">
 						                            <thead>
 						                                <tr>
-						                                    <th>번호</th>
-						                                    <th>제목</th>
-						                                    <th>작성자</th>
-						                                    <th>날짜</th>
-						                                    <th>상태</th>
+						                                    <th>아이디</th>
+						                                    <th>닉네임</th>
+						                                    <th>이름</th>
+						                                    <th>휴대폰번호</th>
+						                                    <th>출생년도</th>
+						                                    <th>우편번호</th>
+						                                    <th>기본주소</th>
+						                                    <th>상세주소</th>
+						                                    <th>이메일</th>
+						                                    <th>성별</th>
+						                                    <th>회원상태</th>
 						                                </tr>
 						                            </thead>
 						                            <tbody>
 						                                <!-- 공지사항 목록을 반복해서 출력합니다 -->
-						                                <c:forEach items="${askList}" var="notice">
+						                                <c:forEach items="${userList}" var="notice">
 						                                    <tr>
-						                                        <td><c:out value="${notice.notiNo}" /></td>
-						                                        <td><a href="askDetail?id=${notice.notiNo}"><c:out value="${notice.notiTitle}" /></a></td>
+						                                        <td><c:out value="${notice.username}" /></td>
 						                                        <td><c:out value="${notice.usernick}" /></td>
-						                                        <td><fmt:formatDate value="${notice.notiDate}" pattern="yyyy.MM.dd HH:mm" /></td>
-						                                        <td><c:out value="${notice.notiAt}" /></td>
+						                                        <td><a href="askDetail?id=${notice.normalname}"><c:out value="${notice.notiTitle}" /></a></td>
+						                                        <td><c:out value="${notice.userph}" /></td>
+						                                        <td><c:out value="${notice.useryear}" /></td>
+						                                        <td><c:out value="${notice.userzip}" /></td>
+						                                        <td><c:out value="${notice.useraddress1}" /></td>
+						                                        <td><c:out value="${notice.useraddress2}" /></td>
+						                                        <td><c:out value="${notice.useremail}" /></td>
+						                                        <td><c:out value="${notice.usergender}" /></td>
+						                                        <td><c:out value="${notice.role}" /></td>
 						                                    </tr>
 						                                </c:forEach>
 						                            </tbody>

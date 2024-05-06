@@ -138,3 +138,32 @@ $(document).ready(function() {
         location = "/result";
     });
 });
+function toggleDropdown() {
+  var dropdown = document.getElementById("myDropdown");
+  if (dropdown.style.display === "block") {
+    dropdown.style.display = "none";
+  } else {
+    dropdown.style.display = "block";
+  }
+}
+
+
+function checkCurrentPage() {
+        var currentPage = "user/mypage?usernick=${usernick}#";
+
+        if (currentPage) {
+            alert("이미 해당 페이지에 위치해 있습니다.");
+            return false;
+        }
+        return true;
+    }
+
+function preparingPage() {
+        var currentPage = "user/mypage?usernick=${usernick}#";
+
+        if (currentPage) {
+            alert("~공사중~");
+            return false;
+        }
+        return true;
+    }

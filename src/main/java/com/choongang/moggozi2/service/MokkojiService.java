@@ -1,34 +1,31 @@
 package com.choongang.moggozi2.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.choongang.moggozi2.entity.Mokkoji;
 import com.choongang.moggozi2.repository.MokkojiRepository;
 
+public interface MokkojiService {
+    
+	 void saveMokkoji(Mokkoji mokkoji);
 
-@Service
-@Transactional
-public class MokkojiService {
-    
-    private final MokkojiRepository mokkojiRepository;
+	    Page<Mokkoji> findAllMokkoji(Pageable pageable);
 
-    @Autowired
-    public MokkojiService(MokkojiRepository mokkojiRepository) {
-        this.mokkojiRepository = mokkojiRepository;
-    }
-    
-    public void saveMokkoji(Mokkoji mokkoji) {
-        mokkojiRepository.save(mokkoji);//insert,update
-    }
-    
-    public Page<Mokkoji> findAllMokkoji(Pageable pageable) {
-        return mokkojiRepository.findAll(pageable);//모든 select를 가져오는거
-    }
+	    Page<Mokkoji> searchMokkoji(String keyword, String category, Pageable pageable);
+
+	    List<Mokkoji> searchMokkoji(String keyword, String category);
+
+	    int countSearchResults(String keyword, String category);
+
+		int countTotalMokkoji();
     
     // 다른 필요한 메서드들을 추가할 수 있습니다.
 }

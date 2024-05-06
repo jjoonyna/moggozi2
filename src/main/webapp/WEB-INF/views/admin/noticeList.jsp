@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -250,7 +251,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${id} 님</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${usernick} 님</span>
                                 <img class="img-profile rounded-circle"
                                     src="./images/undraw_profile.svg">
                             </a>
@@ -314,8 +315,8 @@
 						                                        <td><c:out value="${notice.notiImpt}" /></td>
 						                                        <td><c:out value="${notice.notiNo}" /></td>
 						                                        <td><a href="noticeDetail?id=${notice.notiNo}"><c:out value="${notice.notiTitle}" /></a></td>
-						                                        <td><c:out value="${notice.notiWriter}" /></td>
-						                                        <td><c:out value="${notice.notiDate}" /></td>
+						                                        <td><c:out value="${notice.usernick}" /></td>
+						                                        <td><fmt:formatDate value="${notice.notiDate}" pattern="yyyy.MM.dd HH:mm" /></td>
 						                                        <td><c:out value="${notice.notiHit}" /></td>
 						                                    </tr>
 						                                </c:forEach>

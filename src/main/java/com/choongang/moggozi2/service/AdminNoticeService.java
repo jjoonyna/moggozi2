@@ -1,5 +1,6 @@
 package com.choongang.moggozi2.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -7,36 +8,29 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.choongang.moggozi2.entity.AdminNotice;
+import com.choongang.moggozi2.entity.ReplyNotice;
 import com.choongang.moggozi2.repository.AdminNoticeRepository;
-
+import com.choongang.moggozi2.repository.ReplyNoticeRepository;
 
 @Service
 @Transactional
 public class AdminNoticeService {
 	
-	@Autowired
-	private AdminNoticeRepository adminNoticeRepository;
-	
+    private final AdminNoticeRepository adminNoticeRepository;
+    private final ReplyNoticeRepository replyNoticeRepository;
+
     @Autowired
-    public AdminNoticeService(AdminNoticeRepository adminNoticeRepository) {
+    public AdminNoticeService(AdminNoticeRepository adminNoticeRepository, ReplyNoticeRepository replyNoticeRepository) {
         this.adminNoticeRepository = adminNoticeRepository;
+        this.replyNoticeRepository = replyNoticeRepository;
     }
     
     public void saveAdminNotice(AdminNotice notice) {
     	adminNoticeRepository.save(notice);//insert,update
-    }
-
-    public Page<AdminNotice> findAllNotice(Pageable pageable) {
-        try {
-            return adminNoticeRepository.findAllByOrderByNotiDateDesc(pageable);
-        } catch (Exception e) {
-            // 예외 처리 로직 추가
-            e.printStackTrace();
-            return Page.empty(); // 또는 원하는 대체값을 반환
-        }
     }
 
     public AdminNotice findNoticeById(Integer id) {
@@ -57,8 +51,38 @@ public class AdminNoticeService {
 		
 	}
 
+	public void saveAdminAsk(AdminNotice notice) {
+		adminNoticeRepository.save(notice);
+	}
 
-	
+	public Page<AdminNotice> findAllAsk(Pageable pageable) {
+		 return adminNoticeRepository.findAll(pageable);
+	}
+
+	public Page<AdminNotice> findNoticeByCategory(String category, Pageable pageable) {
+		return adminNoticeRepository.findByCategory(category, pageable);
+	}
+
+	public ReplyNotice saveAdminReply(ReplyNotice notice) {
+		return replyNoticeRepository.save(notice);
+	}
+
+	public Page<AdminNotice> findQnaByUsername(String username, Pageable pageable) {
+		return adminNoticeRepository.findQnaByUsername(username, pageable);
+	}
+
+	public ReplyNotice saveReply(ReplyNotice reply) {
+		return replyNoticeRepository.save(reply);
+	}
+
+	public Optional<AdminNotice> findNoticeByNo(Integer id) {
+		return Optional.ofNullable(adminNoticeRepository.findById(id).orElse(null));
+	}
+
+	public List<ReplyNotice> findRepliesByNotiNo(Integer notiNo) {
+	    return replyNoticeRepository.findByNotiNoNotiNo(notiNo);
+	}
+
 
 
 

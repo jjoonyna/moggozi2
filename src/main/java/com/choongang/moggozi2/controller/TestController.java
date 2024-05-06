@@ -8,11 +8,6 @@ public class TestController {
 
 	
 	
-	
-	@GetMapping("mypage")
-	public String mypage() {
-		return "user/mypage";
-	}
 	@GetMapping("video")
 	public String video() {
 		return "video";

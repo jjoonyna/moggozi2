@@ -11,10 +11,10 @@ import lombok.Data;
 @Data
 public class CustomUserDetails implements UserDetails{
 	
-	private Admin admin;
+	private User user;
 	
-	public CustomUserDetails(Admin admin) {
-		this.admin = admin;
+	public CustomUserDetails(User userData, String usernick) {
+		this.user = userData;
 	}
 
 	
@@ -29,7 +29,7 @@ public class CustomUserDetails implements UserDetails{
 			@Override
 			public String getAuthority() {
 
-				return admin.getRole();
+				return user.getRole();
 			}
 		});
 		
@@ -38,12 +38,16 @@ public class CustomUserDetails implements UserDetails{
 
 	@Override
 	public String getPassword() {
-		return admin.getPassword();
+		return user.getPassword();
+	}
+	
+	public String getUsernick() {
+		return user.getUsernick();
 	}
 
 	@Override
 	public String getUsername() {
-		return admin.getUsername();
+		return user.getUsername();
 	}
 
 	@Override
