@@ -24,6 +24,7 @@ public class SecurityConfig {
         http
             .authorizeRequests((auth) -> auth
                 .antMatchers("/", "/login", "/main", "/join", "/joinProc","/loginAdmin","/signup").permitAll()
+                .antMatchers("/search").permitAll() // 검색 기능에 대한 모든 사용자 접근 허용
                 .antMatchers("/css/**","/js/**","/images/**","/icon/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/my/**").hasAnyRole("ADMIN", "USER")

@@ -130,7 +130,7 @@
 		                        <span class="left"></span>
 		                        <span class="right"></span>
 		                    </a>
-		                    <h2>${mokkoji.mokkojiTitle}
+		                    <h2>[${mokkoji.mokkojiCategory}]${mokkoji.mokkojiTitle}
 		                        <small>닉네임 : ${mokkoji.usernick}</small>
 		                    </h2>
 		                </div>
@@ -138,11 +138,12 @@
 		                    <div class="card-description">
 		                        ${mokkoji.mokkojiIntro }
 		                    </div>
-		                    <div class="card-flap flap2">
-		                        <div class="card-actions">
-		                            <a href="#" class="btn">참가하기</a>
+			                   <div class="card-flap flap2">
+		                     	 <div class="card-actions" id="buttonContainer">
+		                          <a href="javascript:join('${mokkojiCatagory}','${mokkojiNo}','${mokkojiTitle}','${usernick}')"
+		                         class="btn" autocomplete="off" >참가하기</a>
 		                        </div>
-		                    </div>
+						      </div>
 		                </div>
 		            </div>
 		        </c:forEach>

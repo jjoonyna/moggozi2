@@ -1,0 +1,155 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'TTLaundryGothicB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2403-2@1.0/TTLaundryGothicB.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+body{
+	background-color: #000000;
+}
+body h1{
+	font-family: 'TTLaundryGothicB';
+	color: #ffffff;
+	font-size: 80px;
+	text-align: center; 
+	margin-top: 100px;
+}
+moggzimain{
+	border: center;
+}
+body h2{
+	font-family: 'TTLaundryGothicB';
+	color: #ffffff;
+	font-size: 50px;
+	text-align: center;
+	margin: 40px 30px;
+}
+.joinmain{
+	
+}
+
+.joinname{
+	 font-family: 'TTLaundryGothicB';
+	 font-size: xx-large;
+	 color: white;
+	 
+}
+
+.container{
+    padding: 1% 0% 2% 2%;
+    font-family: 'TTLaundryGothicB';
+        width: 1400px;
+}
+
+.moggzimain{
+	border-color:#ffffff;
+	border: solid;
+	width: 1000px;
+    height: 500px;
+    text-align: center;
+}
+
+.join{
+	width: 60% ;
+	margin: 50px 200px;
+}
+.join2{
+	width: 100% ;
+	margin: 30px;
+	margin-left: -1px;
+}
+.input-group-addon{
+	font-family: 'Pretendard-Regular';
+	font-size: 20px;
+}
+
+.btn-success{
+	font-family: 'Pretendard-Regular';
+    display: inline-block;
+    border-radius: 0px;
+    font-size: 25px
+}
+
+/* 참여방 입장 */
+
+/* 참여자 비디오 요소들을 수직으로 정렬하기 위한 CSS */
+
+.video {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* 왼쪽 정렬 */
+}
+
+.col-md-4 {
+    width: 31%; 
+}
+
+.panel {
+    width: 100%; /* 패널 너비 100% */
+}
+
+.panel-heading {
+    padding: 10px; /* 패널 헤딩 패딩 설정 */
+}
+
+.panel-title {
+    margin: 0; /* 패널 타이틀 마진 초기화 */
+}
+
+.panel-body {
+    display: flex; /* 내부 아이템들을 수직으로 정렬하기 위해 Flexbox 사용 */
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+}
+
+
+#joinroom{
+	color: #3EFA97;
+	font-size: 300%;
+    padding: 0 0 2%;
+}
+.leaveroom {
+	margin-left: 200px;	
+}
+
+
+/* 아이콘 */
+
+
+.footer{
+	font-size: x-large;
+	border: solid;
+	padding: 1% 30% 5% 30%;
+    border-top: 2px solid white;
+    border-left: none;
+    border-right: none;
+    bottom: 0px;
+	position: absolute;
+	height: 11rem;
+}
+
+.icons button {
+	margin-right: 20px; /*    각 버튼 사이의 간격 조절 */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
