@@ -60,6 +60,14 @@ public class UserContoller {
     public String signupP() {
         return "signup";
     }
+    
+    // 회원 가입 및 로그인 페이지 
+ 	@GetMapping("/mkjsignup")
+ 	public String loginNsignup(){
+     	
+     	System.out.println("ㅁ회원가입 컨트롤러 입장!!ㅁ ");
+ 		return "mkjsignup"; // 회원가입 페이지의 뷰 이름
+ 	}
 
     @PostMapping("/joinProc")
     public String joinProcess(User user) {
