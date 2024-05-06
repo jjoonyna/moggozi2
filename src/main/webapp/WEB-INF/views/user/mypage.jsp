@@ -118,5 +118,32 @@
 	
 	<jsp:include page="/resources/footer.jsp" />
 
+					<h3>${username }님 환영합니다</h3>
+					<div class=mypage-myinfo-table>
+						<table class="myinfo-table">
+							<caption>내 활동</caption>
+							<tr>
+								<td><br>모임 수</td>
+								<td><br>0</td>
+							</tr>
+							<tr>
+								<td><br>게시글 수</td>
+								<td><br>0</td>
+							</tr>
+						</table>				
+					</div>
+
+				</div>
+			</div>
+			
+			
+			
+			
+			
+			
+		</div>
+		
+	</main>
+		<jsp:include page="/resources/footer.jsp" />
 </body>
 </html>

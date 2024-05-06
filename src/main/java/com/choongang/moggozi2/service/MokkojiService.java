@@ -28,4 +28,6 @@ public interface MokkojiService {
 		int countTotalMokkoji();
     
     // 다른 필요한 메서드들을 추가할 수 있습니다.
+    
+
 }

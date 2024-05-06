@@ -23,7 +23,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeRequests((auth) -> auth
-                .antMatchers("/", "/login", "/main", "/join", "/joinProc","/loginAdmin","/signup").permitAll()
+            	.antMatchers("/", "/login", "/main", "/join", "/joinProc","/loginAdmin","/signup","/snslogin","/google_login","/google_login-callback","/naver_login","/naver_login-callback","/kakao_login","/kakao_login-callback").permitAll()
                 .antMatchers("/search").permitAll() // 검색 기능에 대한 모든 사용자 접근 허용
                 .antMatchers("/css/**","/js/**","/images/**","/icon/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")

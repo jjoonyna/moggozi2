@@ -1,12 +1,7 @@
 package com.choongang.moggozi2.controller;
 
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.math.BigInteger;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -22,14 +18,26 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.choongang.moggozi2.entity.User;
+import com.choongang.moggozi2.repository.UserRepository;
+import com.choongang.moggozi2.service.UserService;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+
 @RestController
 public class NaverController {
 
+	@Autowired
+	private UserRepository newrepository;
+	
+	@Autowired
+	private UserService service;
 	
 	
 	@RequestMapping("/naver_login")
@@ -143,16 +151,36 @@ public class NaverController {
 
 	        // Post 방식으로 Http 요청
 	        // 응답 데이터 형식은 Hashmap 으로 지정
-	        ResponseEntity<HashMap> userResult = restTemplate.postForEntity(userInfoURL, userInfoEntity, HashMap.class);
-	        Map<String, String> userResultMap = userResult.getBody();
+	        ResponseEntity<String> userResult = restTemplate.postForEntity(userInfoURL, userInfoEntity, String.class);
+	        String userResultMap = userResult.getBody();
 
 	        //응답 데이터 확인
 	        System.out.println(userResultMap);
+	        
+	        JsonParser parser = new JsonParser(); 
+	        JsonElement element = parser.parse(userResultMap);
+	        JsonObject respon = element.getAsJsonObject().get("response").getAsJsonObject();
+			String email = respon.getAsJsonObject().get("email").getAsString();;
+			String nickname = respon.getAsJsonObject().get("nickname").getAsString();;
+			String name = respon.getAsJsonObject().get("name").getAsString();;
+			String gender = respon.getAsJsonObject().get("gender").getAsString();;
+			
+			
+			//db 저장
+			User user = new User();
+			boolean newUser = newrepository.existsByUsername(email);
+			if(!newUser) {
+				user.setUsername(email);
+				user.setUsernick(nickname);
+				user.setUsergender(gender);
+				user.setNormalname(name);
+				service.snsuserjoin(user);
+			}
 
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
-
+	    
 			// 세션에 저장된 state 값 삭제
 	    request.getSession().removeAttribute("state");
 

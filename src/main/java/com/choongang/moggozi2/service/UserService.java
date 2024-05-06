@@ -1,5 +1,7 @@
 package com.choongang.moggozi2.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -44,7 +46,24 @@ public class UserService {
 	    // 새로운 사용자 저장
 	    userrepository.save(newUser);
 	}
-
-	
+	public void snsuserjoin(User user) {
+		 boolean isExistingUser = userrepository.existsByUsername(user.getUsername());
+		    if (isExistingUser) {
+		        System.out.println("중복된 아이디가 있으니 다른 아이디를 사용하세요.");
+		        return; // 중복된 아이디가 있으면 처리 중단
+		    }
+		
+		
+		User data = new User();
+		data.setUsername(user.getUsername());
+		data.setNormalname(user.getNormalname());
+		data.setUseremail(user.getUseremail());
+		data.setUseryear(user.getUseryear());
+		data.setUsergender(user.getUsergender());
+		data.setUsernick(user.getUsernick());
+		data.setRole("USER");
+		
+		userrepository.save(data);
+	}
 }
 	

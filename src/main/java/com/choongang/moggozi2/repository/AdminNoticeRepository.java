@@ -12,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 import com.choongang.moggozi2.entity.AdminNotice;
 import com.choongang.moggozi2.entity.ReplyNotice;
 
+
 public interface AdminNoticeRepository extends JpaRepository<AdminNotice, Integer> {
 		List<AdminNotice> findByCategory(String category);
 	    Page<AdminNotice> findByCategory(String category, Pageable pageable);
