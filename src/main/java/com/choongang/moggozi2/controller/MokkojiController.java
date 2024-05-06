@@ -2,14 +2,9 @@ package com.choongang.moggozi2.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.choongang.moggozi2.entity.Mokkoji;
 import com.choongang.moggozi2.service.MokkojiService;
+
 
 
 @Controller
@@ -76,27 +72,26 @@ public class MokkojiController {
         }
     }
     
-    @GetMapping("/main")
-    public String allMokkogi(@RequestParam(defaultValue = "0") int page, Model model) {
-        // 페이지 번호와 페이지 크기를 기반으로 페이징 객체를 생성합니다.
-        Pageable pageable = PageRequest.of(page, 9);
-        
-        // 페이징 처리된 데이터를 가져옵니다.
-        Page<Mokkoji> mokkojiPage = mokkojiService.findAllMokkoji(pageable);
-        
-        // 페이징된 데이터 리스트를 모델에 추가합니다.
-        List<Mokkoji> mokkojiList = mokkojiPage.getContent();
-        
-        // 모델에 리스트를 추가합니다.
-        model.addAttribute("mokkojiList", mokkojiList);
-        
-        // 페이징 정보도 모델에 추가할 수 있습니다.
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", mokkojiPage.getTotalPages());
-        
-        // main 템플릿으로 이동합니다.
-        return "main";
-    }
-    
+//    @GetMapping("/main")
+//    public String allMokkogi(@RequestParam(defaultValue = "0") int page, Model model) {
+//        // 페이지 번호와 페이지 크기를 기반으로 페이징 객체를 생성합니다.
+//        Pageable pageable = PageRequest.of(page, 9);
+//        
+//        // 페이징 처리된 데이터를 가져옵니다.
+//        Page<Mokkoji> mokkojiPage = mokkojiService.findAllMokkoji(pageable);
+//        
+//        // 페이징된 데이터 리스트를 모델에 추가합니다.
+//        List<Mokkoji> mokkojiList = mokkojiPage.getContent();
+//        
+//        // 모델에 리스트를 추가합니다.
+//        model.addAttribute("mokkojiList", mokkojiList);
+//        
+//        // 페이징 정보도 모델에 추가할 수 있습니다.
+//        model.addAttribute("currentPage", page);
+//        model.addAttribute("totalPages", mokkojiPage.getTotalPages());
+//        
+//        // main 템플릿으로 이동합니다.
+//        return "main";
+//    }
     
 }

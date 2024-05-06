@@ -4,16 +4,14 @@ package com.choongang.moggozi2.service;
 
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.choongang.moggozi2.common.Const;
-import com.choongang.moggozi2.entity.UserDTO;
-import com.choongang.moggozi2.repository.NewUserRepository;
+import com.choongang.moggozi2.entity.User;
+import com.choongang.moggozi2.repository.UserRepository;
 import com.choongang.moggozi2.transformer.Trans;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -28,7 +26,7 @@ public class KakaoService {
 	private final HttpSession httpSession;	
 	
 	@Autowired
-	private NewUserRepository newrepository;
+	private UserRepository newrepository;
 	
 	@Autowired
 	private UserService service;
@@ -87,7 +85,7 @@ public class KakaoService {
 		String email = kakao_account.getAsJsonObject().get("email").getAsString();
 		
 		//db 저장
-		UserDTO user = new UserDTO();
+		User user = new User();
 		boolean newUser = newrepository.existsByUsername(email);
 		if(!newUser) {
 			user.setUsername(email);

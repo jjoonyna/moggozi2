@@ -1,10 +1,11 @@
 package com.choongang.moggozi2.controller;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,10 +18,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.choongang.moggozi2.entity.AdminNotice;
+import com.choongang.moggozi2.entity.ReplyNotice;
 import com.choongang.moggozi2.service.AdminNoticeService;
 
 
@@ -29,11 +32,12 @@ public class AdminNoticeController {
 	
 	@Autowired
     private final AdminNoticeService adminNoticeService;
-	
+
 	 @Autowired
 	    public AdminNoticeController(AdminNoticeService adminNoticeService) {
 	        this.adminNoticeService = adminNoticeService;
 	    }
+	 
 	 
 	 /*
 	  * 공지사항 작성 폼
@@ -63,25 +67,13 @@ public class AdminNoticeController {
 	 	 * 공지사항 작성 
 	 	 */
 	 	@PostMapping("/noticeWriteResult")
-		 public String noticeWriteResult(@RequestParam("category") String category,
-		                                 @RequestParam("notiWriter") String notiWriter,
-		                                 @RequestParam("notiTitle") String notiTitle,
-		                                 @RequestParam("notiImpt") String notiImpt,
-		                                 @RequestParam("notiContent") String notiContent,
-		                                 @RequestParam("notiHit") Integer notiHit) {
+		 public String noticeWriteResult(@ModelAttribute AdminNotice notice) {
 	
-		     // 공지사항 엔티티 객체 생성
-		     AdminNotice notice = new AdminNotice();
-		     notice.setCategory(category);
-		     notice.setNotiWriter(notiWriter);
-		     notice.setNotiTitle(notiTitle);
-		     notice.setNotiImpt(notiImpt);
-		     notice.setNotiContent(notiContent);
-		     notice.setNotiHit(notiHit);
+		 
 		     
 		     // 현재 시간을 가져옵니다.
-		     LocalDateTime now = LocalDateTime.now();
-	
+	 		 Timestamp now = new Timestamp(System.currentTimeMillis());
+	 		 
 		     // 엔티티 객체에 현재 시간을 할당합니다.
 		     notice.setNotiDate(now);
 	
@@ -112,8 +104,8 @@ public class AdminNoticeController {
 	 	    // 페이지 번호와 페이지 크기를 기반으로 페이징 객체를 생성합니다.
 	 	    Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "notiDate"));
 
-	 	    // 페이징 처리된 카테고리별 공지사항을 가져옵니다.
-	 	    Page<AdminNotice> noticePage = adminNoticeService.findAllNotice(pageable);
+	         // 페이징 처리된 카테고리별 공지사항을 가져옵니다.
+	         Page<AdminNotice> noticePage = adminNoticeService.findNoticeByCategory("n", pageable);
 
 	 	    // 페이징된 데이터 리스트를 모델에 추가합니다.
 	 	    List<AdminNotice> noticeList = noticePage.getContent();
@@ -121,8 +113,9 @@ public class AdminNoticeController {
 	 	    // noti_impt 컬럼 값이 'Y'인 경우에 대해서 우선적으로 리스트에 추가합니다.
 	 	    List<AdminNotice> importantNotices = new ArrayList<>();
 	 	    List<AdminNotice> normalNotices = new ArrayList<>();
-	 	    for (AdminNotice notice : noticeList) {
-	 	        if ("중요".equals(notice.getNotiImpt())) {
+	 	    for (AdminNotice notice : noticeList) { 
+	 	    	
+	 	        if ("중요".equals(notice.getNotiImpt()) && "n".equals(notice.getCategory())) {
 	 	            importantNotices.add(notice);
 	 	        } else {
 	 	            normalNotices.add(notice);
@@ -142,7 +135,7 @@ public class AdminNoticeController {
 	 	}
 	 	
 	 	/*
-	 	 * 상세보기 
+	 	 * 공지사항 상세보기 
 	 	 */
 	 	@GetMapping("/noticeDetail")
 	 	public String noticeDetail(@RequestParam Integer id, Model model) {
@@ -158,8 +151,137 @@ public class AdminNoticeController {
 	 	    // noticeDetail 템플릿으로 이동합니다.
 	 	    return "admin/noticeDetail";
 	 	}
-
-
 	 	
+	 	
+	 	//////////////////////////////////////////////////////////////////
+	 	//////////////////////////////////////////////////////////////////
+	 	//////////////////////////////////////////////////////////////////
+	 	//////////////////////////////////////////////////////////////////
+	 	//////////////////////////////////////////////////////////////////
+	 	//////////////////////////////////////////////////////////////////
+	 	
+	 	
+	 
+		 	 /*
+		 	  * 1:1문의 리스트 불러오기
+		 	  */
+		 	 @GetMapping("/askList")
+		     public String adminAskList(@RequestParam(defaultValue = "0") int page, Model model) {
+		         // 현재 사용자의 인증 정보 가져오기
+		         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+		         Iterator<? extends GrantedAuthority> iter = authorities.iterator();
+		         GrantedAuthority auth = iter.next();
+		         String role = auth.getAuthority();
+
+		         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		         // 뷰로 사용자 이름 전달
+		         model.addAttribute("role", role);
+		         model.addAttribute("username", username);
+
+		         // 페이지 번호와 페이지 크기를 기반으로 페이징 객체를 생성합니다.
+		         Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "notiDate"));
+
+		         // 페이징 처리된 카테고리별 공지사항을 가져옵니다.
+		         Page<AdminNotice> noticePage = adminNoticeService.findNoticeByCategory("a", pageable);
+
+		         // 페이징된 데이터 리스트를 모델에 추가합니다.
+		         List<AdminNotice> askList = noticePage.getContent();
+
+		         // 모델에 리스트를 추가합니다.
+		         model.addAttribute("askList", askList);
+
+		         // 페이징 정보도 모델에 추가할 수 있습니다.
+		         model.addAttribute("currentPage", page);
+		         model.addAttribute("totalPages", noticePage.getTotalPages());
+
+		         // admin/noticelist 템플릿으로 이동합니다.
+		         return "admin/askList";
+		     }
+		 	 
+		 	/*
+		 	 * 1:1문의 상세보기 
+		 	 */
+		 	@GetMapping("/askDetail")
+		 	public String askDetail(@RequestParam("id") Integer id, Model model) {
+		 	    // id를 사용하여 공지사항을 조회합니다.
+		 	    Optional<AdminNotice> noticeOptional = adminNoticeService.findNoticeByNo(id);
+		 	    
+		 	    // Optional이 값을 갖고 있는지 확인합니다.
+		 	    if (noticeOptional.isPresent()) {
+		 	        AdminNotice askList = noticeOptional.get();
+		 	        
+		 	        // 조회된 공지사항을 모델에 추가합니다.
+		 	        model.addAttribute("id", id);
+		 	        model.addAttribute("notice", askList);
+		 	    }
+		 	    
+		 	    // noticeDetail 템플릿으로 이동합니다.
+		 	    return "admin/askDetail";
+		 	}
+		 	
+		 	////////////////////////////////////////////
+		 	////////////////////////////////////////////
+		 	////////////////////////////////////////////
+		 	////////////////////////////////////////////
+		 	////////////////////////////////////////////
+		 	////////////////////////////////////////////
+		 	////////////////////////////////////////////
+
+		 	 /*
+			  * 1:1문의 작성 폼
+			  */
+			 @GetMapping("/replyWrite")
+			    public String replyWritePage(@RequestParam("id") Integer id, Model model) {
+				 
+				 
+				    // 현재 사용자의 인증 정보 가져오기
+				    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+				    String username = authentication.getName(); // 현재 사용자의 아이디
+				    
+					Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+					Iterator<? extends GrantedAuthority> iter = authorities.iterator();
+					GrantedAuthority auth = iter.next();
+					String role = auth.getAuthority();		 
+					
+				    // 뷰로 사용자 이름 전달
+					model.addAttribute("username", username);
+				    model.addAttribute("role", role);
+				    model.addAttribute("id", id);
+				    
+				    
+			        return "admin/replyWrite";
+			    }
+
+			 	/*
+			 	 * 1:1문의 답변 작성 
+			 	 */
+				 @PostMapping("/replyWriteResult")
+				    public String askWriteResult(@RequestParam("notiNo") Integer id, @ModelAttribute ReplyNotice reply) {
+						// 현재 시간을 가져옵니다.
+					 	Timestamp now = new Timestamp(System.currentTimeMillis());
+						 
+						// 엔티티 객체에 현재 시간을 할당합니다.
+						reply.setReplyDate(now);
+						
+				        // 답변을 저장
+				        ReplyNotice savedReply = adminNoticeService.saveReply(reply);
+				        
+				        // 관련된 문의 가져오기
+				        AdminNotice notice = adminNoticeService.findNoticeById(id);
+
+				        System.out.println("savedReply : " + savedReply);
+				
+				        
+				        // 문의와 답변의 번호를 대조하여 일치하는 경우, 문의의 상태를 "답변완료"로 변경
+				        if (notice != null && savedReply.getNotiNo().getNotiNo().equals(notice.getNotiNo())) {
+				        	notice.setNotiAt("답변완료");
+				            adminNoticeService.saveAdminAsk(notice);
+				        }
+				        
+				        // 작성 성공 페이지로 리다이렉트
+				        return "redirect:/askList";
+				    }
+		 	 
 
 }

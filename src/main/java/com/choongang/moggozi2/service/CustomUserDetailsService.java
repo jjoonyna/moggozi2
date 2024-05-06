@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.choongang.moggozi2.entity.Admin;
 import com.choongang.moggozi2.entity.CustomUserDetails;
+import com.choongang.moggozi2.entity.User;
 import com.choongang.moggozi2.repository.UserRepository;
 
 
@@ -21,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		Admin userData = userRepository.findByUsername(username);
+		User userData = userRepository.findByUsername(username);
 		
 		if(userData != null) {
 			

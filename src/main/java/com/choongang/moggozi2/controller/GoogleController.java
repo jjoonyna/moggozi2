@@ -16,8 +16,8 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.choongang.moggozi2.common.GoogleInfResponse;
 import com.choongang.moggozi2.common.GoogleRequest;
 import com.choongang.moggozi2.common.GoogleResponse;
-import com.choongang.moggozi2.entity.UserDTO;
-import com.choongang.moggozi2.repository.NewUserRepository;
+import com.choongang.moggozi2.entity.User;
+import com.choongang.moggozi2.repository.UserRepository;
 import com.choongang.moggozi2.service.UserService;
 
 
@@ -26,7 +26,7 @@ import com.choongang.moggozi2.service.UserService;
 public class GoogleController {
 	
 	@Autowired
-	private NewUserRepository newrepository;
+	private UserRepository newrepository;
 	
 	@Autowired
 	private UserService service;
@@ -60,14 +60,13 @@ public class GoogleController {
 	        map.put("id_token",jwtToken);
 	        ResponseEntity<GoogleInfResponse> resultEntity2 = restTemplate.postForEntity("https://oauth2.googleapis.com/tokeninfo",
 	                map, GoogleInfResponse.class);
-	        String email=resultEntity2.getBody().getEmail();       
-	        System.out.println(email);
-	        System.out.println(map.get("id_token"));
-	        
-	        UserDTO user = new UserDTO();
+	        String email=resultEntity2.getBody().getEmail();   
+	        String name=resultEntity2.getBody().getName();
+	        User user = new User();
 			boolean newUser = newrepository.existsByUsername(email);
 			if(!newUser) {
 				user.setUsername(email);
+				user.setUsernick(name);
 				service.snsuserjoin(user);
 			}
 	        return new RedirectView("/main");

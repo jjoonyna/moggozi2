@@ -1,1 +1,35 @@
 @charset "UTF-8";
+
+.mypage{
+	margin: 5% auto;
+	display: flex;
+	flex-direction: column;
+	width: 60%;
+	height: 100%;
+}
+
+.mypage-btn{
+	display: flex;
+	flex-direction: row;
+	margin: 1% 0%;
+	width: 100%;
+	height: 100%;
+}
+
+.mypage-btn button{
+	background-color: #ffffff;
+	align-items: center;
+	width: 30%;
+	height: 20%;
+}
+
+.mypage h3{
+	display: flex;
+	flex-direction: column;
+	margin: 30px;
+}
+
+.mypage .mypage-myinfo .mypage-myinfo-table{
+	margin: 50px 40%;
+}
+

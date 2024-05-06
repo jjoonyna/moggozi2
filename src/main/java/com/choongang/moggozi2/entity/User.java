@@ -14,7 +14,7 @@ import lombok.Setter;
 	@Setter
 	@Getter
 	@Entity
-	public class UserDTO {
+	public class User {
 	
 			@Id
 			private String username;		// 아이디

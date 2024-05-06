@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.choongang.moggozi2.entity.UserDTO;
-import com.choongang.moggozi2.repository.NewUserRepository;
+import com.choongang.moggozi2.entity.User;
+import com.choongang.moggozi2.repository.UserRepository;
 import com.choongang.moggozi2.service.UserService;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -34,7 +34,7 @@ import com.google.gson.JsonParser;
 public class NaverController {
 
 	@Autowired
-	private NewUserRepository newrepository;
+	private UserRepository newrepository;
 	
 	@Autowired
 	private UserService service;
@@ -167,7 +167,7 @@ public class NaverController {
 			
 			
 			//db 저장
-			UserDTO user = new UserDTO();
+			User user = new User();
 			boolean newUser = newrepository.existsByUsername(email);
 			if(!newUser) {
 				user.setUsername(email);
@@ -180,7 +180,7 @@ public class NaverController {
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
-
+	    
 			// 세션에 저장된 state 값 삭제
 	    request.getSession().removeAttribute("state");
 

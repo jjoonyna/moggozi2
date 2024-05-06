@@ -99,7 +99,7 @@
 			
 			
 					<section>
-					<!-- 게시판 목록 -->
+<!-- 					게시판 목록 -->
 					<div class="cards">
 					<c:forEach items="${mokkojiList}" var="mokkoji">
 					  <div class="card">
@@ -129,19 +129,19 @@
 					</c:forEach>
 				
 	
-			<!-- 페이지 링크를 표시합니다 -->
+<!-- 			페이지 링크를 표시합니다 -->
 			<div class="page_container">
 			    <div>
 		            	<button id="writeBtn" class="hover-color">방 만들기</button>
 		        </div>
 				
-			    <!-- 페이지 -->
+<!-- 			    페이지 -->
 			    <div class="page_btn">
 			        <div class="page_wrap">
 			            <div class="page_nation">
 			                <a class="arrow pprev" href="#" onclick="pprevPage()"></a>
 			                <a class="arrow prev" href="#" onclick="prevPage()"></a>
-			                <!-- 서버에서 생성된 페이지 버튼 -->
+<!-- 			                서버에서 생성된 페이지 버튼 -->
 			                <c:forEach begin="0" end="${totalPages - 1}" var="pageNumber">
 							    <a class="page-link" href="/main?page=${pageNumber}">${pageNumber + 1}</a>
 							</c:forEach>
@@ -154,7 +154,6 @@
 		</section>
 	</nav>
 	</div>
-</div>
 
 	</main>
  <jsp:include page="/resources/footer.jsp" />

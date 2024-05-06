@@ -57,28 +57,18 @@
 			<!-- 내 정보 -->
 			<div class="mypage">
 				<div class="mypage-btn">
-					<button class="myinfo-btn" onClick="myinfo()" style="background-color: #3EFA97">내 정보</button>
+					<button class="myinfo-btn" onClick="myinfo()" >내 정보</button>
 					<button class="mymoim-btn" onClick="mymoim()">내 모임</button>
-					<button class="myboard-btn" onClick="myboard()">내 게시글</button>
+					<button class="myboard-btn" onClick="myboard()" style="background-color: #3EFA97">내 게시글</button>
 				</div>
 				
-				<div class="mypage-myinfo">
-
-					<h3>${username }님 환영합니다</h3>
-					<div class=mypage-myinfo-table>
-						<table class="myinfo-table">
-							<caption>내 활동</caption>
-							<tr>
-								<td><br>모임 수</td>
-								<td><br>0</td>
-							</tr>
-							<tr>
-								<td><br>게시글 수</td>
-								<td><br>0</td>
-							</tr>
-						</table>				
-					</div>
-
+				<div class="mypage-board">
+				<h3>내 게시글 목록</h3>
+					전체 선택<input type="checkbox" id="allcheck">
+					<form method="post" action="myboarddelete">
+					
+					<button type="submit" value="삭제"></button>
+					</form>
 				</div>
 			</div>
 			

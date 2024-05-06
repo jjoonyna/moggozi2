@@ -31,4 +31,6 @@ public class MokkojiService {
     }
     
     // 다른 필요한 메서드들을 추가할 수 있습니다.
+    
+
 }
