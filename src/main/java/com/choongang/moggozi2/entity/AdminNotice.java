@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +21,9 @@ public class AdminNotice {
 	private Integer notiNo;		// 글번호
 	
 	private String category;		// 카테고리(n = 게시판 / a = 1:1문의)
-	private String username;		// 작성자
+	
+	private String username;		// 아이디
+	private String usernick;		// 닉네임
 	private String notiTitle;		// 제목명 
 	private String notiImpt;		// 중요표시
 	private String notiContent;	// 내용

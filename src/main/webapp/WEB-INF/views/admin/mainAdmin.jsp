@@ -87,7 +87,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">항목</h6>
-                        <a class="collapse-item" href="userManagement">회원 관리</a>
+                        <a class="collapse-item" href="manageUser">회원 관리</a>
                         <a class="collapse-item" href="postMangement">게시물 관리</a>
                     </div>
                 </div>
@@ -251,7 +251,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${id} 님</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${usernick} 님</span>
                                 <img class="img-profile rounded-circle"
                                     src="./images/undraw_profile.svg">
                             </a>

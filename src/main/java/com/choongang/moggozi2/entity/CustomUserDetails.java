@@ -13,7 +13,7 @@ public class CustomUserDetails implements UserDetails{
 	
 	private User user;
 	
-	public CustomUserDetails(User userData) {
+	public CustomUserDetails(User userData, String usernick) {
 		this.user = userData;
 	}
 
@@ -39,6 +39,10 @@ public class CustomUserDetails implements UserDetails{
 	@Override
 	public String getPassword() {
 		return user.getPassword();
+	}
+	
+	public String getUsernick() {
+		return user.getUsernick();
 	}
 
 	@Override

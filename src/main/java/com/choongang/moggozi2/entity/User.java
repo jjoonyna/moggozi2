@@ -1,6 +1,9 @@
 package com.choongang.moggozi2.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,11 +18,14 @@ import lombok.Setter;
 	@Getter
 	@Entity
 	public class User {
-	
-			@Id
+			
 			private String username;		// 아이디
-			private String normalname;	//이름 
+			
+			@Id
+			@Column(name = "usernick") // 컬럼 이름을 명시적으로 지정
 			private String usernick;	//닉네임
+			
+			private String normalname;	//이름 
 			private String password;		// 비밀번호 
 			private String userph;	// 휴대폰번호
 			private String userzip;	// 우편번호

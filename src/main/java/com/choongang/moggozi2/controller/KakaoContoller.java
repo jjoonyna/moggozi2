@@ -1,6 +1,5 @@
 package com.choongang.moggozi2.controller;
 
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -8,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.choongang.moggozi2.service.KakaoService;
-
 
 
 @RestController
@@ -23,7 +21,7 @@ public class KakaoContoller {
     }
 
 	@RequestMapping("/kakao_login-callback")
-	public RedirectView loginCallback(@RequestParam("code") String code) throws Exception {
+	public RedirectView loginCallback(@RequestParam("code") String code) {
 	   return kakaoService.loginCallback(code);
 	}	
 	

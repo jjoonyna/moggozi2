@@ -153,7 +153,7 @@ public class NaverController {
 	        // 응답 데이터 형식은 Hashmap 으로 지정
 	        ResponseEntity<String> userResult = restTemplate.postForEntity(userInfoURL, userInfoEntity, String.class);
 	        String userResultMap = userResult.getBody();
-	        
+
 	        //응답 데이터 확인
 	        System.out.println(userResultMap);
 	        

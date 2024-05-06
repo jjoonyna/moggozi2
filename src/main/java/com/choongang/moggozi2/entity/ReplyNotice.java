@@ -26,9 +26,11 @@ public class ReplyNotice {
 	@JoinColumn(name = "notiNo") // username 컬럼과 매핑
 	private AdminNotice notiNo;	// 글번호
 	
+	private String username;		// 아이디
+	
 	@ManyToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "username") // username 컬럼과 매핑
-	private User username;	// 답변 작성자명
+    @JoinColumn(name = "usernick", referencedColumnName = "usernick")
+	private User usernick;	// 답변 작성자명
 	
 	private String replyContent;	// 답변 내용
 	private Timestamp replyDate;	// 답변 날짜

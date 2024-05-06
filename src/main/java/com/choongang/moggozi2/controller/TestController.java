@@ -9,7 +9,6 @@ public class TestController {
 
 	
 	
-	
 	@GetMapping("video")
 	public String video() {
 		return "video";

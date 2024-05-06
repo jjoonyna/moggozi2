@@ -27,7 +27,7 @@ function openDaumPostcode() {
 <body>
 
 	<div class="wrapper">
-		<form method="post" action="/join">
+		<form method="post" action="/joinProc">
 			<h2>회원가입 하세요</h2>
 
 			<div class="input-box">
@@ -41,6 +41,12 @@ function openDaumPostcode() {
 				<div>
 					<input name="username" id="username" class="input_box"
 						placeholder="아이디"  />
+						<i class='bx bx-user-circle' ></i>
+				</div>
+				
+				<div>
+					<input name="usernick" id="usernick" class="input_box"
+						placeholder="닉네임"  />
 						<i class='bx bx-user-circle' ></i>
 				</div>
 

@@ -8,13 +8,13 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.choongang.moggozi2.entity.AdminNotice;
 import com.choongang.moggozi2.entity.ReplyNotice;
 import com.choongang.moggozi2.repository.AdminNoticeRepository;
 import com.choongang.moggozi2.repository.ReplyNoticeRepository;
-
 
 @Service
 @Transactional

@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -16,12 +17,13 @@ public class SecurityConfig {
 
 	    return new BCryptPasswordEncoder();
 	}
+	
     
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeRequests((auth) -> auth
-                .antMatchers("/**", "/login", "/main", "/join", "/joinProc","/loginAdmin","/signup").permitAll()
+                .antMatchers("/", "/login", "/main", "/join", "/joinProc","/loginAdmin","/signup","/snslogin","/google_login","/google_login-callback","/naver_login","/naver_login-callback","/kakao_login","/kakao_login-callback").permitAll()
                 .antMatchers("/css/**","/js/**","/images/**","/icon/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/my/**").hasAnyRole("ADMIN", "USER")
@@ -32,9 +34,14 @@ public class SecurityConfig {
             .formLogin((auth) -> auth
                 .loginPage("/login")
                 .loginProcessingUrl("/loginProc")
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/main", true)
                 .permitAll()
             );
+        http
+        	.logout((logout) -> logout
+                .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true));
         http
             .csrf((auth) -> auth
                 .disable()

@@ -1,7 +1,6 @@
 package com.choongang.moggozi2.service;
 
 
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,8 +65,7 @@ public class KakaoService {
        return new RedirectView(uri);
 	}	
 	
-	public RedirectView loginCallback(String code) throws Exception {	
-		//토큰 가져오기
+	public RedirectView loginCallback(String code) {	
 		String param = "grant_type=authorization_code&client_id="+REST_API_KEY+"&redirect_uri="+REDIRECT_URI+"&client_secret="+CLIENT_SECRET+"&code="+code;
 		String rtn = httpCallService.Call(Const.POST, TOKEN_URI, Const.EMPTY, param);
         httpSession.setAttribute("token", Trans.token(rtn, new JsonParser()));  
@@ -95,8 +93,6 @@ public class KakaoService {
 		
 		return new RedirectView("/main");
 	}
-	
-	
 	
 	
 	public String logout() {	
