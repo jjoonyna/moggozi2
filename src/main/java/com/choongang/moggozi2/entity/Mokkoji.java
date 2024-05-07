@@ -1,17 +1,17 @@
 package com.choongang.moggozi2.entity;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,9 +27,9 @@ public class Mokkoji {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer mokkojiNo;
     
-	@ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "usernick", referencedColumnName = "usernick")
-    private User usernick;
+    @Column(name = "usernick")
+	private String usernick;
+	
     
     @Column(name = "mokkojiTitle")
     private String mokkojiTitle;
@@ -44,7 +44,7 @@ public class Mokkoji {
     @Column(name = "mokkojiCategory")
     private String mokkojiCategory;
     
-    public Mokkoji(User usernick, String mokkojiTitle, Integer mokkojiPerson,
+    public Mokkoji(String usernick, String mokkojiTitle, Integer mokkojiPerson,
                  String mokkojiIntro, String mokkojiImages, String mokkojiCategory) {
         this.usernick = usernick;
         this.mokkojiTitle = mokkojiTitle;
@@ -53,6 +53,7 @@ public class Mokkoji {
         this.mokkojiImages = mokkojiImages;
         this.mokkojiCategory = mokkojiCategory;
     }
-
+    
+ 
 
 }
