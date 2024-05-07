@@ -27,3 +27,12 @@ body .container nav section .cards .navClass tbody tr td a:hover {text-decoratio
 body .container nav section .cards .navClass tbody tr td a .boardRe {color: #FA5857; font-size: 12px; font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;}
 body .container nav section .cards .navClass tbody .listArea td span .hot {width: 45px; margin: 0 -15px -8px 0;}
 body .container nav section .cards .navClass tbody .listArea td .subject .clip {width: 15px; margin-top: 10px;}
+
+
+
+.sub-title{
+    font-size: 50px;
+    margin-right: auto;
+    margin-top: 6.5%;
+    margin-left: 5%;
+}
