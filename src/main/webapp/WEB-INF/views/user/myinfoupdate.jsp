@@ -33,7 +33,7 @@
 	    	<div class="login-wrapper">
 			            <h2 class="login-text">회원 정보</h2>
 			            <p>어서오세요! ${usernick}님 ☆ﾐ(o*･ω･)ﾉ</p>
-			            <a href="#" onclick="return checkCurrentPage()">마이페이지</a>
+			            <a href="mypage">마이페이지</a>
 			            <a href="logout">로그아웃</a>
 			</div>
 
@@ -48,7 +48,7 @@
                             <div class="dropdown">
                                 <a class="hover-color">마이페이지</a>
                                 <div class="dropdown-content" id="myDropdown">
-                                    <a href="myinfoupdate?usernick=${usernick}">내 정보 수정</a>
+                                    <a href="#" onclick="return checkCurrentPage()">내 정보 수정</a>
                                     <a href="mypwdchange?usernick=${usernick}">비밀번호 변경</a>
                                     <a href="mydelete?usernick=${usernick}">회원 탈퇴</a>
                                     <!-- 사이드바 줄 -->
@@ -96,7 +96,8 @@
 				
 				
 				<div class="mypage-mymoim">
-				<h3>내 정보</h3>
+				<h3>내 정보 수정</h3>
+					<form method="post" action="/infoUpdate">
 						<br>ID<input type="text" name="username" value="${ username}" readonly="readonly">
 						<br>닉네임<input type="text" name="usernick" value="${usernick }" readonly="readonly">
 						<br>PW<input type="password" name="password">
@@ -104,8 +105,11 @@
 						<br>출생년도<input type="text" name="useryear" value="${useryear }">
 						<br>이메일<input type="text" name="useremail" value="${useremail }">
 						<br>우편번호<input type="text" id="userzip" name="userzip" value="${userzip }">
+						<input type="button" value="우편번호검색" onclick="openDaumPostcode()" >
 						<br>주소<input type="text" name="useraddress1" value="${useraddress1 }" readonly onclick="post_search()" id="useraddress1" >
 						<br>상세주소<input type="text" name="useraddress2" value="${useraddress2 }" >
+					<input type="submit" value="수정">
+					</form>
 					
 					
 				</div>

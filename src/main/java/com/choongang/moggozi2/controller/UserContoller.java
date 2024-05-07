@@ -217,6 +217,38 @@ public class UserContoller {
         return "user/mypage";
     }
     
+    //정보수정 페이지 이동
+    @GetMapping("/myinfoupdate")
+    public String myinfoupdate(Authentication auth, Model model) {
+    	String username = null;
+ 	    String usernick = null;
+ 	    String role = null;
+ 	    
+ 	    if (auth != null) {
+ 	        username = auth.getName();
+ 	        role = auth.getAuthorities().stream().findFirst().orElse(null).getAuthority();
+ 	        
+ 	        // usernick 가져오기
+ 	        if (auth.getPrincipal() instanceof CustomUserDetails) {
+ 	            usernick = ((CustomUserDetails) auth.getPrincipal()).getUsernick();
+ 	        }}
+ 	  User user = service.findById(username);
+ 	    
+ 	  model.addAttribute("username", username);
+      model.addAttribute("usernick", usernick);
+      model.addAttribute("userph", user.getUserph());
+      model.addAttribute("userzip", user.getUserzip());
+      model.addAttribute("useryear", user.getUseryear());
+      model.addAttribute("useraddress1", user.getUseraddress1());
+      model.addAttribute("useraddress2", user.getUseraddress2());
+      model.addAttribute("useremail", user.getUseremail());
+      model.addAttribute("usergender", user.getUsergender());
+      
+
+ 	   return "user/myinfoupdate";
+    }
+    
+    
     //정보수정
     @PostMapping("/infoUpdate")
     public String myinfoupdate(Authentication auth, User user) {
@@ -595,10 +627,6 @@ public class UserContoller {
 	 	    // noticeDetail 템플릿으로 이동합니다.
 	 	    return "user/noticeUserDetail";
 	 	}
-
-
-
-
 
 }
 
