@@ -24,7 +24,7 @@ public class SecurityConfig {
         http
             .authorizeRequests((auth) -> auth
                 .antMatchers("/", "/login", "/main", "/join", "/joinProc","/loginAdmin","/signup","/snslogin","/google_login","/google_login-callback","/naver_login","/naver_login-callback","/kakao_login","/kakao_login-callback").permitAll()
-                .antMatchers("/css/**","/js/**","/images/**","/icon/**").permitAll()
+                .antMatchers("/css/**","/js/**","/images/**","/icons/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/my/**").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated()

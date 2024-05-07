@@ -94,25 +94,19 @@
 			<!-- 내 정보 -->
 			<div class="mypage">
 				<div class="mypage-btn">
-					<button class="myinfo-btn" onClick="myinfo()" style="background-color: #3EFA97" >내 정보 수정</button>
-					<button class="mymoim-btn" onClick="mypwdchange()">비밀번호 변경</button>
-					<button class="myboard-btn" onClick="mydelete()">회원탈퇴</button>
+					<button class="myinfo-btn" onClick="myinfo()"  >내 정보 수정</button>
+					<button class="mymoim-btn" onClick="mypwdchange()" >비밀번호 변경</button>
+					<button class="myboard-btn" onClick="mydelete()" style="background-color: #3EFA97">회원탈퇴</button>
 				</div>
 				
 				<div class="mypage-mymoim">
 				<h3>내 정보 수정</h3>
-					<form method="post" action="/infoUpdate">
+					<form method="post" action="/deleteok">
 						<br>ID<input type="text" name="username" value="${ username}" readonly="readonly">
 						<br>닉네임<input type="text" name="usernick" value="${usernick }" readonly="readonly">
-						<br>PW<input type="password" name="password">
-						<br>전화번호<input type="text" name="userph" value="${userph }">
-						<br>출생년도<input type="text" name="useryear" value="${useryear }">
-						<br>이메일<input type="text" name="useremail" value="${useremail }">
-						<br>우편번호<input type="text" id="userzip" name="userzip" value="${userzip }">
-						<input type="button" value="우편번호검색" onclick="openDaumPostcode()" >
-						<br>주소<input type="text" name="useraddress1" value="${useraddress1 }" readonly onclick="post_search()" id="useraddress1" >
-						<br>상세주소<input type="text" name="useraddress2" value="${useraddress2 }" >
-					<input type="submit" value="수정">
+						<br>비밀번호<input type="password" name="password">
+
+					<input type="submit" value="탈퇴">
 					</form>
 					
 					

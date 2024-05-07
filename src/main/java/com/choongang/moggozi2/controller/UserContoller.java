@@ -20,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -194,7 +195,7 @@ public class UserContoller {
     
     
     
-
+    //정보수정 페이지 이동
     @GetMapping("/mypage")
     public String mypageP(Authentication auth, Model model) {
         
@@ -210,20 +211,152 @@ public class UserContoller {
  	        if (auth.getPrincipal() instanceof CustomUserDetails) {
  	            usernick = ((CustomUserDetails) auth.getPrincipal()).getUsernick();
  	        }}
-
-
+ 	    
+ 	   User user = service.findById(username);
         // 뷰로 사용자 이름과 usernick 전달
         model.addAttribute("username", username);
         model.addAttribute("usernick", usernick);
+        model.addAttribute("userph", user.getUserph());
+        model.addAttribute("userzip", user.getUserzip());
+        model.addAttribute("useryear", user.getUseryear());
+        model.addAttribute("useraddress1", user.getUseraddress1());
+        model.addAttribute("useraddress2", user.getUseraddress2());
+        model.addAttribute("useremail", user.getUseremail());
+        model.addAttribute("usergender", user.getUsergender());
+        
         model.addAttribute("role", role);
 
 
         return "user/mypage";
     }
-
-
+    
+    //정보수정
+    @PostMapping("/infoUpdate")
+    public String myinfoupdate(Authentication auth, User user) {
+    	String username = null;
+ 	    String usernick = null;
+ 	    String role = null;
+ 	    
+ 	    if (auth != null) {
+ 	        username = auth.getName();
+ 	        role = auth.getAuthorities().stream().findFirst().orElse(null).getAuthority();
+ 	        
+ 	        // usernick 가져오기
+ 	        if (auth.getPrincipal() instanceof CustomUserDetails) {
+ 	            usernick = ((CustomUserDetails) auth.getPrincipal()).getUsernick();
+ 	        }}
+ 	    User db = service.findById(user.getUsername());
+ 	    if(bCryptPasswordEncoder.matches(user.getPassword(), db.getPassword())) {
+ 	    	user.setRole(role);
+ 	    	user.setPassword(db.getPassword());
+ 	    	user.setUsergender(db.getUsergender());
+ 	    	service.update(user);
+ 	    	return "redirect:mypage";
+ 	    }
+ 	    else {
+ 	    	return "redirect:mypage";
+ 	    }
+    }
+    
+    //비번변경 페이지 이동
+    @GetMapping("/mypwdchange")
+    public String mypwdchange(Authentication auth, Model model) {
+    	String username = null;
+ 	    String usernick = null;
+ 	    String role = null;
+ 	    
+ 	    if (auth != null) {
+ 	        username = auth.getName();
+ 	        role = auth.getAuthorities().stream().findFirst().orElse(null).getAuthority();
+ 	        
+ 	        // usernick 가져오기
+ 	        if (auth.getPrincipal() instanceof CustomUserDetails) {
+ 	            usernick = ((CustomUserDetails) auth.getPrincipal()).getUsernick();
+ 	        }}
+ 	  model.addAttribute("username", username);
+      model.addAttribute("usernick", usernick);
+ 	   return "user/mypwdchange";
+    }
+    
+    //비번변경
+    @PostMapping("/pwdchange")
+    public String pwdchange(Authentication auth, User user,@RequestParam("newpassword") String newpwd) {
+    	String username = null;
+ 	    String usernick = null;
+ 	    String role = null;
+ 	    
+ 	    if (auth != null) {
+ 	        username = auth.getName();
+ 	        role = auth.getAuthorities().stream().findFirst().orElse(null).getAuthority();
+ 	        
+ 	        // usernick 가져오기
+ 	        if (auth.getPrincipal() instanceof CustomUserDetails) {
+ 	            usernick = ((CustomUserDetails) auth.getPrincipal()).getUsernick();
+ 	        }}
+ 	    User db = service.findById(user.getUsername());
+ 	    if(bCryptPasswordEncoder.matches(user.getPassword(), db.getPassword())) {
+ 	    	String pwd = bCryptPasswordEncoder.encode(newpwd);
+ 	    	user.setPassword(pwd);
+ 	    	user.setRole(role);
+ 	    	user.setUserzip(db.getUserzip());
+ 	    	user.setUseraddress1(db.getUseraddress1());
+ 	    	user.setUseraddress2(db.getUseraddress2());
+ 	    	user.setUseremail(db.getUseremail());
+ 	    	user.setUsergender(db.getUsergender());
+ 	    	user.setUserph(db.getUserph());
+ 	    	user.setUseryear(db.getUseryear());
+ 	    	service.update(user);
+ 	    }
+ 	   
+    	return "redirect:main";
+    }
     
     
+    //회원탈퇴 페이지 이동
+    @GetMapping("/mydelete")
+    public String mydelete(Authentication auth, Model model) {
+    	String username = null;
+ 	    String usernick = null;
+ 	    String role = null;
+ 	    
+ 	    if (auth != null) {
+ 	        username = auth.getName();
+ 	        role = auth.getAuthorities().stream().findFirst().orElse(null).getAuthority();
+ 	        
+ 	        // usernick 가져오기
+ 	        if (auth.getPrincipal() instanceof CustomUserDetails) {
+ 	            usernick = ((CustomUserDetails) auth.getPrincipal()).getUsernick();
+ 	        }}
+ 	  model.addAttribute("username", username);
+      model.addAttribute("usernick", usernick);
+ 	   return "user/mydelete";
+    }
+    
+    //회원 탈퇴
+    @PostMapping("deleteok")
+    public String deleteok(Authentication auth, User user) {
+    	String username = null;
+ 	    String usernick = null;
+ 	    String role = null;
+ 	    
+ 	    if (auth != null) {
+ 	        username = auth.getName();
+ 	        role = auth.getAuthorities().stream().findFirst().orElse(null).getAuthority();
+ 	        
+ 	        // usernick 가져오기
+ 	        if (auth.getPrincipal() instanceof CustomUserDetails) {
+ 	            usernick = ((CustomUserDetails) auth.getPrincipal()).getUsernick();
+ 	        }}
+ 	    User db = service.findById(user.getUsername());
+ 	    if(bCryptPasswordEncoder.matches(user.getPassword(), db.getPassword())) {
+ 	    	service.delete(user.getUsername());
+ 	    }
+    	return "main";
+    }
+    
+    
+    
+
     ///////////////////////////////////////////////
     ///////////////////////////////////////////////
     ///////////////////////////////////////////////

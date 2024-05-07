@@ -1,6 +1,6 @@
 package com.choongang.moggozi2.service;
 
-import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,6 +12,7 @@ import com.choongang.moggozi2.repository.UserRepository;
 
 @Service
 public class UserService {
+	
 	
 	@Autowired
 	private UserRepository userrepository;
@@ -65,5 +66,18 @@ public class UserService {
 		
 		userrepository.save(data);
 	}
+	public User findById(String username) {
+		return userrepository.findByUsername(username);
+	}
+	
+	
+	public void update(User user) {
+		userrepository.save(user);
+	}
+	public void delete(String username) {
+		userrepository.deleteById(username);
+	}
+	
+	
 }
 	
