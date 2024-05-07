@@ -9,7 +9,7 @@
     <jsp:include page="/resources/header.jsp" />
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/mocozi.css">
-    <link rel="stylesheet" type="text/css" href="../css/login.css">
+    <link rel="stylesheet" type="text/css" href="../css/boardlist.css">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>모꼬지</title>
@@ -83,50 +83,85 @@
             
             </aside>
             
-            <nav>
+	        <nav>
+                <h1 class="sub-title">내 문의 내역</h1>
+                <!-- 일반 게시판 목록 -->
                 <section>
-                    <!-- 게시판 목록 -->
-                     <h2 style="margin-right: auto; font-size: 30px;">1:1문의 내역</h2>
                     <div class="cards">
-                           <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>번호</th>
-                                            <th>제목</th>
-                                            <th>작성자</th>
-                                            <th>날짜</th>
-                                            <th>상태</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- 공지사항 목록을 반복해서 출력합니다 -->
-                                        <c:forEach items="${askList}" var="notice">
-                                            <tr>
-                                                <td><c:out value="${notice.notiNo}" /></td>
-												<td><a href="myqnaDetail?id=${notice.notiNo}&notiNo=${notice.notiNo}"><c:out value="${notice.notiTitle}" /></a></td>
-                                                <td><c:out value="${notice.usernick}" /></td>
-                                                <td><fmt:formatDate value="${notice.notiDate}" pattern="yyyy.MM.dd HH:mm" /></td>
-                                                <td><c:out value="${notice.notiAt}" /></td>
-                                            </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- Pagination -->
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <c:forEach begin="1" end="${totalPages}" var="i">
-                                        <li class="page-item ${currentPage == i ? 'active' : ''}">
-                                            <a class="page-link" href="/myqnaList?page=${i-1}">${i}</a>
-                                        </li>
-                                    </c:forEach>
-                                </ul>
-                            </nav>
-                    </div>
-    
-            </section>
-        </nav>
+                        <table class="navClass">
+                            <tr class="navClasses">
+                            	<td>문의번호</td>
+                                <td>제목</td>
+                                <td>작성자</td>
+                                <td>작성일</td>
+                                <td>상태</td>
+                            </tr>
+        
+                            <c:if test="${empty askList}">
+                                <tr>
+                                    <td colspan="5">데이터가 없을꼬지</td>
+                                </tr>
+                            </c:if>
+        
+                            <c:if test="${not empty askList}">
+                                <c:forEach items="${askList}" var="notice">
+                                    <tr class="listArea">
+                                        <td>${notice.notiNo}</td>
+                                        <td><a href="myqnaDetail?id=${notice.notiNo}&notiNo=${notice.notiNo}" class="subject">${notice.notiTitle}</a></td>
+                                        <td>${notice.usernick}</td>
+                                        <td><fmt:formatDate value="${notice.notiDate}" pattern="yyyy.MM.dd HH:mm" /></td>
+                                        <td>${notice.notiAt}</td>
+                                    </tr>
+                                </c:forEach>
+                            </c:if>
+                        </table>
+                        <br><br><br>
+						
+						<div class="page_container">
+						    <div class="page_btn">
+						        <div class="page_wrap">
+						            <div class="page_nation">
+						                <!-- 페이지가 1페이지를 초과하는 경우에만 '이전' 링크를 표시합니다. -->
+						                <c:if test="${currentPage > 1}">
+						                    <a class="arrow prev" href="#" onclick="prevPage()"></a>
+						                </c:if>
+						                
+						                <!-- 페이지 번호 링크를 출력합니다. -->
+						                <c:forEach begin="1" end="${totalPages}" var="pageNumber">
+						                    <a class="page-link" href="noticeUserList?pageNum=${pageNumber}">${pageNumber}</a>
+						                </c:forEach>
+						                
+						                <!-- 페이지가 총 페이지 수를 초과하지 않는 경우에만 '다음' 링크를 표시합니다. -->
+						                <c:if test="${currentPage < totalPages}">
+						                    <a class="arrow next" href="#" onclick="nextPage()"></a>
+						                </c:if>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+						
+						<script>
+						    function prevPage() {
+						        var prevPageNumber = ${currentPage - 1};
+						        window.location.href = "noticeUserList?pageNum=" + prevPageNumber;
+						    }
+						    
+						    function nextPage() {
+						        var nextPageNumber = ${currentPage + 1};
+						        window.location.href = "noticeUserList?pageNum=" + nextPageNumber;
+						    }
+						
+						    // 페이지 번호를 클릭할 때 해당 페이지로 이동하는 함수
+						    document.querySelectorAll('.page-link').forEach(item => {
+						        item.addEventListener('click', event => {
+						            event.preventDefault(); // 기본 이벤트 동작을 중지
+						            var pageNumber = item.textContent; // 클릭한 페이지 번호 가져오기
+						            window.location.href = "noticeUserList?pageNum=" + pageNumber; // 페이지 이동
+						        });
+						    });
+						</script>
+			                </nav>
+			                </div></section>
         </div>
     </main>
     
