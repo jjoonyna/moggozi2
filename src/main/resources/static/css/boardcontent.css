@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+
+/* main font */
+@font-face {font-family: 'GangwonEduHyeonokT_OTFMediumA'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduHyeonokT_OTFMediumA.woff') format('woff'); font-weight: normal; font-style: normal;}
+/* sub font */
+@font-face {font-family: 'TTLaundryGothicB'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2403-2@1.0/TTLaundryGothicB.woff2') format('woff2'); font-weight: 700; font-style: normal;}
+
+/* boardlist */
+body .wrap .gnb-wrap .gnb .logo > a img {width: 600px;}
+body .container nav section {font-family: 'TTLaundryGothicB'; font-size: 15px;}
+body .container nav section .cards .pagination {margin: 20px;}
+body .container nav section .cards .navClass {margin-bottom: 40px;}
+body .container nav section .cards .btn {display: flex; text-align: center; justify-content: center; margin-top: -30px; margin-bottom: 40px;}
+body main section .cards .btn .updateBtn {font-family: 'TTLaundryGothicB'; font-size: 15px; color: #000000; background-color: #F3D400; width: 90px; height: 35px; box-shadow: 4px 4px 0px #FA5857; border-radius: 0px; display: flex; text-decoration: none; align-items: center; justify-content: center; transition: background-color 0.2s, transform 0.2s; cursor: default; margin-right: 15px;}
+body main section .cards .btn .delBtn {font-family: 'TTLaundryGothicB'; font-size: 15px; color: #000000; background-color: #F3D400; width: 90px; height: 35px; box-shadow: 4px 4px 0px #FA5857; border-radius: 0px; display: flex; text-decoration: none; align-items: center; justify-content: center; transition: background-color 0.2s, transform 0.2s; cursor: default; margin-right: 15px;}
+body main section .cards .btn .listBtn {font-family: 'TTLaundryGothicB'; font-size: 15px; color: #000000; background-color: #F3D400; width: 90px; height: 35px; box-shadow: 4px 4px 0px #FA5857; border-radius: 0px; display: flex; text-decoration: none; align-items: center; justify-content: center; transition: background-color 0.2s, transform 0.2s; cursor: default;}
+body main section .cards .btn .updateBtn:hover {background-color: #F3D400; box-shadow: 4px 4px 0px #FA5857; transform: translateY(4px) rotate(10deg);}
+body main section .cards .btn .delBtn:hover {background-color: #F3D400; box-shadow: 4px 4px 0px #FA5857; transform: translateY(4px) rotate(10deg);}
+body main section .cards .btn .listBtn:hover {background-color: #F3D400; box-shadow: 4px 4px 0px #FA5857; transform: translateY(4px) rotate(10deg);}
+body .container nav section .cards {display: flex; flex-direction: column; text-align: -webkit-right;}
+body .container nav section .cards table {margin: auto;}
+body .container nav section .cards .cards_category {font-size: 20px; text-align: center; margin: 15px 0; color: #FA5857;}
+body .container nav section .cards .cards_subject {font-size: 30px; text-align: center; color: #F3D400;}
+body .container nav section .cards .navClass tbody .classLeft .noLonger {word-wrap: break-word;}
+body .container nav section .cards .navClass tbody .classLeft .spanNicks {padding: 15px 0 5px 0;}
+body .container nav section .cards .navClass tbody .classLeft .spanNicks .spanNick1 {position: relative; right: -10px;}
+body .container nav section .cards .navClass tbody .classLeft .spanNicks .spanNick2 {position: relative; right: -307px;}
+body .container nav section .cards .navClass tbody .classLeft .spanNicks .spanNick3 {position: relative; right: -321px;}
+body .container nav section .cards .navClass tbody .classLeft .spanNicks .spanNick4 {position: relative; right: -333px;}
+body .container nav section .cards .navClass .taContent textarea {font-family: 'TTLaundryGothicB'; font-size: 15px; color: WHEAT; width: 800px; min-height: 305px; padding: 7px; box-sizing: border-box; border-radius: 6px; background-color: #000000; border: 0.5px solid #ccc; resize: vertical; overflow-y: auto; margin: 4px 0 8px 2px;}
+
+
+
+
+
+
+
