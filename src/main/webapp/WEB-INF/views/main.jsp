@@ -22,34 +22,30 @@
 		</div>
 		
 		<div class="container">
-			<!-- 로그인 창 -->
+	    	<!-- 로그인 창 -->
 			<aside>
 			    <c:choose>
 			        <c:when test="${!empty usernick}">
 	    	<div class="login-wrapper">
 			            <h2 class="login-text">로그인 상태</h2>
-			            <p>로그인한 사용자: ${usernick}</p>
+			            <p>어서오세요! ${usernick}님 ☆ﾐ(o*･ω･)ﾉ</p>
 			            <a href="mypage">마이페이지</a>
 			            <a href="logout">로그아웃</a>
 			</div>
 			        </c:when>
 			        <c:otherwise>
 	    	<div class="login-wrapper">
-			            <h2 class="login-text">로그인</h2>
+	    				<div class="login-menu">
+			            <h2 class="login-text">(っ˘▿˘)(˘▿˘)˘▿˘ς)</h2><br><br><br>
 			            
-			            <form action="/loginProc" method="post" name="loginForm" style="margin-left: 5%;">
-			                <input type="text" class="text-write" name="username" placeholder="아이디">
-			                <input type="password" class="text-write" style="margin-top: 20px;" name="password" placeholder="비밀번호">
-			                <input class="login-btn hover-color" style="margin: -15% 0 0 5%;" type="submit" value="로그인">
-			            </form>
-			            <label for="login-menu" class="login-menu">
-			                <a href="#" class="hover-color textsmall">아이디</a> <div style="font-size: 13px;"> / </div> 
-			                <a href="#" class="hover-color textsmall">비밀번호 찾기</a> <div style="font-size: 13px;"> / </div> 
-			                <a href="signup" class="hover-color textsmall">회원가입</a>
-			            </label>
+			           <label for="login-menu" >
+						    <a href="signup" class="login-btn hover-color">로그인하러 가기!</a>
+						</label>
+						</div>
 			</div>
 			        </c:otherwise>
 			    </c:choose>
+
 
 		
 		
@@ -61,20 +57,20 @@
                             <div class="dropdown">
                                 <a class="hover-color">마이페이지</a>
                                 <div class="dropdown-content" id="myDropdown">
-                                    <a href="mypage">내 정보 수정</a>
-                                    <a href="#">비밀번호 변경</a>
-                                    <a href="#">회원 탈퇴</a>
+                                    <a href="#" onclick="return preparingPage()">내 정보 수정</a>
+                                    <a href="#" onclick="return preparingPage()">비밀번호 변경</a>
+                                    <a href="#" onclick="return preparingPage()">회원 탈퇴</a>
                                     <!-- 사이드바 줄 -->
                                     <hr class="sidebar-divider">
-                                    <a href="#">모임 목록</a>
-                                    <a href="myqnaList">문의 내역</a>
+                                    <a href="#" onclick="return preparingPage()">모임 목록</a>
+                                    <a href="myqnaList?usernick=${usernick}">문의 내역</a>
                                 </div>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <a href="#" class="hover-color">모일꼬지?</a>
+                            <a href="#" onclick="return preparingPage()" class="hover-color">모일꼬지?</a>
                         </td>
                     </tr>
                     <tr>
@@ -82,12 +78,12 @@
                             <div class="dropdown">
                                 <a class="hover-color">알림마당</a>
                                 <div class="dropdown-content" id="myDropdown">
-                                    <a href="noticeUserList">공지사항</a>
-                                    <a href="askWrite">1:1 문의</a>
+                                    <a href="noticeUserList?usernick=${usernick}">공지사항</a>
+                                    <a href="askWrite?usernick=${usernick}">1:1 문의</a>
                                     <!-- 사이드바 줄 -->
                                     <hr class="sidebar-divider">
-                                    <a href="#">모임후기</a>
-                                    <a href="#">커뮤니티</a>
+                                    <a href="#" onclick="return preparingPage()">모임후기</a>
+                                    <a href="#" onclick="return preparingPage()">커뮤니티</a>
                                 </div>
                             </div>
                         </td>
@@ -108,7 +104,7 @@
 	        <nav>
 			<!-- 검색 폼 -->
 	        <form method="get" action="/search">
-			    <input type="text" name="keyword" class="select" id="keyword" value="${keyword }" placeholder="검색어를 입력하세요">
+			    <input type="text" name="keyword" class="keyword" id="keyword" value="${keyword }" placeholder="검색어를 입력하세요">
 			    <select class="category" id="category" name="category" onchange="search()">
 			        <option value=""	<c:if test="${category==''}">selected="selected" </c:if>>카테고리선택</option>
 					<option value="운동"	<c:if test="${category=='운동'}">selected="selected" </c:if>>운동</option>

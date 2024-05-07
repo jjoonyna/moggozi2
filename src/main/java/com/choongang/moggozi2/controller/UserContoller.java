@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -56,38 +57,28 @@ public class UserContoller {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @GetMapping("/signup")
+	
+	/*
+	 * 로그인&회원가입 폼
+	 */
+    @GetMapping("signup")
     public String signupP() {
-        return "signup";
+        return "user/signup";
     }
     
-    // 회원 가입 및 로그인 페이지 
- 	@GetMapping("/mkjsignup")
- 	public String loginNsignup(){
-     	
-     	System.out.println("ㅁ회원가입 컨트롤러 입장!!ㅁ ");
- 		return "mkjsignup"; // 회원가입 페이지의 뷰 이름
- 	}
 
     @PostMapping("/joinProc")
     public String joinProcess(User user) {
         System.out.println(user.getUsername());
         service.newuserjoin(user);
-
-        return "redirect:mypage";
+        
+        return "redirect:main";
     }
 
-    /*
-     * 로그인 페이지 
-     */
-//    @GetMapping("/")
-//    public String loginPage() {
-//    	return "main"; 
-//    }  
     
     
     /*
-     * 로그인 페이지 
+     * 메인 페이지 
      */
     @GetMapping("/")
     public String loginPage(Model model,
@@ -95,6 +86,7 @@ public class UserContoller {
         if (page < 0) {
             page = 0; // 음수인 경우 기본값 0으로 설정
         }
+        
 
         int pageSize = 9; // 페이지 크기 설정
         
@@ -110,11 +102,14 @@ public class UserContoller {
  	        if (auth.getPrincipal() instanceof CustomUserDetails) {
  	            usernick = ((CustomUserDetails) auth.getPrincipal()).getUsernick();
  	        }}
-       
+
+        System.out.println(username);
+ 	    System.out.println(usernick);
+ 	    System.out.println(role);
         
         // 목록을 불러오는 로직
         Page<Mokkoji> mokkojiPage = mokkojiService.findAllMokkoji(PageRequest.of(page, pageSize));
-//        model.addAttribute("usernick", usernick);
+        model.addAttribute("usernick", usernick);
         model.addAttribute("mokkojiList", mokkojiPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", mokkojiPage.getTotalPages());
@@ -131,34 +126,37 @@ public class UserContoller {
     public String mainPage(Model model,
                            @RequestParam(name = "keyword", required = false) String keyword,
                            @RequestParam(name = "category", required = false) String category,
-                           @RequestParam(name = "page", defaultValue = "0") int page) {
+                           @RequestParam(name = "page", defaultValue = "0") int page,
+                           Authentication authentication) {
 
-        // 로그인 정보 확인
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        Iterator<? extends GrantedAuthority> iter = authorities.iterator();
-        GrantedAuthority auth = iter.next();
-        String role = auth.getAuthority();
-        
-        // 사용자의 닉네임 가져오기
+        String username = null;
         String usernick = null;
-        if (authentication.getPrincipal() instanceof UserDetails) {
-            usernick = ((CustomUserDetails) authentication.getPrincipal()).getUsernick();
+        String role = null;
+
+        if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
+            username = authentication.getName();
+            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+            if (!authorities.isEmpty()) {
+                GrantedAuthority auth = authorities.iterator().next();
+                role = auth.getAuthority();
+            }
+
+            // 사용자의 닉네임 가져오기
+            if (authentication.getPrincipal() instanceof UserDetails) {
+                usernick = ((CustomUserDetails) authentication.getPrincipal()).getUsernick();
+            }
         }
 
-        // 관리자 여부 확인
-        if (role.equals("ADMIN")) {
+        if (role != null && role.equals("ADMIN")) {
             // 관리자 페이지로 이동
             model.addAttribute("username", username);
             model.addAttribute("role", role);
             model.addAttribute("usernick", usernick);
-            
+
             System.out.println(username);
-	 	    System.out.println(usernick);
-	 	    System.out.println(role);
-            
-            
+            System.out.println(usernick);
+            System.out.println(role);
+
             return "admin/mainAdmin";
         } else {
             // 사용자 페이지 로직 수행
@@ -168,14 +166,12 @@ public class UserContoller {
             if (page < 0) {
                 page = 0;
             }
-            
+
             // 목록을 불러오는 로직
             Page<Mokkoji> mokkojiPage = mokkojiService.findAllMokkoji(PageRequest.of(page, pageSize));
-//            model.addAttribute("usernick", usernick);
             model.addAttribute("mokkojiList", mokkojiPage.getContent());
             model.addAttribute("currentPage", page);
             model.addAttribute("totalPages", mokkojiPage.getTotalPages());
-
 
             // 사용자 페이지로 이동
             model.addAttribute("username", username);
@@ -185,15 +181,6 @@ public class UserContoller {
         }
     }
 
-
-    
-    
-    
-    
-    
-    
-    
-    
 
     @GetMapping("/mypage")
     public String mypageP(Authentication auth, Model model) {

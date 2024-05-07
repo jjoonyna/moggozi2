@@ -52,7 +52,9 @@ header .wrap .logo a img {
     border: 0.5px solid #ccc;
     border-radius: 5px;
 }
-
+.login-wrapper{
+	  text-align: center;
+}
 .login-btn{
 	background-color: black;
     border: 0.5px solid #ccc;
@@ -85,6 +87,9 @@ header .wrap .logo a img {
 .container {
     display: flex;
     gap: 40px;
+}
+.login-menu {
+	margin: 15%;
 }
 
 aside {
