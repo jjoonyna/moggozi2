@@ -1,7 +1,6 @@
 var version = 1.2;
 var server = null;
 server = "https://janus.jsflux.co.kr/janus"; //jsflux janus server url
-
 var janus = null;
 var sfutest = null;
 var opaqueId = "videoroomtest-"+Janus.randomString(12);
@@ -323,30 +322,58 @@ function checkEnter(field, event) {
 }
 
 
-// 방 만들기 폼에서 닉네임과 방 이름 가져오기
-var userNicknameInput = document.getElementById("user_nickname");
-var roomNameInput = document.getElementById("mokkoji_title_input");
+////참가하기 클릭 후 비디오로 이동
+//
+//
+function join(n, roomname, nickname) {
+/*    alert(n);
+    alert(roomname);
+    alert(nickname);*/
+    
+    // 리디렉션
+    window.location.href = "http://localhost/video?mokkoji=" + encodeURIComponent(n)+
+                           "&roomname=" + encodeURIComponent(roomname)+
+                           "&nickname=" + encodeURIComponent(nickname);
+}
+
+//// 참가하기 버튼에 클릭 이벤트 핸들러 추가
+//document.getElementById("joinButton").addEventListener("click", function() {
+//    var n = "someValue"; // 필요한 값으로 변경 가능
+//    
+//    // var roomname = document.getElementById("roomname").value; // 방 이름 가져오기
+//    // var nickname = document.getElementById("username").value; // 닉네임 가져오기
+//    
+//    var roomname = document.getElementById("mokkoji_title_input").value;
+//    var nickname = document.getElementById("user_nickname").value;
+//    
+//    join(n, roomname, nickname); // join 함수 호출
+//});
+
+
+/*// 방 만들기 폼에서 닉네임과 방 이름 가져오기
+var userNicknameInput = document.getElementById("usernick");
+var roomNameInput = document.getElementById("mokkojiTitle");
 
 // 모임 시작 부분에서 닉네임과 방 이름 가져오기
 var joinNicknameInput = document.getElementById("username");
-var joinRoomNameInput = document.getElementById("roomname");
+var joinRoomNameInput = document.getElementById("roomname");*/
 
+ 
 
 
 // [jsflux] 방생성 및 조인
 function registerUsername() {
-
    if($('#roomname').length === 0) {
       // Create fields to register
         $('#register').click(registerUsername);
       $('#roomname').focus();
-    } else if($('#username').length === 0) {
+    } else if($('#usernick').length === 0) {
       // Create fields to register
       $('#register').click(registerUsername);
-      $('#username').focus();
+      $('#usernick').focus();
    } else {
       // Try a registration
-      $('#username').attr('disabled', true);
+      $('#usernick').attr('disabled', true);
       $('#register').attr('disabled', true).unbind('click');
 
         var roomname = $('#roomname').val();
@@ -367,12 +394,12 @@ function registerUsername() {
          return;
       }
 
-      var username = $('#username').val();
+      var username = $('#usernick').val();
       if(username === "") {
          $('#you')
             .removeClass().addClass('label label-warning')
             .html("채팅방에서 사용할 닉네임을 입력해주세요.");
-         $('#username').removeAttr('disabled');
+         $('#usernick').removeAttr('disabled');
          $('#register').removeAttr('disabled').click(registerUsername);
          return;
       }
@@ -380,7 +407,7 @@ function registerUsername() {
          $('#you')
             .removeClass().addClass('label label-warning')
             .html('닉네임은 영문만 가능합니다.');
-         $('#username').removeAttr('disabled').val("");
+         $('#usernick').removeAttr('disabled').val("");
          $('#register').removeAttr('disabled').click(registerUsername);
          return;
       }
@@ -405,13 +432,13 @@ function registerUsername() {
         sfutest.send({ message: createRoom, success:function(result){
             var event = result["videoroom"]; Janus.debug("Event: " + event);
             if(event != undefined && event != null) {
-                // Our own screen sharing session has been created, join it
+                // Our own screen sharing sessusernameion has been created, join it
                 console.log("Room Create Result: " + result);
                 console.log("error: " + result["error"]);
                 room = result["room"];
                 console.log("Screen sharing session created: " + room);
 
-                var username = $('#username').val(); //myusername = randomString(12);
+                var username = $('#usernick').val(); //myusername = randomString(12);
                 var register = { "request": "join", "room": myroom, "ptype": "publisher", "display": username };
                 myusername = username;
                 sfutest.send({"message": register});

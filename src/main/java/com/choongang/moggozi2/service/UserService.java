@@ -43,7 +43,7 @@ public class UserService {
 	    newUser.setUsergender(user.getUsergender());
 	    newUser.setUsernick(user.getUsernick());
 	    newUser.setRole("USER");
-	    
+    
 	    // 새로운 사용자 저장
 	    userrepository.save(newUser);
 	}

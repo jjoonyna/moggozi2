@@ -13,8 +13,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>모꼬지</title>
 	<jsp:include page="/resources/gnb.jsp" />
-<!-- 	<script src="./js/main.js"></script> -->
-	<script src="./js/videoroomtest.js"></script>
 </head>
 <body>
 	<main>
@@ -24,30 +22,34 @@
 		</div>
 		
 		<div class="container">
-	    	<!-- 로그인 창 -->
+			<!-- 로그인 창 -->
 			<aside>
+	    	<div class="login-wrapper">
 			    <c:choose>
 			        <c:when test="${!empty usernick}">
-	    	<div class="login-wrapper">
 			            <h2 class="login-text">로그인 상태</h2>
 			            <p>어서오세요! ${usernick}님 ☆ﾐ(o*･ω･)ﾉ</p>
-			            <a href="mypage">마이페이지</a>
+			            <a href="mypage?usernick=${usernick}">마이페이지</a>
 			            <a href="logout">로그아웃</a>
-			</div>
 			        </c:when>
 			        <c:otherwise>
-	    	<div class="login-wrapper">
-	    				<div class="login-menu">
-			            <h2 class="login-text">(っ˘▿˘)(˘▿˘)˘▿˘ς)</h2><br><br><br>
+			        	<div class="table-container">
+			            <h2 class="login-text">로그인</h2>
+			            <form action="/loginProc" method="post" name="loginForm">
+			                <input type="text" name="username" placeholder="아이디">
+			                <input type="password" name="password" placeholder="비밀번호">
+			                <input class="hover-color" type="submit" value="로그인">
+			            </form>
+			            </div>
+			            <label for="login-menu" class="login-menu">
+			                <a href="#" class="hover-color textsmall">아이디</a> <div style="font-size: 13px;"> / </div> 
+			                <a href="#" class="hover-color textsmall">비밀번호 찾기</a> <div style="font-size: 13px;"> / </div> 
+			                <a href="#" class="hover-color textsmall">회원가입</a>
+			            </label>
 			            
-			           <label for="login-menu" >
-						    <a href="signup" class="login-btn hover-color">로그인하러 가기!</a>
-						</label>
-						</div>
-			</div>
 			        </c:otherwise>
 			    </c:choose>
-
+			</div>
 
 		
 		
@@ -59,12 +61,12 @@
                             <div class="dropdown">
                                 <a class="hover-color">마이페이지</a>
                                 <div class="dropdown-content" id="myDropdown">
-                                    <a href="myinfoupdate?usernick=${usernick}">내 정보 수정</a>
-                                    <a href="mypwdchange?usernick=${usernick}">비밀번호 변경</a>
-                                    <a href="mydelete?usernick=${usernick}">회원 탈퇴</a>
+                                    <a href="#" onclick="return preparingPage()">내 정보 수정</a>
+                                    <a href="#" onclick="return preparingPage()">비밀번호 변경</a>
+                                    <a href="#" onclick="return preparingPage()">회원 탈퇴</a>
                                     <!-- 사이드바 줄 -->
                                     <hr class="sidebar-divider">
-                                    <a href="mymoim">모임 목록</a>
+                                    <a href="#" onclick="return preparingPage()">모임 목록</a>
                                     <a href="myqnaList?usernick=${usernick}">문의 내역</a>
                                 </div>
                             </div>
@@ -116,63 +118,62 @@
 			</form>
 			
 			<section>
-		    <!-- 게시판 목록 -->
-		    <div class="cards">
-		        <c:forEach items="${mokkojiList}" var="mokkoji">
-		            <div class="card">
-		                <div class="card__image-holder">
-		                    <img class="card__image" src="${mokkoji.mokkojiImages}" alt="모꼬지이미지" />
-		                </div>
-		                <div class="card-title">
-		                    <a href="#" class="toggle-info btn">
-		                        <span class="left"></span>
-		                        <span class="right"></span>
-		                    </a>
-		                    <h2>[${mokkoji.mokkojiCategory}]${mokkoji.mokkojiTitle}
-		                        <small>닉네임 :${mokkoji.usernick}</small>
-		                    </h2>
-		                </div>
-		                <div class="card-flap flap1">
-		                    <div class="card-description">
-		                        ${mokkoji.mokkojiIntro }
-		                    </div>
-			                   <div class="card-flap flap2">
+<!-- 게시판 목록 -->
+					<div class="cards">
+					<c:forEach items="${mokkojiList}" var="mokkoji">
+					  <div class="card">
+					    <div class="card__image-holder">
+					      <img class="card__image" src="${mokkojiImages}" alt="모꼬지이미지" />
+					    </div>
+					    <div class="card-title">
+					      <a href="#" class="toggle-info btn">
+					        <span class="left"></span>
+					        <span class="right"></span>
+					      </a>
+					      <h2>${mokkojiTitle}
+					          <small>닉네임 : ${usernick}</small>
+					          </h2>
+					    </div>
+						    <div class="card-flap flap2">
 	                     	 <div class="card-actions" id="buttonContainer">
-		                        <%--   <a href="javascript:join('${mokkojiCatagory}','${mokkojiNo}','${mokkojiTitle}','${usernick}')"
-		                         class="btn" autocomplete="off" >참가하기</a> --%>
-		                           <a href="javascript:join('${mokkoji.mokkojiNo}','${mokkoji.mokkojiTitle}','${mokkoji.usernick}')"
-		                         class="btn" autocomplete="off" >참가하기</a>
-<!-- 								<a href="/video" class="btn">참가하기</a> -->
-		                        </div>
-						      </div>
-		                </div>
-		            </div>
-		        </c:forEach>
-		    </div>
-		
-		    <!-- 페이지 링크를 표시합니다 -->
-		     <div class="page_container">
-		     <div>
+	                      <%--     <a href="javascript:join('${mokkojiNo}','${mokkojiTitle}','${usernick}')"
+	                         class="btn" autocomplete="off" >참가하기</a> --%>
+	    
+	                        <a href="/video" class="btn">참가하기</a>
+	                        
+	                        </div>
+					      </div>
+					    </div>
+					</c:forEach>
+					  </div>
+				
+	
+			<!-- 페이지 링크를 표시합니다 -->
+			<div class="page_container">
+			    <div>
 		            	<button id="writeBtn" class="hover-color">방 만들기</button>
 		        </div>
-		     
-                        <div class="page_btn">
-                            <div class="page_wrap">
-                                <div class="page_nation">
-                                    <a class="arrow pprev" href="#" onclick="getPage(0)"></a>
-                                    <a class="arrow prev" href="#" onclick="prevPage()"></a>
-                                    <c:forEach begin="0" end="${totalPages > 0 ? totalPages - 1 : 0}" var="pageNumber">
-                                        <a class="page-link" href="#">${pageNumber + 1}</a>
-                                    </c:forEach>
-                                    <a class="arrow next" href="#" onclick="nextPage()"></a>
-                                    <a class="arrow nnext" href="#" onclick="getPage(${totalPages - 1})"></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-				</section>
+				
+			    <!-- 페이지 -->
+			    <div class="page_btn">
+			        <div class="page_wrap">
+			            <div class="page_nation">
+			                <a class="arrow pprev" href="#" onclick="pprevPage()"></a>
+			                <a class="arrow prev" href="#" onclick="prevPage()"></a>
+			                <!-- 서버에서 생성된 페이지 버튼 -->
+			                <c:forEach begin="0" end="${totalPages - 1}" var="pageNumber">
+							    <a class="page-link" href="/main?page=${pageNumber}">${pageNumber + 1}</a>
+							</c:forEach>
+			                <a class="arrow next" href="#" onclick="nextPage()"></a>
+			                <a class="arrow nnext" href="#" onclick="getPage(${totalPages - 1})"></a>
+			            </div>
+			        </div>
+			    </div>
 			</div>
-		</nav>
+		</section>
+	</nav>
+	</div>
+</div>
 
 	</main>
  <jsp:include page="/resources/footer.jsp" />

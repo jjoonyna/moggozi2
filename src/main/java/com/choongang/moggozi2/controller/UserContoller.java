@@ -374,6 +374,25 @@ public class UserContoller {
     }
     
     
+    @GetMapping("mymoim")
+    public String mymoim(Authentication auth, Model model) {
+    	String username = null;
+ 	    String usernick = null;
+ 	    String role = null;
+ 	    
+ 	    if (auth != null) {
+ 	        username = auth.getName();
+ 	        role = auth.getAuthorities().stream().findFirst().orElse(null).getAuthority();
+ 	        
+ 	        // usernick 가져오기
+ 	        if (auth.getPrincipal() instanceof CustomUserDetails) {
+ 	            usernick = ((CustomUserDetails) auth.getPrincipal()).getUsernick();
+ 	        }}
+ 	    
+ 	    
+ 	    return "user/mymoim";
+    }
+    
     
 
     ///////////////////////////////////////////////

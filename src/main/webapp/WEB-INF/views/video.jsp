@@ -22,23 +22,10 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
-<script type="text/javascript" src="./js/janus.js"></script>
-<script type="text/javascript" src="./js/videoroomtest.js?ver=12"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <link rel="shortcut icon" href="#">
-<script>
-	$(function() {
-		$(".navbar-static-top").load(
-				"navbar.html",
-				function() {
-					$(".navbar-static-top li.dropdown").addClass("active");
-					$(".navbar-static-top a[href='videoroomtest.html']")
-							.parent().addClass("active");
-				});
-		$(".footer").load("footer.html");
-	});
-</script>
+
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cerulean/bootstrap.min.css"
 	type="text/css" />
@@ -55,7 +42,7 @@
 		<div class="container">
 			<div class="col-md-12">
 				<h1>
-					회의 시작 <br>
+				<a href="javascript:registerUsername()">회의 시작</a> <br>
 					<button class="btn btn-default" autocomplete="off" id="start">Start</button>
 				</h1>
 			</div>
@@ -68,7 +55,7 @@
 								<span class="input-group-addon">방 이름</span> <input
 									autocomplete="off" class="form-control" type="text"
 									name="mokkojiTitle" placeholder="Room Name" id="roomname"
-									value="${param.roomname }" />	<!-- 	readonly  -->
+									value="${mokkojiTitle }" />		<!-- readonly -->
 							</div>
 						</div>
 						<div class="join2">
@@ -76,14 +63,13 @@
 							<div class="input-group margin-bottom-md ">
 								<span class="input-group-addon">닉네임</span> <input
 									autocomplete="off" class="form-control" type="text"
-									placeholder="닉네" id="usernick" name="usernick"
+									placeholder="닉네임" id="usernick" name="usernick"
 									onkeypress="return checkEnter(this, event);"
-									value="${param.nickname }" />	<!-- 	readonly  -->
+									value="${usernick }" />	<!-- readonly -->
 							</div>
 						</div>
 						<span class="input-group-btn">
-							<button class="btn btn-success" autocomplete="off" id="register"
-								style="padding: 5px 13px;">대화방 참여</button>
+							<button class="btn btn-success" autocomplete="off" id="registertest" onclick="registerUsername()">대화방 참여</button>
 						</span>
 					</div>
 				</div>
@@ -218,10 +204,6 @@
 						</script>
 
 					</div>
-
-			
-
-					<script src="script.js"></script>
 				</div>
 			</div>
 		</div>
@@ -229,3 +211,5 @@
 
 </body>
 </html>
+<script type="text/javascript" src="/js/janus.js"></script>
+<script type="text/javascript" src="/js/videoroomtest.js?ver=12"></script>
