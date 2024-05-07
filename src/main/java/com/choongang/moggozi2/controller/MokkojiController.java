@@ -124,8 +124,7 @@ public class MokkojiController {
             mokkoji.setMokkojiTitle(mokkojiTitle);
             mokkoji.setMokkojiIntro(mokkojiIntro);
             mokkoji.setMokkojiCategory(mokkojiCategory);
-            em.persist(mokkoji);
-               
+            mokkojiService.saveMokkoji(mokkoji);
             // 파일 업로드 성공 시 처리
             return "redirect:/main";
         } catch (IOException e) {

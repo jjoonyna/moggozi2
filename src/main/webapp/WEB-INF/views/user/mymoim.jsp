@@ -91,7 +91,7 @@
 			<div>
 				<table>
 					<tr>
-					<td></td>
+					<td>${ mokkojiList.usernick}</td>
 					<td></td>
 					</tr>				
 				</table>

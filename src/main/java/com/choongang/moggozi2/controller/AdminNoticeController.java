@@ -336,7 +336,7 @@ public class AdminNoticeController {
 				
 				        
 				        // 문의와 답변의 번호를 대조하여 일치하는 경우, 문의의 상태를 "답변완료"로 변경
-				        if (notice != null && savedReply.getNotiNo().equals(notice.getNotiNo())) {
+				        if (notice != null && savedReply.getNotiNo().getNotiNo().equals(notice.getNotiNo())) {
 				        	notice.setNotiAt("답변완료");
 				            adminNoticeService.saveAdminAsk(notice);
 				        }

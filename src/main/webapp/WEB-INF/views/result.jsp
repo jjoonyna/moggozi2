@@ -19,7 +19,7 @@
        </div>
        <div class="card-write">
             <div class="myinfo">
-                <span>닉네임</span><input type="text" name="usernick" id="usernick"  placeholder="이름을 입력하세요." >
+                <span>닉네임</span><input type="text" name="usernick" id="usernick" value="${usernick }"  placeholder="이름을 입력하세요." >
                 <span>인원</span><select name="mokkojiPerson" id="mokkojiPerson">
                 	<option value="" disabled selected>선택</option>
                     <option value="1">1명</option>

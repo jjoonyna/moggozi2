@@ -390,7 +390,6 @@ public class UserContoller {
  	            usernick = ((CustomUserDetails) auth.getPrincipal()).getUsernick();
  	        }}
  	    
- 	    
  	    return "user/mymoim";
     }
     
