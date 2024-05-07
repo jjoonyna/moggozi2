@@ -157,6 +157,7 @@ function checkCurrentPage() {
         }
         return true;
     }
+    
 
 function preparingPage() {
         var currentPage = "user/mypage?usernick=${usernick}#";

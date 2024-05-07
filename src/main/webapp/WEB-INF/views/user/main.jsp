@@ -120,7 +120,7 @@
 			<section>
 <!-- 게시판 목록 -->
 					<div class="cards">
-					<c:forEach items="">
+					<c:forEach items="${mokkojiList}" var="mokkoji">
 					  <div class="card">
 					    <div class="card__image-holder">
 					      <img class="card__image" src="${mokkojiImages}" alt="모꼬지이미지" />
@@ -136,13 +136,16 @@
 					    </div>
 						    <div class="card-flap flap2">
 	                     	 <div class="card-actions" id="buttonContainer">
-	                          <a href="javascript:join('${mokkojiNo}','${mokkojiTitle}','${usernick}')"
-	                         class="btn" autocomplete="off" >참가하기</a>
+	                      <%--     <a href="javascript:join('${mokkojiNo}','${mokkojiTitle}','${usernick}')"
+	                         class="btn" autocomplete="off" >참가하기</a> --%>
+	    
+	                        <a href="/video" class="btn">참가하기</a>
+	                        
 	                        </div>
 					      </div>
 					    </div>
-					  </div>
 					</c:forEach>
+					  </div>
 				
 	
 			<!-- 페이지 링크를 표시합니다 -->

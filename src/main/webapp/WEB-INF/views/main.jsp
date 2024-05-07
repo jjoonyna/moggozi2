@@ -13,6 +13,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>모꼬지</title>
 	<jsp:include page="/resources/gnb.jsp" />
+<!-- 	<script src="./js/main.js"></script> -->
+	<script src="./js/videoroomtest.js"></script>
 </head>
 <body>
 	<main>
@@ -131,7 +133,7 @@
 		                        <span class="right"></span>
 		                    </a>
 		                    <h2>[${mokkoji.mokkojiCategory}]${mokkoji.mokkojiTitle}
-		                        <small>닉네임 : ${mokkoji.usernick}</small>
+		                        <small>닉네임 :${mokkoji.usernick}</small>
 		                    </h2>
 		                </div>
 		                <div class="card-flap flap1">
@@ -139,9 +141,12 @@
 		                        ${mokkoji.mokkojiIntro }
 		                    </div>
 			                   <div class="card-flap flap2">
-		                     	 <div class="card-actions" id="buttonContainer">
-		                          <a href="javascript:join('${mokkojiCatagory}','${mokkojiNo}','${mokkojiTitle}','${usernick}')"
+	                     	 <div class="card-actions" id="buttonContainer">
+		                        <%--   <a href="javascript:join('${mokkojiCatagory}','${mokkojiNo}','${mokkojiTitle}','${usernick}')"
+		                         class="btn" autocomplete="off" >참가하기</a> --%>
+		                           <a href="javascript:join('${mokkoji.mokkojiNo}','${mokkoji.mokkojiTitle}','${mokkoji.usernick}')"
 		                         class="btn" autocomplete="off" >참가하기</a>
+<!-- 								<a href="/video" class="btn">참가하기</a> -->
 		                        </div>
 						      </div>
 		                </div>

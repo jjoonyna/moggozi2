@@ -53,4 +53,6 @@ public class Mokkoji {
         this.mokkojiImages = mokkojiImages;
         this.mokkojiCategory = mokkojiCategory;
     }
+
+
 }
