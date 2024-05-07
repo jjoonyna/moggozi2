@@ -33,7 +33,7 @@
 	    	<div class="login-wrapper">
 			            <h2 class="login-text">회원 정보</h2>
 			            <p>어서오세요! ${usernick}님 ☆ﾐ(o*･ω･)ﾉ</p>
-			            <a href="#" onclick="return checkCurrentPage()">마이페이지</a>
+			            <a href="mypage">마이페이지</a>
 			            <a href="logout">로그아웃</a>
 			</div>
 
@@ -48,9 +48,9 @@
                             <div class="dropdown">
                                 <a class="hover-color">마이페이지</a>
                                 <div class="dropdown-content" id="myDropdown">
-                                    <a href="mypage" onclick="return preparingPage()">내 정보 수정</a>
-                                    <a href="#" onclick="return preparingPage()">비밀번호 변경</a>
-                                    <a href="#" onclick="return preparingPage()">회원 탈퇴</a>
+                                    <a href="myinfoupdate?usernick=${usernick}">내 정보 수정</a>
+                                    <a href="mypwdchange?usernick=${usernick}">비밀번호 변경</a>
+                                    <a href="#" onclick="return checkCurrentPage()">회원 탈퇴</a>
                                     <!-- 사이드바 줄 -->
                                     <hr class="sidebar-divider">
                                     <a href="#" onclick="return preparingPage()">모임 목록</a>
@@ -93,11 +93,6 @@
 			
 			<!-- 내 정보 -->
 			<div class="mypage">
-				<div class="mypage-btn">
-					<button class="myinfo-btn" onClick="myinfo()"  >내 정보 수정</button>
-					<button class="mymoim-btn" onClick="mypwdchange()" >비밀번호 변경</button>
-					<button class="myboard-btn" onClick="mydelete()" style="background-color: #3EFA97">회원탈퇴</button>
-				</div>
 				
 				<div class="mypage-mymoim">
 				<h3>내 정보 수정</h3>

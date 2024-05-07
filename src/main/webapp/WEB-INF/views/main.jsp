@@ -57,9 +57,9 @@
                             <div class="dropdown">
                                 <a class="hover-color">마이페이지</a>
                                 <div class="dropdown-content" id="myDropdown">
-                                    <a href="#" onclick="return preparingPage()">내 정보 수정</a>
-                                    <a href="#" onclick="return preparingPage()">비밀번호 변경</a>
-                                    <a href="#" onclick="return preparingPage()">회원 탈퇴</a>
+                                    <a href="myinfoupdate?usernick=${usernick}">내 정보 수정</a>
+                                    <a href="mypwdchange?usernick=${usernick}">비밀번호 변경</a>
+                                    <a href="mydelete?usernick=${usernick}">회원 탈퇴</a>
                                     <!-- 사이드바 줄 -->
                                     <hr class="sidebar-divider">
                                     <a href="#" onclick="return preparingPage()">모임 목록</a>
