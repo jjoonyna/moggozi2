@@ -170,6 +170,7 @@ public class UserContoller {
 
             // 목록을 불러오는 로직
             Page<Mokkoji> mokkojiPage = mokkojiService.findAllMokkoji(PageRequest.of(page, pageSize));
+         
             model.addAttribute("mokkojiList", mokkojiPage.getContent());
             model.addAttribute("currentPage", page);
             model.addAttribute("totalPages", mokkojiPage.getTotalPages());
