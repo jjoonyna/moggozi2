@@ -50,7 +50,7 @@ public class MokkojiController {
 
         try {
             // 업로드된 파일을 저장할 디렉토리 설정
-            String uploadDir = "/upload/";
+            String uploadDir = "/Users/jung-younsun/Documents/2차 프로젝트/upload";
             File uploadDirFile = new File(uploadDir);
             if (!uploadDirFile.exists()) {
                 uploadDirFile.mkdirs(); // 디렉토리가 존재하지 않으면 생성합니다.
