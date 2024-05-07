@@ -556,16 +556,18 @@ public class UserContoller {
 	     * 공지사항 리스트
 	     */
 	 	@GetMapping("/noticeUserList")
-	 	public String noticeUserList(@RequestParam(defaultValue = "0") int page, Authentication auth, Model model) {
+	 	public String noticeUserList(@RequestParam(defaultValue = "1") int pageNum, 
+	 	                             @RequestParam(defaultValue = "10") int pageSize,
+	 	                             Authentication auth, Model model) {
 
 	 	    String username = null;
 	 	    String usernick = null;
 	 	    String role = null;
-	 	    
-	 	    if(auth != null) {
+
+	 	    if (auth != null) {
 	 	        username = auth.getName();
 	 	        role = auth.getAuthorities().stream().findFirst().orElse(null).getAuthority();
-	 	        
+
 	 	        // usernick 가져오기
 	 	        if (auth.getPrincipal() instanceof UserDetails) {
 	 	            usernick = ((UserDetails) auth.getPrincipal()).getUsername();
@@ -577,12 +579,19 @@ public class UserContoller {
 	 	    model.addAttribute("usernick", usernick); // usernick 추가
 	 	    model.addAttribute("role", role);
 
+	 	    // 페이지 번호를 0부터 시작하는 인덱스로 변환합니다.
+	 	    int page = pageNum - 1;
+
+	 	    // 페이지 번호가 음수이면 0으로 설정
+	 	    if (page < 0) {
+	 	        page = 0;
+	 	    }
 
 	 	    // 페이지 번호와 페이지 크기를 기반으로 페이징 객체를 생성합니다.
-	 	    Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "notiDate"));
+	 	    Pageable pageable = PageRequest.of(page, pageSize, Sort.by(Sort.Direction.DESC, "notiDate"));
 
-	         // 페이징 처리된 카테고리별 공지사항을 가져옵니다.
-	         Page<AdminNotice> noticePage = adminNoticeService.findNoticeByCategory("n", pageable);
+	 	    // 페이징 처리된 공지사항 목록을 가져옵니다.
+	 	    Page<AdminNotice> noticePage = adminNoticeService.findNoticeByCategory("n", pageable);
 
 	 	    // 페이징된 데이터 리스트를 모델에 추가합니다.
 	 	    List<AdminNotice> noticeList = noticePage.getContent();
@@ -590,8 +599,7 @@ public class UserContoller {
 	 	    // noti_impt 컬럼 값이 'Y'인 경우에 대해서 우선적으로 리스트에 추가합니다.
 	 	    List<AdminNotice> importantNotices = new ArrayList<>();
 	 	    List<AdminNotice> normalNotices = new ArrayList<>();
-	 	    for (AdminNotice notice : noticeList) { 
-	 	    	
+	 	    for (AdminNotice notice : noticeList) {
 	 	        if ("중요".equals(notice.getNotiImpt()) && "n".equals(notice.getCategory())) {
 	 	            importantNotices.add(notice);
 	 	        } else {
@@ -603,13 +611,17 @@ public class UserContoller {
 	 	    // 모델에 리스트를 추가합니다.
 	 	    model.addAttribute("noticeList", importantNotices);
 
-	 	    // 페이징 정보도 모델에 추가할 수 있습니다.
-	 	    model.addAttribute("currentPage", page);
+	 	    // 페이징 정보도 모델에 추가합니다.
+	 	    model.addAttribute("currentPage", pageNum); // 페이지 번호를 그대로 사용합니다.
 	 	    model.addAttribute("totalPages", noticePage.getTotalPages());
 
-	 	    // admin/noticelist 템플릿으로 이동합니다.
+	 	    // user/noticeUserList 템플릿으로 이동합니다.
 	 	    return "user/noticeUserList";
 	 	}
+
+
+
+	 	
 	 	
 	 	/*
 	 	 * 공지사항 상세보기 
