@@ -29,6 +29,9 @@ import com.choongang.moggozi2.service.MokkojiService;
 
 @Controller
 public class MokkojiController {
+	
+	@Autowired
+	private EntityManager em;
     
 	@Autowired
 	private EntityManager em;
@@ -72,27 +75,27 @@ public class MokkojiController {
                                    @RequestParam("mokkojiTitle") String mokkojiTitle,
                                    @RequestParam("mokkojiIntro") String mokkojiIntro,
                                    @RequestParam("mokkojiCategory") String mokkojiCategory) {
-        
-    	 String username = null;
-         String usernick = null;
-         String role = null;
 
-         if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
-             username = authentication.getName();
-             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-             if (!authorities.isEmpty()) {
-                 GrantedAuthority auth = authorities.iterator().next();
-                 role = auth.getAuthority();
-             }
+   	 	String username = null;
+        String usernick = null;
+        String role = null;
 
-             // 사용자의 닉네임 가져오기
-             if (authentication.getPrincipal() instanceof UserDetails) {
-                 usernick = ((CustomUserDetails) authentication.getPrincipal()).getUsernick();
-             }
-         }
-    	
-    	
-    	if (mokkojiImages.isEmpty()) {
+        if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
+            username = authentication.getName();
+            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+            if (!authorities.isEmpty()) {
+                GrantedAuthority auth = authorities.iterator().next();
+                role = auth.getAuthority();
+            }
+
+            // 사용자의 닉네임 가져오기
+            if (authentication.getPrincipal() instanceof UserDetails) {
+                usernick = ((CustomUserDetails) authentication.getPrincipal()).getUsernick();
+            }
+        }
+
+
+        if (mokkojiImages.isEmpty()) {
             // 파일이 비어있을 경우 처리
             return "redirect:/uploadFailure";
         }

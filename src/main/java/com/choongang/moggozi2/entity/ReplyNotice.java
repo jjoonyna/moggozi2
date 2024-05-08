@@ -44,5 +44,6 @@ public class ReplyNotice {
 	
 	private String replyContent;	// 답변 내용
 	private Timestamp replyDate;	// 답변 날짜
+	
 
 }

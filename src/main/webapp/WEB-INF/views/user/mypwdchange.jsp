@@ -40,7 +40,7 @@
 		
 		
  
-            <!-- 사이드 카테고리 -->
+              <!-- 사이드 카테고리 -->
             <div class="table-container">
                 <table>
                     <tr>

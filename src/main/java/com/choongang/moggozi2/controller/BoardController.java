@@ -11,6 +11,7 @@ import java.util.List;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +32,24 @@ public class BoardController {
     }
 
     @GetMapping("/boardlist")
-    public String boardlist(@RequestParam(value="page", defaultValue="1")int page, Model model) {
+    public String boardlist(Authentication auth, @RequestParam(value="page", defaultValue="1")int page, Model model) {
+    	String username = null;
+ 	    String usernick = null;
+
+ 	    if (auth != null) {
+ 	        username = auth.getName();
+
+ 	        // usernick 가져오기
+ 	        if (auth.getPrincipal() instanceof UserDetails) {
+ 	            usernick = ((UserDetails) auth.getPrincipal()).getUsername();
+ 	        }
+ 	    }
+ 	    // 뷰로 사용자 이름과 usernick 전달
+ 	    model.addAttribute("username", username);
+ 	    model.addAttribute("usernick", usernick); // usernick 추가
+	    	
+    	
+    	
     	int limit = 10;
     	int listcount = (int)boardService.getCount();
     	int start = (page-1) * limit;	// 각 page별 추출할 시작번호 : 0,10,20...
@@ -69,19 +87,21 @@ public class BoardController {
     }
 
     @GetMapping("/boardinsertform")
-    public String boardinsertform(Model model) {
-    	 // 현재 사용자의 인증 정보 가져오기
-	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	    String username = authentication.getName(); // 현재 사용자의 아이디
-	    Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-		Iterator<? extends GrantedAuthority> iter = authorities.iterator();
-		GrantedAuthority auth = iter.next();
-		String role = auth.getAuthority();	
-		
-		
-	    // 뷰로 사용자 이름 전달
-		model.addAttribute("username", username);
-	    model.addAttribute("role", role);
+    public String boardinsertform(Authentication auth, Model model) {
+    	String username = null;
+ 	    String usernick = null;
+
+ 	    if (auth != null) {
+ 	        username = auth.getName();
+
+ 	        // usernick 가져오기
+ 	        if (auth.getPrincipal() instanceof UserDetails) {
+ 	            usernick = ((UserDetails) auth.getPrincipal()).getUsername();
+ 	        }
+ 	    }
+ 	    // 뷰로 사용자 이름과 usernick 전달
+ 	    model.addAttribute("username", username);
+ 	    model.addAttribute("usernick", usernick); // usernick 추가
 	    	
     	return "boardinsertform";
     }
@@ -91,17 +111,8 @@ public class BoardController {
                              @RequestParam("category") String category,
                              @RequestParam("boardSubject") String boardSubject,
                              @RequestParam("boardContent") String boardContent,
-                             @RequestParam("boardDate") Timestamp boardDate,
                              @RequestParam(value="boardFile", required=false) MultipartFile boardFile) {
     	
-        // 현재 사용자의 인증 정보 가져오기
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName(); // 현재 사용자의 아이디
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        Iterator<? extends GrantedAuthority> iter = authorities.iterator();
-        GrantedAuthority auth = iter.next();
-        String role = auth.getAuthority();        
-        
         try {
             // 파일 업로드를 수행
             String fileName = "";
@@ -119,17 +130,11 @@ public class BoardController {
             }
             // 게시글 정보를 DB에 저장
             CommonBoard commonBoard = new CommonBoard();
-            commonBoard.setUsername(username);
             commonBoard.setBoardSubject(boardSubject);
             commonBoard.setBoardContent(boardContent);
             commonBoard.setCategory(category);
-            commonBoard.setBoardDate(boardDate);
             commonBoard.setBoardFile(fileName);
             boardService.saveCommonBoard(commonBoard);
-            
-            // 뷰로 사용자 이름 전달
-            model.addAttribute("username", username);
-            model.addAttribute("role", role);
             
             // 게시글 등록이 성공한 경우, 게시글 목록 페이지로 리다이렉트
             return "redirect:/boardlist";
@@ -142,26 +147,31 @@ public class BoardController {
 
 
     @GetMapping("/boardupdateform")
-    public String boardupdateform(@RequestParam Integer boardNo, int page, Model model) {
+    public String boardupdateform(Authentication auth, @RequestParam Integer boardNo, int page, Model model) {
     	
     	
-   	 // 현재 사용자의 인증 정보 가져오기
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    String username = authentication.getName(); // 현재 사용자의 아이디
-    Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-	Iterator<? extends GrantedAuthority> iter = authorities.iterator();
-	GrantedAuthority auth = iter.next();
-	String role = auth.getAuthority();	
+		 	String username = null;
+	 	    String usernick = null;
 	
-	CommonBoard commonBoard = boardService.getContent(boardNo);
+	 	    if (auth != null) {
+	 	        username = auth.getName();
 	
-    // 뷰로 사용자 이름 전달
-	model.addAttribute("username", username);
-    model.addAttribute("role", role);
-    	
-	model.addAttribute("boardNo", boardNo);
-	model.addAttribute("commonBoard", commonBoard);
-	model.addAttribute("page", page);
+	 	        // usernick 가져오기
+	 	        if (auth.getPrincipal() instanceof UserDetails) {
+	 	            usernick = ((UserDetails) auth.getPrincipal()).getUsername();
+	 	        }
+	 	    }
+	 	    // 뷰로 사용자 이름과 usernick 전달
+	 	    model.addAttribute("username", username);
+	 	    model.addAttribute("usernick", usernick); // usernick 추가
+	
+	 	    
+			CommonBoard commonBoard = boardService.getContent(boardNo);
+			
+		    	
+			model.addAttribute("boardNo", boardNo);
+			model.addAttribute("commonBoard", commonBoard);
+			model.addAttribute("page", page);
 
 		return "boardupdateform";
     }
@@ -184,7 +194,7 @@ public class BoardController {
                 // 파일 업로드를 수행합니다.
                 if (boardFile != null && !boardFile.isEmpty()) {
                     // 업로드된 파일을 저장할 디렉토리 설정
-                    String uploadDir = "/upload1/";
+                    String uploadDir = "/upload/";
                     File uploadDirFile = new File(uploadDir);
                     if (!uploadDirFile.exists()) {
                         uploadDirFile.mkdirs(); // 디렉토리가 존재하지 않으면 생성합니다.
@@ -221,23 +231,27 @@ public class BoardController {
 
     
     @GetMapping("/boarddelete")
-    public String boarddelete(@RequestParam Integer boardNo, int page, Model model) {
-    	 // 현재 사용자의 인증 정보 가져오기
-	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	    String username = authentication.getName(); // 현재 사용자의 아이디
-	    Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-		Iterator<? extends GrantedAuthority> iter = authorities.iterator();
-		GrantedAuthority auth = iter.next();
-		String role = auth.getAuthority();		
+    public String boarddelete(Authentication auth, @RequestParam Integer boardNo, int page, Model model) {
+    	
+    	String username = null;
+ 	    String usernick = null;
+
+ 	    if (auth != null) {
+ 	        username = auth.getName();
+
+ 	        // usernick 가져오기
+ 	        if (auth.getPrincipal() instanceof UserDetails) {
+ 	            usernick = ((UserDetails) auth.getPrincipal()).getUsername();
+ 	        }
+ 	    }
+ 	    // 뷰로 사용자 이름과 usernick 전달
+ 	    model.addAttribute("username", username);
+ 	    model.addAttribute("usernick", usernick); // usernick 추가
 		
 		System.out.println(boardNo);
 		
     	boardService.boarddelete(boardNo);
-        
     	
-    	// 뷰로 사용자 이름 전달
-		model.addAttribute("username", username);
-	    model.addAttribute("role", role);
 	    model.addAttribute("page",page);
     	return "redirect:boardlist";
     }

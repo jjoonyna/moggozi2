@@ -27,6 +27,9 @@ import lombok.Setter;
 			
 			private String normalname;	//이름 
 			private String password;		// 비밀번호 
+			
+			private String myId; // 새로운 속성 추가
+			
 			private String userph;	// 휴대폰번호
 			private String userzip;	// 우편번호
 			private String useryear;	//출생년동 

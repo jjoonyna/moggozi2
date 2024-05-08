@@ -19,7 +19,7 @@
        </div>
        <div class="card-write">
             <div class="myinfo">
-                <span>닉네임</span><input type="text" name="usernick" id="usernick" value="${usernick }"  placeholder="이름을 입력하세요." >
+				<span>닉네임</span><input type="text" name="usernick" id="usernick" value="${usernick }" placeholder="이름을 입력하세요." >
                 <span>인원</span><select name="mokkojiPerson" id="mokkojiPerson">
                 	<option value="" disabled selected>선택</option>
                     <option value="1">1명</option>
@@ -31,7 +31,17 @@
                 </select>
                 <span>카테고리</span><select name="mokkojiCategory" id="mokkojiCategory">
                 	<option value="" disabled selected>선택</option>
+				 	<option value="스터디">스터디</option>
                     <option value="운동">운동</option>
+                    <option value="요리">요리</option>
+                    <option value="리뷰">리뷰</option>
+                    <option value="시사/재테크">시사/재테크</option>
+                    <option value="일상">일상</option>
+                    <option value="반려동물">반려동물</option>
+                    <option value="쇼핑">쇼핑</option>
+                    <option value="DIY">DIY</option>
+                    <option value="노래">노래</option>
+                    <option value="키덜트">키덜트</option>
                     <option value="게임">게임</option>
                 </select>
             </div>
