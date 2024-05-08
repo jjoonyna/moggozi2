@@ -2,6 +2,7 @@ package com.choongang.moggozi2.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date; // Date import 추가
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,30 +10,25 @@ import org.springframework.security.core.userdetails.UserDetails;
 import lombok.Data;
 
 @Data
-public class CustomUserDetails implements UserDetails{
+public class CustomUserDetails implements UserDetails {
 	
 	private User user;
-	
-	public CustomUserDetails(User userData, String usernick) {
+	private Date loginTime; // 로그인 시간 추가
+
+	public CustomUserDetails(User userData, String usernick, Date loginTime) {
 		this.user = userData;
+		this.loginTime = loginTime; // 로그인 시간 초기화
 	}
 
-	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// 사용자의 권한을 리턴해주는 메서드
-		
 		Collection<GrantedAuthority> collection = new ArrayList<>();
-		
 		collection.add(new GrantedAuthority() {
-			
 			@Override
 			public String getAuthority() {
-
 				return user.getRole();
 			}
 		});
-		
 		return collection;
 	}
 
@@ -52,26 +48,26 @@ public class CustomUserDetails implements UserDetails{
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
 		return true;
 	}
+
+	public Date getLoginTime() {
+        return loginTime;
+    }
 
 }

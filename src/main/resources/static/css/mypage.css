@@ -33,3 +33,23 @@
 	margin: 50px 40%;
 }
 
+
+.sub-title{
+    font-size: 50px;
+    margin-right: auto;
+    margin-top: 6.5%;
+    margin-left: 5%;
+}
+
+
+body .container nav .search-wrap #category {font-family: 'TTLaundryGothicB'; font-size: 15px;}
+body .container nav .search-wrap #boundary {font-family: 'TTLaundryGothicB'; font-size: 15px;}
+body .container nav section .cards {display: grid; justify-content: center; flex-wrap: wrap; height: 341px;}
+body .container nav section .cards .mypage-mymoim {width: 100%; text-align: right;}
+body .container nav section .cards .mypage-mymoim .myinfo {text-align: center;}
+body .container nav section .cards .mypage-mymoim .myinfo #myinfohead {font-size: 40px;}
+body .container nav section .cards .mypage-mymoim input {color: WHEAT; background-color: BLACK; font-family: 'TTLaundryGothicB'; font-size: 15px;}
+body .container nav section .cards .mypage-mymoim table {border-collapse: separate; border-spacing: 10px;}
+body .container nav section .cards .mypage-mymoim table caption {font-size: 40px; margin: 10px 0 20px 0;} 
+
+

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +21,6 @@
 	<main>
 		<!-- 메인 배너 -->
 		<div class="main-banner">
-			<h1>굉장히 엄청난 타이포 그래피</h1>
 		</div>
 		
 		<div class="container">
@@ -30,6 +30,7 @@
 			        <c:when test="${!empty usernick}">
 	    	<div class="login-wrapper">
 			            <h2 class="login-text">회원 정보</h2>
+			            <p><fmt:formatDate value="${loginTime}" pattern="M월 d일 a h시 mm분"/> 등장!</p>
 			            <p>어서오세요!<br>${usernick}님 ☆ﾐ(o*･ω･)ﾉ</p><br>
 			            <a href="mypage">마이페이지</a>
 			            <a href="logout">로그아웃</a>

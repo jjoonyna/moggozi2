@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+.mypage{
+	margin: 5% auto;
+	display: flex;
+	flex-direction: column;
+	width: 60%;
+	height: 100%;
+}
+
+.mypage-btn{
+	display: flex;
+	flex-direction: row;
+	margin: 1% 0%;
+	width: 100%;
+	height: 100%;
+}
+
+.mypage-btn button{
+	background-color: #ffffff;
+	align-items: center;
+	width: 30%;
+	height: 20%;
+	
+}
+
+.mypage h3{
+	display: flex;
+	flex-direction: column;
+	margin: 30px;
+}
+
+.mypage .mypage-myinfo .mypage-myinfo-table{
+	margin: 50px 40%;
+}
+
+
+
+
+body .container nav .search-wrap #category {font-family: 'TTLaundryGothicB'; font-size: 15px;}
+body .container nav .search-wrap #boundary {font-family: 'TTLaundryGothicB'; font-size: 15px;}
+body .container nav section .cards {display: grid; justify-content: center; flex-wrap: wrap; height: 341px;}
+body .container nav section .cards .mypage-mymoim {width: 100%; text-align: right;}
+body .container nav section .cards .mypage-mymoim .myinfo {text-align: center;}
+body .container nav section .cards .mypage-mymoim .myinfo #myinfohead {font-size: 40px;}
+body .container nav section .cards .mypage-mymoim input {width: 100%; color: WHEAT; background-color: BLACK; font-family: 'TTLaundryGothicB'; font-size: 15px;}
+body .container nav section .cards .mypage-mymoim table {border-collapse: separate; border-spacing: 10px;}
+body .container nav section .cards .mypage-mymoim table caption {font-size: 40px; margin: 10px 0 20px 0;} 
+body .container nav section .cards .mypage-mymoim .button-search {font-family: 'TTLaundryGothicB'; width: 110px; height: 28px; border-radius: 6px; color: #ffffff; font-size: 15px; background-color: #000000; border: none; cursor: pointer; display: flex; justify-content: center; margin-top: 16px; align-items: center; margin: -7px -132px; border: 0.5px solid #ccc;}
+body .container nav section .cards .mypage-mymoim .button-submit {font-family: 'TTLaundryGothicB'; font-size: 15px; color: #000000; background-color: #F3D400; width: 90px; height: 35px; box-shadow: 4px 4px 0px #FA5857; border-radius: 0px; display: flex; text-decoration: none; align-items: center; justify-content: center; transition: background-color 0.2s, transform 0.2s; cursor: default; margin-inline: auto; margin-top: 20px;}
+body .container nav section .cards .mypage-mymoim .button-submit:hover {background-color: #F3D400; box-shadow: 4px 4px 0px #FA5857; transform: translateY(4px) rotate(10deg);}
+body .container nav section .cards .mypage-mymoim .info-form table tr td .label-userzip {width: 70px;}
+body .container nav section .cards .mypage-mymoim .info-form table tr td .input-username {color: gray}
+body .container nav section .cards .mypage-mymoim .info-form table tr td .input-usernick {color: gray}
+
+.sub-title{
+    font-size: 50px;
+    margin-right: auto;
+    margin-top: 6.5%;
+    margin-left: 5%;
+}
+
