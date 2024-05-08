@@ -33,8 +33,6 @@ public class MokkojiController {
 	@Autowired
 	private EntityManager em;
     
-	@Autowired
-	private EntityManager em;
 	
     private final MokkojiService mokkojiService;
 
