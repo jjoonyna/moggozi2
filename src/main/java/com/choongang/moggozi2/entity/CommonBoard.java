@@ -18,7 +18,7 @@ public class CommonBoard{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer boardNo;
-    private String	username;
+    private String	usernick;
 	private String  category;
 	private String  boardSubject;
 	private String  boardContent;

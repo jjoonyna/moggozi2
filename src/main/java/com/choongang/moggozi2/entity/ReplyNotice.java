@@ -3,6 +3,7 @@ package com.choongang.moggozi2.entity;
 import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,5 +35,6 @@ public class ReplyNotice {
 	
 	private String replyContent;	// 답변 내용
 	private Timestamp replyDate;	// 답변 날짜
+	
 
 }

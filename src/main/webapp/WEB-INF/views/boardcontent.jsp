@@ -22,19 +22,12 @@
 		<div class="container">
 			<!-- 로그인 창 -->
 			<aside>
-		    	<div class="login-wrapper">
-			        <h2 class="login-text">Login</h2>
-			        <form method="post" action="login" id="login-form">
-			            <input type="text" name="user_id" placeholder="ID">
-			            <input type="password" name="user_pw" placeholder="PW">
-			            <input class="hover-color" type="submit" value="Login">
-			            <label for="login-menu" class="login-menu">
-			            	 <a href="#" class="hover-color textsmall">ID</a> <div style="font-size: 13px;"> / </div> 
-			            	 <a href="#" class="hover-color textsmall">PW 찾기</a> <div style="font-size: 13px;"> / </div> 
-			            	 <a href="#" class="hover-color textsmall">회원가입</a>
-			            </label>
-			        </form>
-		    	</div>
+	    	<div class="login-wrapper">
+			            <h2 class="login-text">회원 정보</h2>
+			            <p>어서오세요! ${usernick}님 ☆ﾐ(o*･ω･)ﾉ</p>
+			            <a href="#" onclick="return checkCurrentPage()">마이페이지</a>
+			            <a href="logout">로그아웃</a>
+			</div>
 			
 			
 				<!-- 사이드 카테고리 -->
@@ -138,7 +131,7 @@
 						<table class="navClass">
 							<tr class="classLeft">
 								<td class="spanNicks">
-									<span class="spanNick1">작성자: ${CommonBoard.username}</span>
+									<span class="spanNick1">작성자: ${CommonBoard.usernick}</span>
 									<span class="spanNick2">등록일: ${CommonBoard.boardDate}</span>
 									<span class="spanNick3">댓글: ${CommonBoard.boardRe}</span>
 									<span class="spanNick4">조회: ${CommonBoard.boardCnt}회</span>

@@ -27,11 +27,16 @@ body .container nav section .cards .navClass tbody .classLeft .spanNicks {paddin
 body .container nav section .cards .navClass tbody .classLeft .spanNicks .spanNick1 {position: relative; right: -10px;}
 body .container nav section .cards .navClass tbody .classLeft .spanNicks .spanNick2 {position: relative; right: -307px;}
 body .container nav section .cards .navClass tbody .classLeft .spanNicks .spanNick3 {position: relative; right: -321px;}
-body .container nav section .cards .navClass tbody .classLeft .spanNicks .spanNick4 {position: relative; right: -333px;}
-body .container nav section .cards .navClass .taContent textarea {font-family: 'TTLaundryGothicB'; font-size: 15px; color: WHEAT; width: 800px; min-height: 305px; padding: 7px; box-sizing: border-box; border-radius: 6px; background-color: #000000; border: 0.5px solid #ccc; resize: vertical; overflow-y: auto; margin: 4px 0 8px 2px;}
+body .container nav section .cards .navClass tbody .classLeft .spanNicks .spanNick4 {position: relative; right: -500px;}
+body .container nav section .cards .navClass .taContent textarea {font-family: 'TTLaundryGothicB'; font-size: 15px; color: WHEAT; width: 800px; padding: 7px; box-sizing: border-box; border-radius: 6px; background-color: #000000; border: 0.5px solid #ccc; resize: vertical; overflow-y: auto; margin: 4px 0 8px 2px;}
 
 
-
+.sub-title{
+    font-size: 50px;
+    margin-right: auto;
+    margin-top: 6.5%;
+    margin-left: 5%;
+}
 
 
 

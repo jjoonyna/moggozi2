@@ -24,27 +24,10 @@
 				<!-- 로그인 창 -->
 			<aside>
 	    	<div class="login-wrapper">
-			    <c:choose>
-			        <c:when test="${!empty username}">
-			            <h2 class="login-text">로그인 상태</h2>
-			            <p>로그인한 사용자: ${username}</p>
-			            <a href="mypage">마이페이지</a>
+			            <h2 class="login-text">회원 정보</h2>
+			            <p>어서오세요! ${usernick}님 ☆ﾐ(o*･ω･)ﾉ</p>
+			            <a href="#" onclick="return checkCurrentPage()">마이페이지</a>
 			            <a href="logout">로그아웃</a>
-			        </c:when>
-			        <c:otherwise>
-			            <h2 class="login-text">로그인</h2>
-			            <form action="/loginProc" method="post" name="loginForm">
-			                <input type="text" name="username" placeholder="아이디">
-			                <input type="password" name="password" placeholder="비밀번호">
-			                <input class="hover-color" type="submit" value="로그인">
-			            </form>
-			            <label for="login-menu" class="login-menu">
-			                <a href="#" class="hover-color textsmall">아이디</a> <div style="font-size: 13px;"> / </div> 
-			                <a href="#" class="hover-color textsmall">비밀번호 찾기</a> <div style="font-size: 13px;"> / </div> 
-			                <a href="#" class="hover-color textsmall">회원가입</a>
-			            </label>
-			        </c:otherwise>
-			    </c:choose>
 			</div>
 
 			

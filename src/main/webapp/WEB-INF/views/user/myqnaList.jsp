@@ -34,28 +34,36 @@
                 <a href="logout">로그아웃</a>
             </div>
         
+            
             <!-- 사이드 카테고리 -->
-            <div class="table-container">
+			 <div class="table-container">
                 <table>
                     <tr>
                         <td>
                             <div class="dropdown">
                                 <a class="hover-color">마이페이지</a>
                                 <div class="dropdown-content" id="myDropdown">
-                                    <a href="#" onclick="return preparingPage()">내 정보 수정</a>
-                                    <a href="#" onclick="return preparingPage()">비밀번호 변경</a>
-                                    <a href="#" onclick="return preparingPage()">회원 탈퇴</a>
+                                    <a href="myinfoupdate?usernick=${usernick}">내 정보 수정</a>
+                                    <a href="mypwdchange?usernick=${usernick}">비밀번호 변경</a>
+                                    <a href="mydelete?usernick=${usernick}">회원 탈퇴</a>
                                     <!-- 사이드바 줄 -->
                                     <hr class="sidebar-divider">
-                                    <a href="#" onclick="return preparingPage()">모임 목록</a>
-                                    <a href="#" onclick="return checkCurrentPage()">문의 내역</a>
+                                    <a href="mymoim">모임 목록</a>
+                                    <a href="#" onclick="return preparingPage()">문의 내역</a>
                                 </div>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <a href="#" class="hover-color">모일꼬지?</a>
+                            <a  class="hover-color">모일꼬지?</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div href="boardlist?usernick=${usernick}" class="dropdown">
+                                <a class="hover-color" href="boardlist?usernick=${usernick}">모임니당</a>
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -63,12 +71,8 @@
                             <div class="dropdown">
                                 <a class="hover-color">알림마당</a>
                                 <div class="dropdown-content" id="myDropdown">
-                                    <a href="noticeUserList">공지사항</a>
-                                    <a href="askWrite">1:1 문의</a>
-                                    <!-- 사이드바 줄 -->
-                                    <hr class="sidebar-divider">
-                                    <a href="#" onclick="return preparingPage()">모임후기</a>
-                                    <a href="#" onclick="return preparingPage()">커뮤니티</a>
+                                    <a href="noticeUserList?usernick=${usernick}">공지사항</a>
+                                    <a href="askWrite?usernick=${usernick}">1:1 문의</a>
                                 </div>
                             </div>
                         </td>
@@ -161,8 +165,7 @@
 						    });
 						</script>
 			                </nav>
-			                </div></section>
-        </div>
+			                </div>
     </main>
     
     <jsp:include page="/resources/footer.jsp" />

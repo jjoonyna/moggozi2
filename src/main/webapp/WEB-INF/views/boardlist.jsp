@@ -28,33 +28,57 @@
 			<!-- 로그인 창 -->
 			<aside>
 		    	<div class="login-wrapper">
-			            <h2 class="login-text">로그인 상태</h2>
-			            <p>로그인한 사용자: ${username}</p>
-			            <a href="mypage">마이페이지</a>
-			            <a href="logout">로그아웃</a>
-		    	</div>
-			
-			
-				<!-- 사이드 카테고리 -->
-				<div class="table-container">
-					<table>
-					    <tr>
-					        <td>
-					            <a href="#" class="hover-color">모일꼬지?</a>
-					        </td>
-					    </tr>
-					    <tr>
-					        <td>
-					            <a href="#" class="hover-color">알림마당</a>
-					        </td>
-					    </tr>
-					    <tr>
-					        <td>
-					            <a href="#" class="hover-color">마이페이지</a>
-					        </td>
-					    </tr>
-					</table>
+				            <h2 class="login-text">회원 정보</h2>
+				            <p>어서오세요! ${usernick}님 ☆ﾐ(o*･ω･)ﾉ</p>
+				            <a href="#" onclick="return checkCurrentPage()">마이페이지</a>
+				            <a href="logout">로그아웃</a>
 				</div>
+			
+			
+			 <!-- 사이드 카테고리 -->
+			 <div class="table-container">
+                <table>
+                    <tr>
+                        <td>
+                            <div class="dropdown">
+                                <a class="hover-color">마이페이지</a>
+                                <div class="dropdown-content" id="myDropdown">
+                                    <a href="myinfoupdate?usernick=${usernick}">내 정보 수정</a>
+                                    <a href="mypwdchange?usernick=${usernick}">비밀번호 변경</a>
+                                    <a href="mydelete?usernick=${usernick}">회원 탈퇴</a>
+                                    <!-- 사이드바 줄 -->
+                                    <hr class="sidebar-divider">
+                                    <a href="mymoim?usernick=${usernick}">모임 목록</a>
+                                    <a href="myqnaList?usernick=${usernick}">문의 내역</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="main" class="hover-color">모일꼬지?</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="dropdown">
+                                <a class="hover-color" href="#" onclick="return checkCurrentPage()">모임니당</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="dropdown">
+                                <a class="hover-color">알림마당</a>
+                                <div class="dropdown-content" id="myDropdown">
+                                    <a href="noticeUserList?usernick=${usernick}">공지사항</a>
+                                    <a href="askWrite?usernick=${usernick}">1:1 문의</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
 				
 				
 				<!-- hot 모꼬지! -->
@@ -147,7 +171,7 @@
 										</c:if>
 										<c:if test="${board.boardState != 'n' }">		<!-- 글번호 / 페이지번호 -->
 											<td>${board.boardNo}</td>
-											<td>${board.username }</td>
+											<td>${board.usernick }</td>
 											<td>${board.category}</td>
 											<td>
 												<span>
@@ -184,7 +208,7 @@
 							<option value="subcon"	<c:if test="${search=='subcon'}" >selected="selected"</c:if>>제목+내용</option>
 							<option value="subject"	<c:if test="${search=='boardSubject'}">selected="selected"</c:if>>제목</option>
 							<option value="content"	<c:if test="${search=='boardContent'}">selected="selected"</c:if>>내용</option>
-							<option value="writer"	<c:if test="${search=='username'}" >selected="selected"</c:if>>작성자</option>
+							<option value="writer"	<c:if test="${search=='usernick'}" >selected="selected"</c:if>>작성자</option>
 						</select> 
 					<input type="text" name="keyword" class="keyword"> 
 					<input type="submit" value="확인" class="confBtn">

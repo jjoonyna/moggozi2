@@ -27,9 +27,9 @@ public class Mokkoji {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer mokkojiNo;
     
-	@ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "usernick", referencedColumnName = "usernick")
-    private User usernick;
+    @Column(name = "usernick")
+	private String usernick;
+	
     
     @Column(name = "mokkojiTitle")
     private String mokkojiTitle;
@@ -44,7 +44,7 @@ public class Mokkoji {
     @Column(name = "mokkojiCategory")
     private String mokkojiCategory;
     
-    public Mokkoji(User usernick, String mokkojiTitle, Integer mokkojiPerson,
+    public Mokkoji(String usernick, String mokkojiTitle, Integer mokkojiPerson,
                  String mokkojiIntro, String mokkojiImages, String mokkojiCategory) {
         this.usernick = usernick;
         this.mokkojiTitle = mokkojiTitle;

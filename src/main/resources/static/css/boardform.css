@@ -32,3 +32,11 @@ body .container nav section .cards tbody tr td .uploadTitle {margin: 0 5px 0px -
 body .container nav section .cards tbody tr td div .uploadBtn {cursor: pointer;}
 body .container nav section .cards form .innerTable tbody tr td .contentTitle {margin-bottom: 100px; vertical-align: -20px;}
 body .container nav section .cards form {margin-top: 10px;}
+
+
+.sub-title{
+    font-size: 50px;
+    margin-right: auto;
+    margin-top: 6.5%;
+    margin-left: 5%;
+}

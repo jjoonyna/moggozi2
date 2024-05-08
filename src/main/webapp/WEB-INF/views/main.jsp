@@ -78,14 +78,17 @@
                     <tr>
                         <td>
                             <div class="dropdown">
+                                <a class="hover-color" href="boardlist?usernick=${usernick}">모임니당</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="dropdown">
                                 <a class="hover-color">알림마당</a>
                                 <div class="dropdown-content" id="myDropdown">
                                     <a href="noticeUserList?usernick=${usernick}">공지사항</a>
                                     <a href="askWrite?usernick=${usernick}">1:1 문의</a>
-                                    <!-- 사이드바 줄 -->
-                                    <hr class="sidebar-divider">
-                                    <a href="#" onclick="return preparingPage()">모임후기</a>
-                                    <a href="#" onclick="return preparingPage()">커뮤니티</a>
                                 </div>
                             </div>
                         </td>
@@ -104,25 +107,53 @@
 	
 	
 	        <nav>
-			<!-- 검색 폼 -->
-	        <form method="get" action="/search">
-			    <input type="text" name="keyword" class="keyword" id="keyword" value="${keyword }" placeholder="검색어를 입력하세요">
-			    <select class="category" id="category" name="category" onchange="search()">
-			        <option value=""	<c:if test="${category==''}">selected="selected" </c:if>>카테고리선택</option>
-					<option value="운동"	<c:if test="${category=='운동'}">selected="selected" </c:if>>운동</option>
-					<option value="게임"	<c:if test="${category=='게임'}">selected="selected" </c:if>>게임</option>
-			    </select>
-			    <button type="submit" class="searchBtn">검색</button>
-			</form>
+			<div class="search-wrap">
+				<!-- 카테고리 -->
+				<div class="search-category">
+				 <label for="category" style="margin-right: 5px;">모임</label>
+				 <select id="category" name="category" onchange="getCategory()">
+				 	<option value="" disabled selected>선택</option>
+				 	<!-- 모임 분류 -->
+				 	<option value="스터디">스터디</option>
+                    <option value="운동">운동</option>
+                    <option value="요리">요리</option>
+                    <option value="리뷰">리뷰</option>
+                    <option value="시사/재테크">시사/재테크</option>
+                    <option value="일상">일상</option>
+                    <option value="반려동물">반려동물</option>
+                    <option value="쇼핑">쇼핑</option>
+                    <option value="DIY">DIY</option>
+                    <option value="노래">노래</option>
+                    <option value="키덜트">키덜트</option>
+                    <option value="게임">게임</option>
+				 </select>
+				</div>
+				
+				<!-- 검색창 -->
+				<div class="search-wrap searchBox">
+				      <label for="search" id="searchBar">검색</label>
+				      <input type="text" id="search" name="search" placeholder="모임 명을 검색해주세요.">
+				</div>
+	
+				<!-- 검색 버튼 -->
+				<div>
+					<button id="searchBtn" class="hover-color">검색</button>
+				</div>
+				<br> <br> <br> <br>
+				</div>
 			
+			<nav>
 			<section>
 		    <!-- 게시판 목록 -->
 		    <div class="cards">
 		        <c:forEach items="${mokkojiList}" var="mokkoji">
+		        
 		            <div class="card">
+		            
 		                <div class="card__image-holder">
 		                    <img class="card__image" src="${mokkoji.mokkojiImages}" alt="모꼬지이미지" />
 		                </div>
+		                
 		                <div class="card-title">
 		                    <a href="#" class="toggle-info btn">
 		                        <span class="left"></span>
@@ -132,47 +163,52 @@
 		                        <small>닉네임 :${mokkoji.usernick}</small>
 		                    </h2>
 		                </div>
+		                
 		                <div class="card-flap flap1">
 		                    <div class="card-description">
 		                        ${mokkoji.mokkojiIntro }
 		                    </div>
-			                   <div class="card-flap flap2">
-	                     	 <div class="card-actions" id="buttonContainer">
-		                        <%--   <a href="javascript:join('${mokkojiCatagory}','${mokkojiNo}','${mokkojiTitle}','${usernick}')"
-		                         class="btn" autocomplete="off" >참가하기</a> --%>
-		                           <a href="javascript:join('${mokkoji.mokkojiNo}','${mokkoji.mokkojiTitle}','${mokkoji.usernick}')"
-		                         class="btn" autocomplete="off" >참가하기</a>
-<!-- 								<a href="/video" class="btn">참가하기</a> -->
-		                        </div>
-						      </div>
+		                    
+		                    <div class="card-flap flap2">
+                     	 	 <div class="card-actions" id="buttonContainer">
+	                           <a href="javascript:join('${mokkoji.mokkojiNo}','${mokkoji.mokkojiTitle}','${mokkoji.usernick}')"
+	                          class="btn" autocomplete="off" >참가하기</a>
+	                         </div>
+					       </div>
 		                </div>
+		                
 		            </div>
+		            
 		        </c:forEach>
-		    </div>
-		
-		    <!-- 페이지 링크를 표시합니다 -->
+		        
+		     <!-- 페이지 링크를 표시합니다 -->
 		     <div class="page_container">
-		     <div>
-		            	<button id="writeBtn" class="hover-color">방 만들기</button>
+		     	<div>
+	            	<button id="writeBtn" class="hover-color">방 만들기</button>
 		        </div>
 		     
-                        <div class="page_btn">
-                            <div class="page_wrap">
-                                <div class="page_nation">
-                                    <a class="arrow pprev" href="#" onclick="getPage(0)"></a>
-                                    <a class="arrow prev" href="#" onclick="prevPage()"></a>
-                                    <c:forEach begin="0" end="${totalPages > 0 ? totalPages - 1 : 0}" var="pageNumber">
-                                        <a class="page-link" href="#">${pageNumber + 1}</a>
-                                    </c:forEach>
-                                    <a class="arrow next" href="#" onclick="nextPage()"></a>
-                                    <a class="arrow nnext" href="#" onclick="getPage(${totalPages - 1})"></a>
-                                </div>
-                            </div>
+                <div class="page_btn">
+                    <div class="page_wrap">
+                        <div class="page_nation">
+                            <a class="arrow pprev" href="#" onclick="getPage(0)"></a>
+                            <a class="arrow prev" href="#" onclick="prevPage()"></a>
+                            <c:forEach begin="0" end="${totalPages > 0 ? totalPages - 1 : 0}" var="pageNumber">
+                                <a class="page-link" href="#">${pageNumber + 1}</a>
+                            </c:forEach>
+                            <a class="arrow next" href="#" onclick="nextPage()"></a>
+                            <a class="arrow nnext" href="#" onclick="getPage(${totalPages - 1})"></a>
                         </div>
                     </div>
-				</section>
-			</div>
-		</nav>
+                </div>
+                
+              </div>
+		        
+		    </div>
+		
+
+			</section>
+			</nav>
+		</div>
 
 	</main>
  <jsp:include page="/resources/footer.jsp" />

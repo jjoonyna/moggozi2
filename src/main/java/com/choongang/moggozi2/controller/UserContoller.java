@@ -181,6 +181,89 @@ public class UserContoller {
             return "main"; // 사용자 페이지로 이동
         }
     }
+    
+    	// 회원 아이디&비번 찾기 페이지 
+ 		@GetMapping("/id_pw_find")
+ 			public String findpwUserpage(Model model) {
+ 			System.out.println("ㅁ회원 아이디 비번 찾기 컨트롤러 입장!!ㅁ ");
+ 					return "/user/id_pw_find";
+ 		}
+
+ 		//아이디 찾기 처리 
+ 		@PostMapping("/id_ok")
+ 		public String findID(Model model, @RequestParam("userph") String userph) {
+ 			System.out.println("핸드폰  " + userph);
+ 			List<User> users = service.findByMyid(userph);
+ 			String username = "";
+ 			String useremail = "";
+ 			if (users != null) {
+ 				for (int i = 0; i < users.size(); i++) {
+ 					User u = (User) users.get(i);
+ 					if (u.getUserph().equals(userph)) {
+ 						username = u.getUsername();
+ 						useremail = u.getUseremail();
+ 					}
+ 				}
+ 				System.out.println(username);
+ 				System.out.println(useremail);
+ 				return "redirect:/sendUserByEmail?useremail="+useremail+"&username="+username;
+ 			} else
+ 			// 사용자가 없으면 null 반환
+ 			{
+ 				System.out.println("존재하지 않는 사용자 입니다.");
+ 				model.addAttribute("errorMessage", "존재하지 않는 사용자입니다.");
+ 				return "user/find_ok_result";
+ 			}
+ 		}
+ 		
+ 		//비밀번호 찾기 처리
+ 		 @PostMapping("/pw_ok")
+ 		    public String findPw(Model model, @RequestParam("username") String username) {
+ 		        System.out.println("Username: " + username);
+
+ 		        List<User> users = service.findByUsername(username);
+ 	 			String useremail = "";
+ 	 			
+ 		        String newPassword = generateRandomPassword(5);
+ 		        
+ 		        if (users != null) {
+ 					for (int i = 0; i < users.size(); i++) {
+ 						User u = (User) users.get(i);
+ 						if (u.getUsername().equals(username)) {
+ 							useremail = u.getUseremail();
+ 							u.setPassword(bCryptPasswordEncoder.encode(newPassword));
+ 							service.save(u);
+ 						}
+ 					}
+ 	 				System.out.println(username);
+ 	 				return "redirect:sendPasswordByEmail?useremail="+useremail+"&newPassword="+newPassword;
+ 				}  else {
+ 			        // 사용자가 존재하지 않는 경우, 에러 메시지를 모델에 추가
+ 			        System.out.println("존재하지 않는 사용자입니다.");
+ 			        model.addAttribute("errorMessage", "존재하지 않는 사용자입니다.");
+ 			    }
+ 		        return "user/find_ok_result";
+ 		 }
+ 		 
+ 		 
+ 		// 무작위로 길이가 length인 비밀번호 생성
+ 			public static String generateRandomPassword(int length) {
+ 				System.out.println("무작위 길이 비밀번호 생성 ");
+ 			    String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+ 			    StringBuilder password = new StringBuilder(length);
+ 			    for (int i = 0; i < length; i++) {
+ 			        int index = (int) (Math.random() * chars.length());
+ 			        password.append(chars.charAt(index));
+ 			    }
+ 			    return password.toString();
+ 			}
+
+ 			// 비밀번호를 해싱하여 저장
+ 			public static String hashPassword(String password) {
+ 				System.out.println("비밀번호를 해싱 하면서 저장 ");
+ 			    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+ 			    return encoder.encode(password);
+ 			}
 
 
     @GetMapping("/mypage")

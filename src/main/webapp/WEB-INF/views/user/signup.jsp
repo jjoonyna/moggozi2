@@ -61,7 +61,7 @@ function openDaumPostcode() {
 				    <input type="password" name="password" placeholder="패스워드">
 				    <button type="submit">로그인</button>
 
-				<a href="#">패스워드를 잊어뿟슴꽈?</a>
+				<a href="id_pw_find">패스워드를 잊어뿟슴꽈?</a>
 				</form>				
 		</div>
 	    <div class="toggle-container">

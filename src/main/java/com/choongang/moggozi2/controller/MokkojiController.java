@@ -3,12 +3,18 @@ package com.choongang.moggozi2.controller;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.Collection;
+
+import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +29,9 @@ import com.choongang.moggozi2.service.MokkojiService;
 
 @Controller
 public class MokkojiController {
+	
+	@Autowired
+	private EntityManager em;
     
     private final MokkojiService mokkojiService;
 
@@ -32,17 +41,57 @@ public class MokkojiController {
     }
     
     @GetMapping("/result")
-    public String result() {
+    public String result(Authentication authentication, Model model) {
+   	 String username = null;
+        String usernick = null;
+        String role = null;
+
+        if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
+            username = authentication.getName();
+            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+            if (!authorities.isEmpty()) {
+                GrantedAuthority auth = authorities.iterator().next();
+                role = auth.getAuthority();
+            }
+
+            // 사용자의 닉네임 가져오기
+            if (authentication.getPrincipal() instanceof UserDetails) {
+                usernick = ((CustomUserDetails) authentication.getPrincipal()).getUsernick();
+            }
+        }
+        model.addAttribute("usernick",usernick);
+        
         return "result";
     }
 
     @PostMapping("/upload")
-    public String handleFileUpload(@RequestParam("mokkojiImages") MultipartFile mokkojiImages,
-                                   @RequestParam("usernick") User usernick,
+    public String handleFileUpload(Authentication authentication,
+			   					   @RequestParam("mokkojiImages") MultipartFile mokkojiImages,
+			   					   @RequestParam("usernick") String nick,
                                    @RequestParam("mokkojiPerson") Integer mokkojiPerson,
                                    @RequestParam("mokkojiTitle") String mokkojiTitle,
                                    @RequestParam("mokkojiIntro") String mokkojiIntro,
                                    @RequestParam("mokkojiCategory") String mokkojiCategory) {
+
+   	 	String username = null;
+        String usernick = null;
+        String role = null;
+
+        if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
+            username = authentication.getName();
+            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+            if (!authorities.isEmpty()) {
+                GrantedAuthority auth = authorities.iterator().next();
+                role = auth.getAuthority();
+            }
+
+            // 사용자의 닉네임 가져오기
+            if (authentication.getPrincipal() instanceof UserDetails) {
+                usernick = ((CustomUserDetails) authentication.getPrincipal()).getUsernick();
+            }
+        }
+
+
         if (mokkojiImages.isEmpty()) {
             // 파일이 비어있을 경우 처리
             return "redirect:/uploadFailure";
@@ -69,7 +118,7 @@ public class MokkojiController {
 		     mokkoji.setMokkojiDate(now);
             
             mokkoji.setMokkojiImages(uploadDir + fileName);
-            mokkoji.setUsernick(usernick);
+            mokkoji.setUsernick(nick);
             mokkoji.setMokkojiPerson(mokkojiPerson);
             mokkoji.setMokkojiTitle(mokkojiTitle);
             mokkoji.setMokkojiIntro(mokkojiIntro);
