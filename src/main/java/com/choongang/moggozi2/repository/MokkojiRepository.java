@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.choongang.moggozi2.entity.Mokkoji;
@@ -34,6 +35,10 @@ public interface MokkojiRepository extends JpaRepository<Mokkoji, Integer> {
     // 특정 필드(mokkojiNo)의 수를 카운트하는 쿼리 정의
     @Query("SELECT COUNT(mokkoji_no) FROM Mokkoji")
     int countMokkojiNo();
+
+    
+    @Query(value="select * from mokkoji where usernick = :usernick", nativeQuery = true)
+	List<Mokkoji> findAll(@Param(value = "usernick") String usernick);
     
 
 	

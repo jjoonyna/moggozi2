@@ -61,4 +61,8 @@ public class MokkojiServiceImpl implements MokkojiService {
             return mokkojiRepository.countByMokkojiTitleContaining(keyword);
         }
     }
+    
+    public List<Mokkoji> findAllMokkoji(String usernick){
+    	return mokkojiRepository.findAll(usernick);
+    }
 }

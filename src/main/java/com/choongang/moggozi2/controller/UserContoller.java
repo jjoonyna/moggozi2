@@ -390,6 +390,10 @@ public class UserContoller {
  	            usernick = ((CustomUserDetails) auth.getPrincipal()).getUsernick();
  	        }}
  	    
+ 	    List<Mokkoji> mokkoji = mokkojiService.findAllMokkoji(usernick);
+ 	    System.out.println(mokkoji.get(0).getMokkojiTitle());
+ 	    model.addAttribute("mokkoji",mokkoji);
+ 	    
  	    return "user/mymoim";
     }
     

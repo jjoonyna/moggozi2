@@ -86,17 +86,30 @@
 			<!-- hot 모꼬지! -->
 			
 			</aside>
-			
-			<c:forEach items="mokkojiList" var="moimlist">
+			<form action="listDelete" method="post">
+			<c:forEach items="${ mokkoji}" var="mokkoji">
 			<div>
 				<table>
 					<tr>
-					<td>${ mokkojiList.usernick}</td>
-					<td></td>
+					<td><input type="checkbox"></td>
+					</tr>
+					<tr>
+					<td>제목</td>
+					<td>${mokkoji.mokkojiTitle }</td>
+					<td>인원</td>
+					<td>${mokkoji.mokkojiPerson }</td>
+					</tr>				
+					<tr>
+					<td>만든날짜</td>
+					<td>${mokkoji.mokkojiDate }</td>
+					<td>작성자</td>
+					<td>${mokkoji.usernick }</td>
 					</tr>				
 				</table>
 			</div>
 			</c:forEach>
+			<input type="submit" value="삭제">
+			</form>
 			
 			
 				</div>
