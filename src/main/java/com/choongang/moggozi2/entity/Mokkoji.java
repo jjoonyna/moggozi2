@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.UniqueConstraint;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,7 +35,9 @@ public class Mokkoji {
     @JoinColumn(name="usernick",insertable = false, updatable = false)
     private User user;
     
-    @Column(name = "mokkojiTitle")
+    
+    
+    @Column(name = "mokkojiTitle", unique=true)
     private String mokkojiTitle;
     
     private Integer mokkojiPerson;
