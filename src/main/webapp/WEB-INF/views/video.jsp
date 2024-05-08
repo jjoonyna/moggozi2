@@ -65,7 +65,7 @@
 									autocomplete="off" class="form-control" type="text"
 									placeholder="닉네임" id="usernick" name="usernick"
 									onkeypress="return checkEnter(this, event);"
-									value="${usernick }" />	<!-- readonly -->
+									value="${usernick }" />
 							</div>
 						</div>
 						<span class="input-group-btn">

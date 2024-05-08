@@ -45,6 +45,8 @@ public class UserService {
 	    newUser.setUsergender(user.getUsergender());
 	    newUser.setUsernick(user.getUsernick());
 	    newUser.setRole("USER");
+	    // 관리자 회원가입 시 활성화
+//	    newUser.setRole("ADMIN");
     
 	    // 새로운 사용자 저장
 	    userrepository.save(newUser);
@@ -123,6 +125,10 @@ public class UserService {
 			
 		}
 
+		// 닉네임 중복 검사
+		public User findByNick(String usernick) {
+			return userrepository.findByUsernick(usernick);
+		}
 	
 	
 }

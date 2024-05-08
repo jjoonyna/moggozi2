@@ -29,8 +29,8 @@
 			    <c:choose>
 			        <c:when test="${!empty usernick}">
 	    	<div class="login-wrapper">
-			            <h2 class="login-text">로그인 상태</h2>
-			            <p>어서오세요! ${usernick}님 ☆ﾐ(o*･ω･)ﾉ</p>
+			            <h2 class="login-text">회원 정보</h2>
+			            <p>어서오세요!<br>${usernick}님 ☆ﾐ(o*･ω･)ﾉ</p><br>
 			            <a href="mypage">마이페이지</a>
 			            <a href="logout">로그아웃</a>
 			</div>

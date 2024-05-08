@@ -88,20 +88,20 @@ public class BoardController {
 
     @GetMapping("/boardinsertform")
     public String boardinsertform(Authentication auth, Model model) {
-    	String username = null;
- 	    String usernick = null;
+        	String username = null;
+     	    String usernick = null;
 
- 	    if (auth != null) {
- 	        username = auth.getName();
+     	    if (auth != null) {
+     	        username = auth.getName();
 
- 	        // usernick 가져오기
- 	        if (auth.getPrincipal() instanceof UserDetails) {
- 	            usernick = ((UserDetails) auth.getPrincipal()).getUsername();
- 	        }
- 	    }
- 	    // 뷰로 사용자 이름과 usernick 전달
- 	    model.addAttribute("username", username);
- 	    model.addAttribute("usernick", usernick); // usernick 추가
+     	        // usernick 가져오기
+     	        if (auth.getPrincipal() instanceof UserDetails) {
+     	            usernick = ((UserDetails) auth.getPrincipal()).getUsername();
+     	        }
+     	    }
+     	    // 뷰로 사용자 이름과 usernick 전달
+     	    model.addAttribute("username", username);
+     	    model.addAttribute("usernick", usernick); // usernick 추가
 	    	
     	return "boardinsertform";
     }

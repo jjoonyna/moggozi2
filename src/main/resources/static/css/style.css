@@ -9,7 +9,7 @@
 
 body{
     background-color: grey;
-    background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+    background: linear-gradient(to right, black, grey);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -25,7 +25,7 @@ body{
     overflow: hidden;
     width: 768px;
     max-width: 100%;
-    min-height: 1000px;
+    min-height: 500px;
 }
 
 .container p{
@@ -36,6 +36,7 @@ body{
 }
 
 .container span{
+	color: red;
     font-size: 12px;
 }
 
@@ -47,7 +48,7 @@ body{
 }
 
 .container button{
-    background-color: #512da8;
+    background-color: black;
     color: #fff;
     font-size: 12px;
     padding: 10px 45px;
@@ -73,6 +74,7 @@ body{
     flex-direction: column;
     padding: 0 40px;
     height: 100%;
+    overflow: auto;
 }
 
 .container input{
@@ -161,9 +163,9 @@ body{
 }
 
 .toggle{
-    background-color: #512da8;
+    background-color:  black;
     height: 100%;
-    background: linear-gradient(to right, #5c6bc0, #512da8);
+    background: linear-gradient(to right, black, grey);
     color: #fff;
     position: relative;
     left: -100%;

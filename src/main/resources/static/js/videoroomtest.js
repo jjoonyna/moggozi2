@@ -376,23 +376,27 @@ function registerUsername() {
       $('#usernick').attr('disabled', true);
       $('#register').attr('disabled', true).unbind('click');
 
-        var roomname = $('#roomname').val();
-      if(roomname === "") {
-         $('#room')
-            .removeClass().addClass('label label-warning')
-            .html("채팅방 아이디(번호)를 넣으세요. ex) 1234");
-         $('#roomname').removeAttr('disabled');
-         $('#register').removeAttr('disabled').click(registerUsername);
-         return;
-      }
-      if(/[^0-9]/.test(roomname)) {
+	var roomname = $('#roomname').val();
+	if(roomname === "" || isNaN(roomname) || parseInt(roomname) <= 0) {
+	   $('#room')
+	      .removeClass().addClass('label label-warning')
+	      .html("채팅방 아이디(번호)를 양의 정수로 입력하세요. ex) 1234");
+	   $('#roomname').removeAttr('disabled').val("");
+	   $('#register').removeAttr('disabled').click(registerUsername);
+	   return;
+	}
+	
+	// 입력값이 양의 정수인 경우에만 처리
+	myroom = parseInt(roomname);
+
+  /*    if(/[^a-zA-Z0-9]/.test(roomname)) {
          $('#room')
             .removeClass().addClass('label label-warning')
             .html('채팅방 아이디는 숫자만 가능합니다.');
          $('#roomname').removeAttr('disabled').val("");
          $('#register').removeAttr('disabled').click(registerUsername);
          return;
-      }
+      } 
 
       var username = $('#usernick').val();
       if(username === "") {
@@ -411,7 +415,7 @@ function registerUsername() {
          $('#register').removeAttr('disabled').click(registerUsername);
          return;
       }
-
+*/
         //alert("room id:" + roomname);
         myroom = Number(roomname); //사용자 입력 방 아이디
 
