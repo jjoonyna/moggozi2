@@ -392,7 +392,7 @@ function registerUsername() {
          $('#roomname').removeAttr('disabled').val("");
          $('#register').removeAttr('disabled').click(registerUsername);
          return;
-      }
+      } 
 
       var username = $('#usernick').val();
       if(username === "") {

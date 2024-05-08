@@ -30,6 +30,10 @@ public class Mokkoji {
     
     @Column(name = "usernick")
 	private String usernick;
+    
+    @ManyToOne
+    @JoinColumn(name="usernick",insertable = false, updatable = false)
+    private User user;
 	
     @ManyToOne
     @JoinColumn(name="usernick",insertable = false, updatable = false)

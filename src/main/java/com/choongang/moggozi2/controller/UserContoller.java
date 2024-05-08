@@ -19,11 +19,14 @@ import org.springframework.ui.Model;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.choongang.moggozi2.entity.CustomUserDetails;
 import com.choongang.moggozi2.entity.AdminNotice;
@@ -62,10 +65,46 @@ public class UserContoller {
 	/*
 	 * 로그인&회원가입 폼
 	 */
-    @GetMapping("signup")
-    public String signupP() {
+//    @GetMapping("signup")
+//    public String signupP() {
+//        return "user/signup";
+//    }
+    
+	/*
+	 * 로그인&회원가입 폼
+	 */
+	@GetMapping("/signup")
+    public String showSignupForm(Model model) {
+        model.addAttribute("user", new User());
         return "user/signup";
     }
+
+	 // 아이디 중복 검사
+	   @GetMapping("/check/{username}")
+	   @ResponseBody
+	   public ResponseEntity<Integer> checkname(@PathVariable("username") String username) {
+		   User user = service.findById(username);
+		   int result = 0;
+	      if (user != null) {
+	    	  result = 1;
+	         return new ResponseEntity<>(result,HttpStatus.OK);
+	      }
+	      return new ResponseEntity<>(result,HttpStatus.OK);
+	   }
+	// 닉네임 중복 검사
+	   @GetMapping("/checknick/{usernick}")
+	   @ResponseBody
+	   public ResponseEntity<Integer> checknick(@PathVariable("usernick") String usernick) {
+		   User nick = service.findByNick(usernick);
+		   int result = 0;
+	      if (nick != null) {
+	    	  result = 1;
+	         return new ResponseEntity<>(result,HttpStatus.OK);
+	      }
+	      return new ResponseEntity<>(result,HttpStatus.OK);
+	   }
+
+    
     
 
     @PostMapping("/joinProc")
