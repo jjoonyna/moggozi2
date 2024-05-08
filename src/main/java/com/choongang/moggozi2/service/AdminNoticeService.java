@@ -80,7 +80,7 @@ public class AdminNoticeService {
 	}
 
 	public List<ReplyNotice> findRepliesByNotiNo(Integer notiNo) {
-	    return replyNoticeRepository.findByNotiNoNotiNo(notiNo);
+	    return replyNoticeRepository.findByNotiNo(notiNo);
 	}
 
 

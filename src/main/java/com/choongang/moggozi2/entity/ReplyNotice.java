@@ -27,14 +27,20 @@ public class ReplyNotice {
 	private Integer replyNo;		// 답변번호
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "notiNo") // username 컬럼과 매핑
-	private AdminNotice notiNo;	// 글번호
+	@JoinColumn(name = "notiNo",insertable = false, updatable = false) // username 컬럼과 매핑
+	private AdminNotice adminNotice;	// 글번호
+	
+	@Column(name="notiNo")
+	private Integer notiNo;
 	
 	private String username;		// 아이디
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "usernick", referencedColumnName = "usernick")
-	private User usernick;	// 답변 작성자명
+	@ManyToOne
+    @JoinColumn(name = "usernick", referencedColumnName = "usernick", insertable = false, updatable = false)
+	private User user;	// 답변 작성자명
+	
+	@Column(name="usernick")
+	private String usernick;
 	
 	private String replyContent;	// 답변 내용
 	private Timestamp replyDate;	// 답변 날짜

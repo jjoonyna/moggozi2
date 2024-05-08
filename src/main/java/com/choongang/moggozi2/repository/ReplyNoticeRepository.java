@@ -13,7 +13,6 @@ import com.choongang.moggozi2.entity.ReplyNotice;
 public interface ReplyNoticeRepository extends JpaRepository<ReplyNotice, Long> {
 
 
-	List<ReplyNotice> findByNotiNo(AdminNotice notiNo);
-	List<ReplyNotice> findByNotiNoNotiNo(Integer notiNo);
+	List<ReplyNotice> findByNotiNo(Integer notiNo);
 	 
 }

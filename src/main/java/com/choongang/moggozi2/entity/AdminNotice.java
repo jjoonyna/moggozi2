@@ -2,11 +2,13 @@ package com.choongang.moggozi2.entity;
 
 import java.sql.Timestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +23,10 @@ public class AdminNotice {
 	private Integer notiNo;		// 글번호
 	
 	private String category;		// 카테고리(n = 게시판 / a = 1:1문의)
+	
+	@ManyToOne
+    @JoinColumn(name = "usernick", referencedColumnName = "usernick", insertable = false, updatable = false)
+	private User user;
 	
 	private String username;		// 아이디
 	private String usernick;		// 닉네임

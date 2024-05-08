@@ -385,7 +385,7 @@ function registerUsername() {
          $('#register').removeAttr('disabled').click(registerUsername);
          return;
       }
-      if(/[^0-9]/.test(roomname)) {
+      if(/[^a-zA-Z0-9]/.test(roomname)) {
          $('#room')
             .removeClass().addClass('label label-warning')
             .html('채팅방 아이디는 숫자만 가능합니다.');

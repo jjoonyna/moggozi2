@@ -117,7 +117,6 @@ public class BoardController {
                 File uploadFile = new File(uploadDir + fileName);
                 boardFile.transferTo(uploadFile);
             }
-
             // 게시글 정보를 DB에 저장
             CommonBoard commonBoard = new CommonBoard();
             commonBoard.setUsername(username);
