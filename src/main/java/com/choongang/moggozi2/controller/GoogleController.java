@@ -1,6 +1,5 @@
 package com.choongang.moggozi2.controller;
 
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.choongang.moggozi2.common.GoogleInfResponse;
@@ -52,26 +52,7 @@ public class GoogleController {
 	    }
 
 	 @RequestMapping("google_login-callback")
-	    public RedirectView loginGoogle(@RequestParam(value = "code") String authCode,Model model,Authentication authentication){
-		 
-		 	String username = null;
-	        String usernick = null;
-	        String role = null;
-
-	        if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
-	            username = authentication.getName();
-	            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-	            if (!authorities.isEmpty()) {
-	                GrantedAuthority auth = authorities.iterator().next();
-	                role = auth.getAuthority();
-	            }
-
-	            // 사용자의 닉네임 가져오기
-	            if (authentication.getPrincipal() instanceof UserDetails) {
-	                usernick = ((CustomUserDetails) authentication.getPrincipal()).getUsernick();
-	            }
-	        }
-	        
+	    public ModelAndView loginGoogle(@RequestParam(value = "code") String authCode,Model model,Authentication authentication){
 	        RestTemplate restTemplate = new RestTemplate();
 	        GoogleRequest googleOAuthRequestParam = GoogleRequest
 	                .builder()
@@ -87,20 +68,37 @@ public class GoogleController {
 	        map.put("id_token",jwtToken);
 	        ResponseEntity<GoogleInfResponse> resultEntity2 = restTemplate.postForEntity("https://oauth2.googleapis.com/tokeninfo",
 	                map, GoogleInfResponse.class);
-	        String email=resultEntity2.getBody().getEmail();   
-	        String name=resultEntity2.getBody().getName();
+	        String username=resultEntity2.getBody().getEmail();   
+	        String usernick=resultEntity2.getBody().getName();
 	        User user = new User();
-			boolean newUser = newrepository.existsByUsername(email);
+	        String role = "";
+			boolean newUser = newrepository.existsByUsername(username);
 			if(!newUser) {
-				user.setUsername(email);
-				user.setUsernick(name);
+				user.setUsername(username);
+				user.setUsernick(usernick);
 				service.snsuserjoin(user);
 			}
+			if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
+	            username = authentication.getName();
+	            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+	            if (!authorities.isEmpty()) {
+	                GrantedAuthority auth = authorities.iterator().next();
+	                role = auth.getAuthority();
+	            }
+
+	            // 사용자의 닉네임 가져오기
+	            if (authentication.getPrincipal() instanceof UserDetails) {
+	                usernick = ((CustomUserDetails) authentication.getPrincipal()).getUsernick();
+	            }
+	        }
 			
-		      	model.addAttribute("username", username);
-	            model.addAttribute("role", role);
-	            model.addAttribute("usernick", usernick);
-	        return new RedirectView("/main");
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("/main");
+			modelAndView.addObject("username", username);
+			modelAndView.addObject("role", role);
+			modelAndView.addObject("usernick", usernick);
+			return modelAndView;
+			
 	    }
 	
 }

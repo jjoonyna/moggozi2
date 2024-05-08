@@ -26,6 +26,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.choongang.moggozi2.entity.CustomUserDetails;
@@ -101,31 +102,12 @@ public class NaverController {
 //	}
 	
 	@RequestMapping("/naver_login-callback")
-	public RedirectView naver_redirect(HttpServletRequest request, Model model,Authentication authentication) {
-		
-		 String username = null;
-	        String usernick = null;
-	        String role = null;
-
-	        if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
-	            username = authentication.getName();
-	            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-	            if (!authorities.isEmpty()) {
-	                GrantedAuthority auth = authorities.iterator().next();
-	                role = auth.getAuthority();
-	            }
-
-	            // 사용자의 닉네임 가져오기
-	            if (authentication.getPrincipal() instanceof UserDetails) {
-	                usernick = ((CustomUserDetails) authentication.getPrincipal()).getUsernick();
-	            }
-	        }
-	        
-	        
+	public ModelAndView naver_redirect(HttpServletRequest request,Model model,Authentication authentication) {
 		// 네이버에서 전달해준 code, state 값 가져오기
 	    String code = request.getParameter("code");
 	    String state = request.getParameter("state");
 
+	    ModelAndView modelAndView = new ModelAndView();
 	    // 세션에 저장해둔 state값 가져오기
 	    String session_state = String.valueOf(request.getSession().getAttribute("state"));
 
@@ -133,7 +115,8 @@ public class NaverController {
 	    if (!state.equals(session_state)) {
 	        System.out.println("세션 불일치");
 	        request.getSession().removeAttribute("state");
-	        return new RedirectView("/error");
+	        modelAndView.addObject("/error");
+	        return modelAndView;
 	    }
 
 	    String tokenURL = "https://nid.naver.com/oauth2.0/token";
@@ -187,18 +170,38 @@ public class NaverController {
 	        JsonParser parser = new JsonParser(); 
 	        JsonElement element = parser.parse(userResultMap);
 	        JsonObject respon = element.getAsJsonObject().get("response").getAsJsonObject();
-			String email = respon.getAsJsonObject().get("email").getAsString();;
-			String nickname = respon.getAsJsonObject().get("nickname").getAsString();;
+			String username = respon.getAsJsonObject().get("email").getAsString();;
+			String usernick = respon.getAsJsonObject().get("nickname").getAsString();;
 			String name = respon.getAsJsonObject().get("name").getAsString();;
 			String gender = respon.getAsJsonObject().get("gender").getAsString();;
+			String role = "";
 			
 			
+			if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
+	            username = authentication.getName();
+	            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+	            if (!authorities.isEmpty()) {
+	                GrantedAuthority auth = authorities.iterator().next();
+	                role = auth.getAuthority();
+	            }
+
+	            // 사용자의 닉네임 가져오기
+	            if (authentication.getPrincipal() instanceof UserDetails) {
+	                usernick = ((CustomUserDetails) authentication.getPrincipal()).getUsernick();
+	            }
+	        }
+			
+			
+			modelAndView.setViewName("/main");
+			modelAndView.addObject("username", username);
+			modelAndView.addObject("role", role);
+			modelAndView.addObject("usernick", usernick);
 			//db 저장
 			User user = new User();
-			boolean newUser = newrepository.existsByUsername(email);
+			boolean newUser = newrepository.existsByUsername(username);
 			if(!newUser) {
-				user.setUsername(email);
-				user.setUsernick(nickname);
+				user.setUsername(username);
+				user.setUsernick(usernick);
 				user.setUsergender(gender);
 				user.setNormalname(name);
 				service.snsuserjoin(user);
@@ -210,12 +213,10 @@ public class NaverController {
 	    
 			// 세션에 저장된 state 값 삭제
 	    request.getSession().removeAttribute("state");
-	    
-		model.addAttribute("username", username);
-        model.addAttribute("role", role);
-        model.addAttribute("usernick", usernick);
 
-	    return new RedirectView("/main");
+	    
+		
+		return modelAndView;
 	}
 	
 	

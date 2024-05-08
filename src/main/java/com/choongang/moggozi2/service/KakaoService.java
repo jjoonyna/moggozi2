@@ -1,14 +1,23 @@
 package com.choongang.moggozi2.service;
 
 
+import java.util.Collection;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.choongang.moggozi2.common.Const;
+import com.choongang.moggozi2.entity.CustomUserDetails;
 import com.choongang.moggozi2.entity.User;
 import com.choongang.moggozi2.repository.UserRepository;
 import com.choongang.moggozi2.transformer.Trans;
@@ -65,7 +74,7 @@ public class KakaoService {
        return new RedirectView(uri);
 	}	
 	
-	public RedirectView loginCallback(String code) {	
+	public ModelAndView loginCallback(String code,Model model,Authentication authentication) {	
 		String param = "grant_type=authorization_code&client_id="+REST_API_KEY+"&redirect_uri="+REDIRECT_URI+"&client_secret="+CLIENT_SECRET+"&code="+code;
 		String rtn = httpCallService.Call(Const.POST, TOKEN_URI, Const.EMPTY, param);
         httpSession.setAttribute("token", Trans.token(rtn, new JsonParser()));  
@@ -79,19 +88,40 @@ public class KakaoService {
         JsonElement element = parser.parse(result);
 		JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
 		JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
-		String nickname = properties.getAsJsonObject().get("nickname").getAsString();
-		String email = kakao_account.getAsJsonObject().get("email").getAsString();
+		String usernick = properties.getAsJsonObject().get("nickname").getAsString();
+		String username = kakao_account.getAsJsonObject().get("email").getAsString();
+		String role = "";
 		
 		//db 저장
 		User user = new User();
-		boolean newUser = newrepository.existsByUsername(email);
+		boolean newUser = newrepository.existsByUsername(username);
 		if(!newUser) {
-			user.setUsername(email);
-			user.setUsernick(nickname);
+			user.setUsername(username);
+			user.setUsernick(usernick);
 			service.snsuserjoin(user);
 		}
 		
-		return new RedirectView("/main");
+		if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
+            username = authentication.getName();
+            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+            if (!authorities.isEmpty()) {
+                GrantedAuthority auth = authorities.iterator().next();
+                role = auth.getAuthority();
+            }
+
+            // 사용자의 닉네임 가져오기
+            if (authentication.getPrincipal() instanceof UserDetails) {
+                usernick = ((CustomUserDetails) authentication.getPrincipal()).getUsernick();
+            }
+        }
+		
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("/main");
+		modelAndView.addObject("username", username);
+		modelAndView.addObject("role", role);
+		modelAndView.addObject("usernick", usernick);
+		return modelAndView;
 	}
 	
 	
