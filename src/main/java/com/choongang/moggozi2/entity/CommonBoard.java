@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -19,14 +20,18 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@Table(name="commonboard")
 public class CommonBoard{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="board_no")
     private Integer boardNo;
 
     @Column(name = "usernick")
-    private String	username;
+    private String	usernick;
     
+    private String	username;
+
     @ManyToOne
     @JoinColumn(name="usernick",insertable = false, updatable = false)
     private User user;
@@ -34,7 +39,6 @@ public class CommonBoard{
 	private String  category;
 	private String  boardSubject;
 	private String  boardContent;
-	
 	@CreationTimestamp
 	private Timestamp boardDate;
 	

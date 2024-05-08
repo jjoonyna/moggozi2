@@ -3,6 +3,7 @@ package com.choongang.moggozi2.controller;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +16,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.choongang.moggozi2.entity.CustomUserDetails;
 import com.choongang.moggozi2.entity.User;
 import com.choongang.moggozi2.repository.UserRepository;
 import com.choongang.moggozi2.service.UserService;
@@ -94,7 +101,27 @@ public class NaverController {
 //	}
 	
 	@RequestMapping("/naver_login-callback")
-	public RedirectView naver_redirect(HttpServletRequest request) {
+	public RedirectView naver_redirect(HttpServletRequest request, Model model,Authentication authentication) {
+		
+		 String username = null;
+	        String usernick = null;
+	        String role = null;
+
+	        if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
+	            username = authentication.getName();
+	            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+	            if (!authorities.isEmpty()) {
+	                GrantedAuthority auth = authorities.iterator().next();
+	                role = auth.getAuthority();
+	            }
+
+	            // 사용자의 닉네임 가져오기
+	            if (authentication.getPrincipal() instanceof UserDetails) {
+	                usernick = ((CustomUserDetails) authentication.getPrincipal()).getUsernick();
+	            }
+	        }
+	        
+	        
 		// 네이버에서 전달해준 code, state 값 가져오기
 	    String code = request.getParameter("code");
 	    String state = request.getParameter("state");
@@ -183,6 +210,10 @@ public class NaverController {
 	    
 			// 세션에 저장된 state 값 삭제
 	    request.getSession().removeAttribute("state");
+	    
+		model.addAttribute("username", username);
+        model.addAttribute("role", role);
+        model.addAttribute("usernick", usernick);
 
 	    return new RedirectView("/main");
 	}

@@ -1,11 +1,18 @@
 package com.choongang.moggozi2.controller;
 
+
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +23,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.choongang.moggozi2.common.GoogleInfResponse;
 import com.choongang.moggozi2.common.GoogleRequest;
 import com.choongang.moggozi2.common.GoogleResponse;
+import com.choongang.moggozi2.entity.CustomUserDetails;
 import com.choongang.moggozi2.entity.User;
 import com.choongang.moggozi2.repository.UserRepository;
 import com.choongang.moggozi2.service.UserService;
@@ -44,7 +52,26 @@ public class GoogleController {
 	    }
 
 	 @RequestMapping("google_login-callback")
-	    public RedirectView loginGoogle(@RequestParam(value = "code") String authCode){
+	    public RedirectView loginGoogle(@RequestParam(value = "code") String authCode,Model model,Authentication authentication){
+		 
+		 	String username = null;
+	        String usernick = null;
+	        String role = null;
+
+	        if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
+	            username = authentication.getName();
+	            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+	            if (!authorities.isEmpty()) {
+	                GrantedAuthority auth = authorities.iterator().next();
+	                role = auth.getAuthority();
+	            }
+
+	            // 사용자의 닉네임 가져오기
+	            if (authentication.getPrincipal() instanceof UserDetails) {
+	                usernick = ((CustomUserDetails) authentication.getPrincipal()).getUsernick();
+	            }
+	        }
+	        
 	        RestTemplate restTemplate = new RestTemplate();
 	        GoogleRequest googleOAuthRequestParam = GoogleRequest
 	                .builder()
@@ -69,6 +96,10 @@ public class GoogleController {
 				user.setUsernick(name);
 				service.snsuserjoin(user);
 			}
+			
+		      	model.addAttribute("username", username);
+	            model.addAttribute("role", role);
+	            model.addAttribute("usernick", usernick);
 	        return new RedirectView("/main");
 	    }
 	
