@@ -83,7 +83,7 @@
 
 			<!-- 상세 게시판 -->
 			<nav>
-				<h1 class="sub-title">공지사항 상세보기</h1>
+				<h1 class="sub-title">공지사항</h1>
 				<section>
 					<div class="cards">
 						<c:choose>
