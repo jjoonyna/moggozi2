@@ -8,6 +8,7 @@
     <jsp:include page="/resources/header.jsp" />
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/mocozi.css">
+        <link rel="stylesheet" type="text/css" href="../css/login.css">
     <link rel="stylesheet" type="text/css" href="../css/boardlist.css">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,14 +24,14 @@
         </div>
         
         <div class="container">
-            <!-- 로그인 창 -->
-            <aside>
-                <div style="width: 300px; padding: 40px; box-sizing: border-box; border: 0.5px solid #ccc; border-radius: 5px;">
-                    <h2 class="login-text">회원 정보</h2>
-                    <p>어서오세요! ${usernick}님 ☆ﾐ(o*･ω･)ﾉ</p>
-                    <a href="mypage">마이페이지</a>
-                    <a href="logout">로그아웃</a>
-                </div>
+        					<!-- 로그인 창 -->
+			<aside>
+	    	<div class="login-wrapper">
+			            <h2 class="login-text">회원 정보</h2>
+			            <p>어서오세요!<br>${usernick}님 ☆ﾐ(o*･ω･)ﾉ</p><br>
+			            <a href="mypage">마이페이지</a>
+			            <a href="logout">로그아웃</a>
+			</div>
                 
                 <!-- 사이드 카테고리 -->
                 <div class="table-container">
@@ -40,27 +41,25 @@
                                 <div class="dropdown">
                                     <a class="hover-color">마이페이지</a>
                                     <div class="dropdown-content" id="myDropdown">
-                                        <a href="myinfoupdate?usernick=${usernick}">내 정보 수정</a>
-                                        <a href="mypwdchange?usernick=${usernick}">비밀번호 변경</a>
-                                        <a href="mydelete?usernick=${usernick}">회원 탈퇴</a>
+                                        <a href="myinfoupdate">내 정보 수정</a>
+                                        <a href="mypwdchange">비밀번호 변경</a>
+                                        <a href="mydelete">회원 탈퇴</a>
                                         <!-- 사이드바 줄 -->
                                         <hr class="sidebar-divider">
-                                        <a href="mymoim">모임 목록</a>
-                                        <a href="#" onclick="return preparingPage()">문의 내역</a>
+                                        <a href="#" onclick="return checkCurrentPage()">모임 목록</a>
+                                        <a href="myqnaList">내 모꼬지</a>
                                     </div>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <a  class="hover-color">모일꼬지?</a>
+                                <a class="hover-color" href="main">모일꼬지?</a>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <div href="boardlist?usernick=${usernick}" class="dropdown">
-                                    <a class="hover-color" href="boardlist?usernick=${usernick}">모임니당</a>
-                                </div>
+                                <a class="hover-color" href="boardlist">모임니당</a>
                             </td>
                         </tr>
                         <tr>
@@ -68,8 +67,8 @@
                                 <div class="dropdown">
                                     <a class="hover-color">알림마당</a>
                                     <div class="dropdown-content" id="myDropdown">
-                                        <a href="noticeUserList?usernick=${usernick}">공지사항</a>
-                                        <a href="askWrite?usernick=${usernick}">1:1 문의</a>
+                                        <a href="noticeUserList">공지사항</a>
+                                        <a href="askWrite">1:1 문의</a>
                                     </div>
                                 </div>
                             </td>
@@ -88,34 +87,34 @@
                         <table class="navClass">
                             <tr class="navClasses">
                                 <td></td>
-                                <!-- 체크박스를 위한 빈 칸 -->
                                 <td>제목</td>
                                 <td>인원</td>
                                 <td>만든날짜</td>
                                 <td>작성자</td>
                             </tr>
         
-                            <c:if test="${empty mokkoji}">
-                                <tr>
-                                    <td colspan="5">데이터가 없습니다.</td>
-                                </tr>
-                            </c:if>
-        
-                            <c:if test="${not empty mokkoji}">
-                                <c:forEach items="${mokkoji}" var="mokkoji">
-                                    <tr class="listArea">
-                                        <td><input type="checkbox"></td>
-                                        <!-- 체크박스 -->
-                                        <td>${mokkoji.mokkojiTitle}</td>
-                                        <td>${mokkoji.mokkojiPerson}</td>
-                                        <td>${mokkoji.mokkojiDate}</td>
-                                        <td>${mokkoji.usernick}</td>
-                                    </tr>
-                                </c:forEach>
-                            </c:if>
+                           <c:choose>
+							    <c:when test="${empty mokkoji}">
+							        <tr>
+							            <td colspan="5">데이터가 없습니다.</td>
+							        </tr>
+							    </c:when>
+							    <c:otherwise>
+							        <c:forEach items="${mokkoji}" var="mokkojiItem">
+							            <tr class="listArea">
+							                <td><input type="checkbox"></td>
+							                <td>${mokkojiItem.mokkojiTitle}</td>
+							                <td>${mokkojiItem.mokkojiPerson}</td>
+							                <td>${mokkojiItem.mokkojiDate}</td>
+							                <td>${mokkojiItem.usernick}</td>
+							            </tr>
+							        </c:forEach>
+							    </c:otherwise>
+							</c:choose>
+
                         </table>
                         <!-- 삭제 버튼 -->
-                        <form action="listDelete" method="post">
+                        <form action="/listDelete" method="post">
                             <input type="submit" class="button-submit" value="삭제">
                         </form>
                     </div>

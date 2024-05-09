@@ -505,16 +505,18 @@ public class UserContoller {
     public String mymoim(Authentication auth, Model model) {
     	String username = null;
  	    String usernick = null;
- 	    String role = null;
  	    
  	    if (auth != null) {
  	        username = auth.getName();
- 	        role = auth.getAuthorities().stream().findFirst().orElse(null).getAuthority();
  	        
  	        // usernick 가져오기
  	        if (auth.getPrincipal() instanceof CustomUserDetails) {
  	            usernick = ((CustomUserDetails) auth.getPrincipal()).getUsernick();
  	        }}
+ 	    
+        // 뷰로 사용자 이름 전달
+        model.addAttribute("username", username);
+        model.addAttribute("usernick", usernick);
  	    
  	    List<Mokkoji> mokkoji = mokkojiService.findAllMokkoji(usernick);
  	    model.addAttribute("mokkoji",mokkoji);
@@ -637,11 +639,28 @@ public class UserContoller {
 
 
     
-	    /*
+	 	 /*
 	 	 * 1:1문의 상세보기 
 	 	 */
 	 	@GetMapping("/myqnaDetail")
-	 	public String getReplyByNotiNo(@RequestParam("id") Integer id, @RequestParam(name = "usernick", required = false) String usernick, Model model) {
+	 	public String getReplyByNotiNo(Authentication auth, @RequestParam("id") Integer id,   Model model) {
+	 		
+	 		String username = null;
+	 	    String usernick = null;
+	 	    
+	 	    if (auth != null) {
+	 	        username = auth.getName();
+	 	        
+	 	        // usernick 가져오기
+	 	        if (auth.getPrincipal() instanceof CustomUserDetails) {
+	 	            usernick = ((CustomUserDetails) auth.getPrincipal()).getUsernick();
+	 	        }}
+
+	 	    // 뷰로 사용자 이름과 usernick 전달
+	 	    model.addAttribute("username", username);
+	 	    model.addAttribute("usernick", usernick); // usernick 추가
+	 		
+	 		
 	 	    // id를 사용하여 공지사항을 조회합니다.
 	 	    AdminNotice notice = adminNoticeService.findNoticeById(id);
 	 	    
@@ -688,24 +707,20 @@ public class UserContoller {
 	 	                             @RequestParam(defaultValue = "10") int pageSize,
 	 	                             Authentication auth, Model model) {
 
-	 	    String username = null;
+	 		String username = null;
 	 	    String usernick = null;
-	 	    String role = null;
-
+	 	    
 	 	    if (auth != null) {
 	 	        username = auth.getName();
-	 	        role = auth.getAuthorities().stream().findFirst().orElse(null).getAuthority();
-
+	 	        
 	 	        // usernick 가져오기
-	 	        if (auth.getPrincipal() instanceof UserDetails) {
-	 	            usernick = ((UserDetails) auth.getPrincipal()).getUsername();
-	 	        }
-	 	    }
+	 	        if (auth.getPrincipal() instanceof CustomUserDetails) {
+	 	            usernick = ((CustomUserDetails) auth.getPrincipal()).getUsernick();
+	 	        }}
 
 	 	    // 뷰로 사용자 이름과 usernick 전달
 	 	    model.addAttribute("username", username);
 	 	    model.addAttribute("usernick", usernick); // usernick 추가
-	 	    model.addAttribute("role", role);
 
 	 	    // 페이지 번호를 0부터 시작하는 인덱스로 변환합니다.
 	 	    int page = pageNum - 1;

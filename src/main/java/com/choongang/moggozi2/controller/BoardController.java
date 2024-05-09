@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.choongang.moggozi2.entity.CommonBoard;
+import com.choongang.moggozi2.entity.CustomUserDetails;
 import com.choongang.moggozi2.service.BoardService;
 
 @Controller
@@ -33,7 +34,7 @@ public class BoardController {
 
     @GetMapping("/boardlist")
     public String boardlist(Authentication auth, @RequestParam(value="page", defaultValue="1")int page, Model model) {
-    	String username = null;
+ 	    String username = null;
  	    String usernick = null;
 
  	    if (auth != null) {
@@ -41,9 +42,10 @@ public class BoardController {
 
  	        // usernick 가져오기
  	        if (auth.getPrincipal() instanceof UserDetails) {
- 	            usernick = ((UserDetails) auth.getPrincipal()).getUsername();
+ 	            usernick = ((CustomUserDetails) auth.getPrincipal()).getUsernick();
  	        }
  	    }
+
  	    // 뷰로 사용자 이름과 usernick 전달
  	    model.addAttribute("username", username);
  	    model.addAttribute("usernick", usernick); // usernick 추가
@@ -88,20 +90,21 @@ public class BoardController {
 
     @GetMapping("/boardinsertform")
     public String boardinsertform(Authentication auth, Model model) {
-        	String username = null;
-     	    String usernick = null;
+        String username = null;
+ 	    String usernick = null;
 
-     	    if (auth != null) {
-     	        username = auth.getName();
+ 	    if (auth != null) {
+ 	        username = auth.getName();
 
-     	        // usernick 가져오기
-     	        if (auth.getPrincipal() instanceof UserDetails) {
-     	            usernick = ((UserDetails) auth.getPrincipal()).getUsername();
-     	        }
-     	    }
-     	    // 뷰로 사용자 이름과 usernick 전달
-     	    model.addAttribute("username", username);
-     	    model.addAttribute("usernick", usernick); // usernick 추가
+ 	        // usernick 가져오기
+ 	        if (auth.getPrincipal() instanceof UserDetails) {
+ 	            usernick = ((CustomUserDetails) auth.getPrincipal()).getUsernick();
+ 	        }
+ 	    }
+
+ 	    // 뷰로 사용자 이름과 usernick 전달
+ 	    model.addAttribute("username", username);
+ 	    model.addAttribute("usernick", usernick); // usernick 추가
 	    	
     	return "boardinsertform";
     }
@@ -111,6 +114,8 @@ public class BoardController {
                              @RequestParam("category") String category,
                              @RequestParam("boardSubject") String boardSubject,
                              @RequestParam("boardContent") String boardContent,
+                             @RequestParam("username") String username,
+                             @RequestParam("usernick") String usernick,
                              @RequestParam(value="boardFile", required=false) MultipartFile boardFile) {
     	
         try {
@@ -131,6 +136,8 @@ public class BoardController {
             // 게시글 정보를 DB에 저장
             CommonBoard commonBoard = new CommonBoard();
             commonBoard.setBoardSubject(boardSubject);
+            commonBoard.setUsername(username);
+            commonBoard.setUsernick(usernick);
             commonBoard.setBoardContent(boardContent);
             commonBoard.setCategory(category);
             commonBoard.setBoardFile(fileName);
@@ -150,20 +157,22 @@ public class BoardController {
     public String boardupdateform(Authentication auth, @RequestParam Integer boardNo, int page, Model model) {
     	
     	
-		 	String username = null;
-	 	    String usernick = null;
-	
-	 	    if (auth != null) {
-	 	        username = auth.getName();
-	
-	 	        // usernick 가져오기
-	 	        if (auth.getPrincipal() instanceof UserDetails) {
-	 	            usernick = ((UserDetails) auth.getPrincipal()).getUsername();
-	 	        }
-	 	    }
-	 	    // 뷰로 사용자 이름과 usernick 전달
-	 	    model.addAttribute("username", username);
-	 	    model.addAttribute("usernick", usernick); // usernick 추가
+    	
+ 	    String username = null;
+ 	    String usernick = null;
+
+ 	    if (auth != null) {
+ 	        username = auth.getName();
+
+ 	        // usernick 가져오기
+ 	        if (auth.getPrincipal() instanceof UserDetails) {
+ 	            usernick = ((CustomUserDetails) auth.getPrincipal()).getUsernick();
+ 	        }
+ 	    }
+
+ 	    // 뷰로 사용자 이름과 usernick 전달
+ 	    model.addAttribute("username", username);
+ 	    model.addAttribute("usernick", usernick); // usernick 추가
 	
 	 	    
 			CommonBoard commonBoard = boardService.getContent(boardNo);
