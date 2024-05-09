@@ -9,7 +9,6 @@
 @font-face {font-family: 'TTLaundryGothicB'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2403-2@1.0/TTLaundryGothicB.woff2') format('woff2'); font-weight: 700; font-style: normal;}
 
 /* boardlist */
-body .wrap .gnb-wrap .gnb .logo > a img {width: 600px;}
 body .container .navClass {color: #FFFFFF;}
 body .search_form {display: flex; align-items: center; justify-content: center;}
 body .container .selectBtn {font-family: 'TTLaundryGothicB'; font-size: 15px; color: #FFFFFF; background-color: #FA5857; width: 100px; height: 40px; border-radius: 0px; cursor: pointer; margin-right: 15px;}

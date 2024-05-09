@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <jsp:include page="/resources/header.jsp" />
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
+        <link rel="stylesheet" type="text/css" href="./css/login.css">
     <link rel="stylesheet" type="text/css" href="../css/boardlist.css">
     <link rel="stylesheet" type="text/css" href="../css/mocozi.css">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,56 +25,57 @@
         </div>
         
         <div class="container">
-            <!-- 로그인 창 -->
-            <aside>
-            <div style="width: 300px; padding: 40px; box-sizing: border-box; border: 0.5px solid #ccc; border-radius: 5px;">
-                <h2 class="login-text">회원 정보</h2>
-                <p>어서오세요! ${usernick}님 ☆ﾐ(o*･ω･)ﾉ</p>
-                <a href="mypage">마이페이지</a>
-                <a href="logout">로그아웃</a>
-            </div>
-        
-            <!-- 사이드 카테고리 -->
-            <div class="table-container">
-                <table>
-                    <tr>
-                        <td>
-                            <div class="dropdown">
-                                <a class="hover-color">마이페이지</a>
-                                <div class="dropdown-content" id="myDropdown">
-                                    <a href="#" onclick="return preparingPage()">내 정보 수정</a>
-                                    <a href="#" onclick="return preparingPage()">비밀번호 변경</a>
-                                    <a href="#" onclick="return preparingPage()">회원 탈퇴</a>
-                                    <!-- 사이드바 줄 -->
-                                    <hr class="sidebar-divider">
-                                    <a href="#" onclick="return preparingPage()">모임 목록</a>
-                                    <a href="myqnaList">문의 내역</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="#" class="hover-color">모일꼬지?</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="dropdown">
-                                <a class="hover-color">알림마당</a>
-                                <div class="dropdown-content" id="myDropdown">
-                                    <a href="#" onclick="return checkCurrentPage()">공지사항</a>
-                                    <a href="askWrite">1:1 문의</a>
-                                    <!-- 사이드바 줄 -->
-                                    <hr class="sidebar-divider">
-                                    <a href="#" onclick="return preparingPage()">모임후기</a>
-                                    <a href="#" onclick="return preparingPage()">커뮤니티</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+			<!-- 로그인 창 -->
+			<aside>
+				<div class="login-wrapper">
+					<h2 class="login-text">회원 정보</h2>
+					<c:if test="${not empty usernick}">
+					    <p>어서오세요!<br><c:out value="${usernick}" />님 ☆ﾐ(o*･ω･)ﾉ</p>
+					</c:if>
+					<br> 
+					<a href="mypage">마이페이지</a> 
+					<a href="logout">로그아웃</a>
+				</div>
+
+
+				<!-- 사이드 카테고리 -->
+				<div class="table-container">
+					<table>
+						<tr>
+							<td>
+								<div class="dropdown">
+									<a class="hover-color">마이페이지</a>
+									<div class="dropdown-content" id="myDropdown">
+										<a href="myinfoupdate">내 정보 수정</a> 
+										<a href="mypwdchange">비밀번호 변경</a> 
+										<a href="mydelete">회원 탈퇴</a>
+										<!-- 사이드바 줄 -->
+										<hr class="sidebar-divider">
+										<a href="mymoim">내 모꼬지</a> 
+										<a href="myqnaList">문의 내역</a>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td><a href="main" class="hover-color">모일꼬지?</a></td>
+						</tr>
+						<tr>
+							<td><a class="hover-color" href="boardlist">모임니당</a></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="dropdown">
+									<a class="hover-color">알림마당</a>
+									<div class="dropdown-content" id="myDropdown">
+										<a href="#" onclick="return checkCurrentPage()">공지사항</a> 
+										<a href="askWrite">1:1 문의</a>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
             
             
             <!-- hot 모꼬지! -->

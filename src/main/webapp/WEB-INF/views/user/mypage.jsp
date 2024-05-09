@@ -34,7 +34,7 @@
 			<aside>
 		    	<div class="login-wrapper">
 		            <h2 class="login-text">회원 정보</h2>
-		            <p>어서오세요! ${usernick}님 ☆ﾐ(o*･ω･)ﾉ</p>
+		            <p>어서오세요!<br>${usernick}님 ☆ﾐ(o*･ω･)ﾉ</p><br>
 		            <a href="#" onclick="return checkCurrentPage()">마이페이지</a>
 		            <a href="logout">로그아웃</a>
 				</div>
@@ -50,27 +50,25 @@
                             <div class="dropdown">
                                 <a class="hover-color">마이페이지</a>
                                 <div class="dropdown-content" id="myDropdown">
-                                    <a href="myinfoupdate?usernick=${usernick}">내 정보 수정</a>
-                                    <a href="mypwdchange?usernick=${usernick}">비밀번호 변경</a>
-                                    <a href="mydelete?usernick=${usernick}">회원 탈퇴</a>
+                                    <a href="myinfoupdate">내 정보 수정</a>
+                                    <a href="mypwdchange">비밀번호 변경</a>
+                                    <a href="mydelete">회원 탈퇴</a>
                                     <!-- 사이드바 줄 -->
                                     <hr class="sidebar-divider">
-                                    <a href="mymoim">모임 목록</a>
-                                    <a href="myqnaList?usernick=${usernick}">문의 내역</a>
+                                    <a href="mymoim">내 모꼬지</a>
+                                    <a href="myqnaList">문의 내역</a>
                                 </div>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <a href="#" onclick="return preparingPage()" class="hover-color">모일꼬지?</a>
+                            <a href="main" class="hover-color">모일꼬지?</a>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <div class="dropdown">
-                                <a class="hover-color" href="boardlist?usernick=${usernick}">모임니당</a>
-                            </div>
+                            <a class="hover-color" href="boardlist">모임니당</a>
                         </td>
                     </tr>
                     <tr>
@@ -78,8 +76,8 @@
                             <div class="dropdown">
                                 <a class="hover-color">알림마당</a>
                                 <div class="dropdown-content" id="myDropdown">
-                                    <a href="noticeUserList?usernick=${usernick}">공지사항</a>
-                                    <a href="askWrite?usernick=${usernick}">1:1 문의</a>
+                                    <a href="noticeUserList">공지사항</a>
+                                    <a href="askWrite">1:1 문의</a>
                                 </div>
                             </div>
                         </td>

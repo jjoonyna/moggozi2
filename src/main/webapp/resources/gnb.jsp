@@ -20,7 +20,7 @@
 			<nav class="gnb-wrap">
 			    <div class="gnb">
 			        <h1 class="logo">
-			            <a href="#"><img src="../images/logo.png" alt="로고"></a>
+			            <a href="main"><img src="../images/logo.png" alt="로고"></a>
 			        </h1>
 			    </div>
 			</nav>
