@@ -10,8 +10,12 @@ version = '0.0.1-SNAPSHOT'
 java {
 	sourceCompatibility = '17'
 }
-
-
+jar {
+    enabled = true
+    archiveBaseName.set('myapp')
+    archiveVersion.set('0.0.1')
+    archiveClassifier.set('release')
+}     
 
 configurations {
 	compileOnly {
@@ -56,3 +60,7 @@ dependencies {
   	implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.3.1'
 }
 
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

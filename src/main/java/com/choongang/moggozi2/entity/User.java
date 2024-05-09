@@ -17,6 +17,7 @@ import lombok.Setter;
 	@Setter
 	@Getter
 	@Entity
+	@Table(name="user")
 	public class User {
 			
 			private String username;		// 아이디

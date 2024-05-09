@@ -3,12 +3,14 @@ package com.choongang.moggozi2.entity;
 import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,10 +18,12 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
+@Table(name="AdminNotice")
 public class AdminNotice {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="notiNo")
 	private Integer notiNo;		// 글번호
 	
 	private String category;		// 카테고리(n = 게시판 / a = 1:1문의)
