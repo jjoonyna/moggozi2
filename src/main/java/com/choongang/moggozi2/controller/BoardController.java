@@ -76,7 +76,24 @@ public class BoardController {
     }
     
     @GetMapping("/boardcontent")
-    	public String boardcontent(@RequestParam Integer boardNo, int page, Model model) {
+    	public String boardcontent(Authentication auth, @RequestParam Integer boardNo, int page, Model model) {
+	        
+    		String username = null;
+	 	    String usernick = null;
+	
+	 	    if (auth != null) {
+	 	        username = auth.getName();
+	
+	 	        // usernick 가져오기
+	 	        if (auth.getPrincipal() instanceof UserDetails) {
+	 	            usernick = ((CustomUserDetails) auth.getPrincipal()).getUsernick();
+	 	        }
+	 	    }
+
+ 	    // 뷰로 사용자 이름과 usernick 전달
+ 	    model.addAttribute("username", username);
+ 	    model.addAttribute("usernick", usernick); // usernick 추가
+    	
     		boardService.increaseViews(boardNo);
     		
     		CommonBoard commonBoard = boardService.getContent(boardNo);
