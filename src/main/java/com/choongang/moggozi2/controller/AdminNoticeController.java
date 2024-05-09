@@ -45,7 +45,7 @@ public class AdminNoticeController {
 	 /*
 	  * 공지사항 작성 폼
 	  */
-	 @GetMapping("/admin/noticeWrite")
+	 @GetMapping("/noticeWrite")
 	    public String noticeWritePage(Model model, Authentication auth) {
 		 
 		 
