@@ -16,10 +16,10 @@ public interface BoardRepository extends JpaRepository<CommonBoard, Integer>{
 //	public BoardList findByNo(int no);				// 상세 정보
 	
 	// JPQL
-	@Query(value="select * from commonboard order by board_no desc limit :start, 10", nativeQuery = true)
+	@Query(value="select * from commonboard order by boardno desc limit :start, 10", nativeQuery = true)
 	public List<CommonBoard> findAll(@Param("start")  int start);		// 전체 목록 검색	
 	
-	@Query(value="select * from commonboard where board_no = :boardNo", nativeQuery = true)
+	@Query(value="select * from commonboard where boardno = :boardNo", nativeQuery = true)
 	public CommonBoard findByBoard_no(@Param("boardNo") Integer boardNo);
 
 	

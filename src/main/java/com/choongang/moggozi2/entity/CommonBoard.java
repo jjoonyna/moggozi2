@@ -25,27 +25,33 @@ public class CommonBoard{
 	
 	    @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    @Column(name="board_no")
+	    @Column(name="boardno")
 	    private Integer boardNo;
 
 	    @Column(name = "usernick")
 	    private String	usernick;
-
+	    @Column(name="username")
 	    private String	username;
 
 	    @ManyToOne
 	    @JoinColumn(name="usernick",insertable = false, updatable = false)
 	    private User user;
-
+	    @Column(name="category")
 		private String  category;
-		private String  boardSubject;
-		private String  boardContent;
+	    @Column(name="boardsubject")
+	    private String  boardSubject;
+	    @Column(name="boardcontent")
+	    private String  boardContent;
 		@CreationTimestamp
+		@Column(name="boarddate")
 		private Timestamp boardDate;
-
+		@Column(name="boardcnt")
 		private Integer boardCnt = 0;
+		@Column(name="boardfile")
 		private String  boardFile;
-	    private String  boardState = "y";
-	    private Integer boardRe = 0;
+		@Column(name="boardstate")
+		private String  boardState = "y";
+		@Column(name="boardre")
+		private Integer boardRe = 0;
 	    
 }

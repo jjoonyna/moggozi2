@@ -583,7 +583,7 @@ public class UserContoller {
 		     adminNoticeService.saveAdminAsk(notice);
 	
 		     // 작성 성공 페이지로 리다이렉트
-		     return "redirect:/user/myqnaList";
+		     return "redirect:/myqnaList";
 		 }
 
     

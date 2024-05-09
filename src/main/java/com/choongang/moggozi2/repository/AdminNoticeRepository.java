@@ -20,7 +20,7 @@ public interface AdminNoticeRepository extends JpaRepository<AdminNotice, Intege
 	    
 	    
 	    
-	    @Query("SELECT an FROM AdminNotice an WHERE an.notiNo = :notiNo")
+	    @Query(value="SELECT an FROM adminnotice an WHERE an.notino = :notiNo",nativeQuery=true)
 	    Optional<AdminNotice> findAdminNoticeWithRepliesByNotiNo(@Param("notiNo") Long notiNo);
 
 	   

@@ -33,12 +33,12 @@ public interface MokkojiRepository extends JpaRepository<Mokkoji, Integer> {
     int countByMokkojiTitleContaining(String keyword);
     
     // 특정 필드(mokkojiNo)의 수를 카운트하는 쿼리 정의
-    @Query("SELECT COUNT(mokkoji_no) FROM Mokkoji")
+    @Query(value="SELECT COUNT(mokkojino) FROM mokkoji", nativeQuery=true)
     int countMokkojiNo();
 
     
     @Query(value="select * from mokkoji where usernick = :usernick", nativeQuery = true)
-	List<Mokkoji> findAll(@Param(value = "usernick") String usernick);
+	List<Mokkoji> findAll(@Param("usernick") String usernick);
     
 
 	

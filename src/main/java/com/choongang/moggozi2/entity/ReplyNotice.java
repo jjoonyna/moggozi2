@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.choongang.moggozi2.entity.AdminNotice;
 import com.choongang.moggozi2.entity.User;
@@ -20,6 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@Table(name="replynotice")
 public class ReplyNotice {
 
 	@Id
@@ -27,12 +29,12 @@ public class ReplyNotice {
 	private Integer replyNo;		// 답변번호
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "notiNo",insertable = false, updatable = false) // username 컬럼과 매핑
+	@JoinColumn(name = "notino",insertable = false, updatable = false) // username 컬럼과 매핑
 	private AdminNotice adminNotice;	// 글번호
 	
-	@Column(name="notiNo")
+	@Column(name="notino")
 	private Integer notiNo;
-	
+	@Column(name="username")
 	private String username;		// 아이디
 	
 	@ManyToOne
@@ -41,8 +43,9 @@ public class ReplyNotice {
 	
 	@Column(name="usernick")
 	private String usernick;
-	
+	@Column(name="replycontent")
 	private String replyContent;	// 답변 내용
+	@Column(name="replydate")
 	private Timestamp replyDate;	// 답변 날짜
 	
 
