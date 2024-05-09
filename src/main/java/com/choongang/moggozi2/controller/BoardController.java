@@ -114,7 +114,6 @@ public class BoardController {
                              @RequestParam("category") String category,
                              @RequestParam("boardSubject") String boardSubject,
                              @RequestParam("boardContent") String boardContent,
-                             @RequestParam("username") String username,
                              @RequestParam("usernick") String usernick,
                              @RequestParam(value="boardFile", required=false) MultipartFile boardFile) {
     	
@@ -136,7 +135,6 @@ public class BoardController {
             // 게시글 정보를 DB에 저장
             CommonBoard commonBoard = new CommonBoard();
             commonBoard.setBoardSubject(boardSubject);
-            commonBoard.setUsername(username);
             commonBoard.setUsernick(usernick);
             commonBoard.setBoardContent(boardContent);
             commonBoard.setCategory(category);

@@ -23,7 +23,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeRequests((auth) -> auth
-            	.antMatchers("/", "/main", "/joinProc","/loginAdmin","/signup","/snslogin","/google_login","/google_login-callback","/naver_login","/naver_login-callback","/kakao_login","/kakao_login-callback","/mkjsignup","/id_pw_find","id_ok_result","pw_ok_result","/id_ok","/pw_ok","/sendPasswordByEmail","/sendUserByEmail").permitAll()
+            	.antMatchers("/", "/main","/check/**","/checknick/**", "/joinProc","/loginAdmin","/signup","/snslogin","/google_login","/google_login-callback","/naver_login","/naver_login-callback","/kakao_login","/kakao_login-callback","/mkjsignup","/id_pw_find","id_ok_result","pw_ok_result","/id_ok","/pw_ok","/sendPasswordByEmail","/sendUserByEmail").permitAll()
                 .antMatchers("/search/**").permitAll() // 검색 기능에 대한 모든 사용자 접근 허용
                 .antMatchers("/upload/**").permitAll() // 업로드된 파일에 대한 접근 권한 허용
                 .antMatchers("/css/**","/js/**","/images/**","/icon/**").permitAll()
