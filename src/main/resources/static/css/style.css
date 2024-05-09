@@ -220,3 +220,15 @@ body{
   .radio-container input[type="radio"] {
     margin-right: 10px; /* 각 라디오 버튼 사이의 간격 */
   }
+  
+  
+  
+.result-card{
+	display: flex;
+	margin: auto 0% 0% 35%;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+	text-align: center;
+}

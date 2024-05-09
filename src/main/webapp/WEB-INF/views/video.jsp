@@ -53,9 +53,12 @@
 						<div id="registernow">
 							<div class="input-group margin-bottom-md ">
 								<span class="input-group-addon">방 이름</span> <input
-									autocomplete="off" class="form-control" type="text"
-									name="mokkojiTitle" placeholder="Room Name" id="roomname"
-									value="${mokkojiTitle }" />		<!-- readonly -->
+									 class="form-control" type="text" name="mokkojiTitle"
+									value="${mokkojiTitle }" readonly="readonly" />		<!-- readonly -->
+								 <input
+									autocomplete="off" class="form-control" type="hidden"
+									name="mokkojiNo" placeholder="Room Name" id="roomname"
+									value="${mokkojiNo }" />		<!-- readonly -->
 							</div>
 						</div>
 						<div class="join2">
@@ -79,7 +82,7 @@
 			<div class="container hide" id="videos">
 			<div class="joinmain">
 				<div class="joinname">모임명:</div>
-				<div id="joinroom"></div>
+				<div id="joinroom">${ mokkojiTitle}</div>
 
 				<div class="col-md-6">
 					<div class="panel panel-default">

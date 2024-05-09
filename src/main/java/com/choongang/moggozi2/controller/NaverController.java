@@ -160,7 +160,6 @@ public class NaverController {
 	        HttpEntity<?> userInfoEntity = new HttpEntity<>(headers);
 
 	        // Post 방식으로 Http 요청
-	        // 응답 데이터 형식은 Hashmap 으로 지정
 	        ResponseEntity<String> userResult = restTemplate.postForEntity(userInfoURL, userInfoEntity, String.class);
 	        String userResultMap = userResult.getBody();
 

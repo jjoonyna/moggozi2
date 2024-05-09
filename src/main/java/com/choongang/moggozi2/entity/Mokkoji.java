@@ -35,12 +35,6 @@ public class Mokkoji {
     @JoinColumn(name="usernick",insertable = false, updatable = false)
     private User user;
 	
-    @ManyToOne
-    @JoinColumn(name="usernick",insertable = false, updatable = false)
-    private User user;
-    
-    
-    
     @Column(name = "mokkojiTitle", unique=true)
     private String mokkojiTitle;
     
