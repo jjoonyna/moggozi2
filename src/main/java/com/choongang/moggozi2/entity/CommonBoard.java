@@ -30,8 +30,6 @@ public class CommonBoard{
 
 	    @Column(name = "usernick")
 	    private String	usernick;
-	    @Column(name="username")
-	    private String	username;
 
 	    @ManyToOne
 	    @JoinColumn(name="usernick",insertable = false, updatable = false)

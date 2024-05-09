@@ -83,7 +83,7 @@
 
 			<!-- 상세 게시판 -->
 			<nav>
-				<h1 class="sub-title">내 문의 상세 보기</h1>
+				<h1 class="sub-title">내 문의 내역</h1>
 				<section>
 					<div class="cards">
 						<c:choose>

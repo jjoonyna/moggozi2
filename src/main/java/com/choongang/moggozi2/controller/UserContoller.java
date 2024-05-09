@@ -770,8 +770,25 @@ public class UserContoller {
 	 	 * 공지사항 상세보기 
 	 	 */
 	 	@GetMapping("/noticeUserDetail")
-	 	public String noticeUserDetail(@RequestParam Integer id, @RequestParam(name = "usernick", required = false) String usernick, Model model) {
-	 	    // id를 사용하여 공지사항을 조회합니다.
+	 	public String noticeUserDetail(Authentication auth, @RequestParam Integer id, Model model) {
+	        String username = null;
+	 	    String usernick = null;
+
+	 	    if (auth != null) {
+	 	        username = auth.getName();
+
+	 	        // usernick 가져오기
+	 	        if (auth.getPrincipal() instanceof UserDetails) {
+	 	            usernick = ((CustomUserDetails) auth.getPrincipal()).getUsernick();
+	 	        }
+	 	    }
+
+	 	    // 뷰로 사용자 이름과 usernick 전달
+	 	    model.addAttribute("username", username);
+	 	    model.addAttribute("usernick", usernick); // usernick 추가
+	 		
+	 		
+	 		// id를 사용하여 공지사항을 조회합니다.
 	 	    AdminNotice notice = adminNoticeService.findNoticeById(id);
 	 	    
 	 	   // 조회수 증가

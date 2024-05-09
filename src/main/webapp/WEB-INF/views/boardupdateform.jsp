@@ -91,60 +91,8 @@
 			</aside>
 			
 			<nav>
-			<div class="search-wrap">
-				<!-- 카테고리 -->
-				<div class="search-category">
-				 <label for="category" style="margin-right: 5px;">모임</label>
-				 <select id="category" name="category" onchange="getCategory()">
-				 	<option value="" disabled selected>선택</option>
-				 	<!-- 모임 분류 -->
-				 	<option value="스터디">스터디</option>
-                    <option value="운동">운동</option>
-                    <option value="요리">요리</option>
-                    <option value="리뷰">리뷰</option>
-                    <option value="시사/재테크">시사/재테크</option>
-                    <option value="일상">일상</option>
-                    <option value="반려동물">반려동물</option>
-                    <option value="쇼핑">쇼핑</option>
-                    <option value="DIY">DIY</option>
-                    <option value="노래">노래</option>
-                    <option value="키덜트">키덜트</option>
-                    <option value="게임">게임</option>
-				 </select>
-				</div>
-				
-				<!-- 검색 범위 -->
-				<div class="search-boundary">
-				 <label for="boundary"></label>
-				 <select id="boundary" name="boundary" onchange="getBoundary()">
-				 	<option value="" disabled selected>선택</option>
-				 	<!-- 모임 분류 -->
-				 	<option value="제목만">제목만</option>
-                    <option value="게시글+댓글">게시글+댓글</option>
-                    <option value="내용">내용</option>
-                    <option value="글작성자">글작성자</option>
-                    <option value="댓글내용">댓글내용</option>
-                    <option value="댓글작성자">댓글작성자</option>
-				 </select>
-				</div>
-				
-				<!-- 검색창 -->
-				<div class="search-wrap searchBox">
-				      <label for="search" id="searchBar">검색</label>
-				      <input type="text" id="search" name="search" placeholder="모임 명을 검색해주세요.">
-				</div>
-	
-				<!-- 검색 버튼 -->
-				<div>
-					<button id="searchBtn" class="hover-color">검색</button>
-				</div>
-				<br> <br> <br> <br>
-				</div>
-			
-			
-			
-			
-				<!-- 글작성 폼 -->
+				<h1 class="sub-title">모임니당</h1>
+				<!-- 글 수정 폼 -->
 				<section>
 					<div class="cards">
 						<form id="upload1" method="Post" action="/boardupdate" enctype="multipart/form-data">

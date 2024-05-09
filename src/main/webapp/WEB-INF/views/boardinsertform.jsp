@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="../css/mocozi.css">
     <link rel="stylesheet" type="text/css" href="../css/login.css">
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
-    <link rel="stylesheet" type="text/css" href="../css/boardform.css">
+<link rel="stylesheet" type="text/css" href="./css/boardcontent.css">
     <link rel="icon"       type="image/x-icon" href="./images/m.png">
  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,42 +18,59 @@
 <jsp:include page="/resources/gnb.jsp" />
 </head>
 <body>
-	<main>
-	
-			<!-- 메인 배너 -->
-		<div class="main-banner">
-		</div>
-		
-		<div class="container">
-				<!-- 로그인 창 -->
+    <main>
+        <!-- 메인 배너 -->
+        <div class="main-banner">
+        </div>
+        
+        <div class="container">
+			<!-- 로그인 창 -->
 			<aside>
-	    	<div class="login-wrapper">
-			            <h2 class="login-text">회원 정보</h2>
-			            <p>어서오세요! ${usernick}님 ☆ﾐ(o*･ω･)ﾉ</p>
-			            <a href="#" onclick="return checkCurrentPage()">마이페이지</a>
-			            <a href="logout">로그아웃</a>
-			</div>
+				<div class="login-wrapper">
+					<h2 class="login-text">회원 정보</h2>
+						<p>어서오세요!<br><c:out value="${usernick}" />님 ☆ﾐ(o*･ω･)ﾉ</p>
+					<br> 
+					<a href="mypage">마이페이지</a> 
+					<a href="logout">로그아웃</a>
+				</div>
 
-			
-			
+
 				<!-- 사이드 카테고리 -->
 				<div class="table-container">
 					<table>
-					    <tr>
-					        <td>
-					            <a href="#" class="hover-color">모일꼬지?</a>
-					        </td>
-					    </tr>
-					    <tr>
-					        <td>
-					            <a href="#" class="hover-color">알림마당</a>
-					        </td>
-					    </tr>
-					    <tr>
-					        <td>
-					            <a href="#" class="hover-color">마이페이지</a>
-					        </td>
-					    </tr>
+						<tr>
+							<td>
+								<div class="dropdown">
+									<a class="hover-color">마이페이지</a>
+									<div class="dropdown-content" id="myDropdown">
+										<a href="myinfoupdate">내 정보 수정</a> 
+										<a href="mypwdchange">비밀번호 변경</a> 
+										<a href="mydelete">회원 탈퇴</a>
+										<!-- 사이드바 줄 -->
+										<hr class="sidebar-divider">
+										<a href="mymoim">내 모꼬지</a> 
+										<a href="myqnaList">문의 내역</a>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td><a href="main" class="hover-color">모일꼬지?</a></td>
+						</tr>
+						<tr>
+							<td><a class="hover-color" href="#" onclick="return checkCurrentPage()">모임니당</a></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="dropdown">
+									<a class="hover-color">알림마당</a>
+									<div class="dropdown-content" id="myDropdown">
+										<a href="noticeUserList">공지사항</a> 
+										<a href="askWrite">1:1 문의</a>
+									</div>
+								</div>
+							</td>
+						</tr>
 					</table>
 				</div>
 				
@@ -67,59 +84,8 @@
 			</aside>
 			
 			<nav>
-			<div class="search-wrap">
-				<!-- 카테고리 -->
-				<div class="search-category">
-				 <label for="category" style="margin-right: 5px;">모임</label>
-				 <select id="category" name="category" onchange="getCategory()">
-				 	<option value="" disabled selected>선택</option>
-				 	<!-- 모임 분류 -->
-				 	<option value="스터디">스터디</option>
-                    <option value="운동">운동</option>
-                    <option value="요리">요리</option>
-                    <option value="리뷰">리뷰</option>
-                    <option value="시사/재테크">시사/재테크</option>
-                    <option value="일상">일상</option>
-                    <option value="반려동물">반려동물</option>
-                    <option value="쇼핑">쇼핑</option>
-                    <option value="DIY">DIY</option>
-                    <option value="노래">노래</option>
-                    <option value="키덜트">키덜트</option>
-                    <option value="게임">게임</option>
-				 </select>
-				</div>
-				
-				<!-- 검색 범위 -->
-				<div class="search-boundary">
-				 <label for="boundary"></label>
-				 <select id="boundary" name="boundary" onchange="getBoundary()">
-				 	<option value="" disabled selected>선택</option>
-				 	<!-- 모임 분류 -->
-				 	<option value="제목만">제목만</option>
-                    <option value="게시글+댓글">게시글+댓글</option>
-                    <option value="내용">내용</option>
-                    <option value="글작성자">글작성자</option>
-                    <option value="댓글내용">댓글내용</option>
-                    <option value="댓글작성자">댓글작성자</option>
-				 </select>
-				</div>
-				
-				<!-- 검색창 -->
-				<div class="search-wrap searchBox">
-				      <label for="search" id="searchBar">검색</label>
-				      <input type="text" id="search" name="search" placeholder="모임 명을 검색해주세요.">
-				</div>
-	
-				<!-- 검색 버튼 -->
-				<div>
-					<button id="searchBtn" class="hover-color">검색</button>
-				</div>
-				<br> <br> <br> <br>
-				</div>
 			
-			
-			
-			
+				<h1 class="sub-title">모임니당</h1>
 				<!-- 글작성 폼 -->
 				<section>
 					<div class="cards">
