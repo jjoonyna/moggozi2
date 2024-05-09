@@ -53,62 +53,50 @@ public class GoogleController {
 
 	 @RequestMapping("google_login-callback")
 	    public ModelAndView loginGoogle(@RequestParam(value = "code") String authCode,Model model,Authentication authentication){
-	       
-		 RestTemplate restTemplate = new RestTemplate();
-	        
-		 GoogleRequest googleOAuthRequestParam = GoogleRequest
+	        RestTemplate restTemplate = new RestTemplate();
+	        GoogleRequest googleOAuthRequestParam = GoogleRequest
 	                .builder()
 	                .clientId(googleClientId)
 	                .clientSecret(googleClientPw)
 	                .code(authCode)
 	                .redirectUri("http://localhost:80/google_login-callback")
 	                .grantType("authorization_code").build();
-	        
-		 ResponseEntity<GoogleResponse> resultEntity = restTemplate.postForEntity("https://oauth2.googleapis.com/token",
-				 googleOAuthRequestParam, GoogleResponse.class);
-	       
-		 String jwtToken=resultEntity.getBody().getId_token();
-		 Map<String, String> map=new HashMap<>();
-		 map.put("id_token",jwtToken);
-	        
-		 ResponseEntity<GoogleInfResponse> resultEntity2 = restTemplate.postForEntity("https://oauth2.googleapis.com/tokeninfo",
-				 map, GoogleInfResponse.class);
-	        
-		 String username=resultEntity2.getBody().getEmail();   
-		 String usernick=resultEntity2.getBody().getName();
-		 User user = new User();
-		 String role = "";
-			
-		 boolean newUser = newrepository.existsByUsername(username);
-			
-		 if(!newUser) {
-			 user.setUsername(username);
-			 user.setUsernick(usernick);
-			 service.snsuserjoin(user);
-		 }
-		 
-			
-		 if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
-			 username = authentication.getName();
-			 Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-			 if (!authorities.isEmpty()) {
-				 GrantedAuthority auth = authorities.iterator().next();
-				 role = auth.getAuthority();
-			 }
+	        ResponseEntity<GoogleResponse> resultEntity = restTemplate.postForEntity("https://oauth2.googleapis.com/token",
+	                googleOAuthRequestParam, GoogleResponse.class);
+	        String jwtToken=resultEntity.getBody().getId_token();
+	 		Map<String, String> map=new HashMap<>();
+	        map.put("id_token",jwtToken);
+	        ResponseEntity<GoogleInfResponse> resultEntity2 = restTemplate.postForEntity("https://oauth2.googleapis.com/tokeninfo",
+	                map, GoogleInfResponse.class);
+	        String username=resultEntity2.getBody().getEmail();   
+	        String usernick=resultEntity2.getBody().getName();
+	        User user = new User();
+	        String role = "";
+			boolean newUser = newrepository.existsByUsername(username);
+			if(!newUser) {
+				user.setUsername(username);
+				user.setUsernick(usernick);
+				service.snsuserjoin(user);
+			}
+			if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
+	            username = authentication.getName();
+	            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+	            if (!authorities.isEmpty()) {
+	                GrantedAuthority auth = authorities.iterator().next();
+	                role = auth.getAuthority();
+	            }
 
 	            // 사용자의 닉네임 가져오기
-			 if (authentication.getPrincipal() instanceof UserDetails) {
-				 usernick = ((CustomUserDetails) authentication.getPrincipal()).getUsernick();
-			 }
-		 }
+	            if (authentication.getPrincipal() instanceof UserDetails) {
+	                usernick = ((CustomUserDetails) authentication.getPrincipal()).getUsernick();
+	            }
+	        }
 			
 			ModelAndView modelAndView = new ModelAndView();
 			modelAndView.setViewName("/main");
 			modelAndView.addObject("username", username);
 			modelAndView.addObject("role", role);
 			modelAndView.addObject("usernick", usernick);
-			
-			
 			return modelAndView;
 			
 	    }

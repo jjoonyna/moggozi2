@@ -12,7 +12,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<title>회원가입 및 로그인페이지 2</title>
+<title>모꼬지</title>
 <script>
 function openDaumPostcode() {
    new daum.Postcode({

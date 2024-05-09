@@ -18,12 +18,13 @@
 		<div class="wrap">
 			
 			<nav class="gnb-wrap">
-				<div class="gnb">
-					<h1 class="logo">
-						<a href="#"><img src="../images/logo.png"></a>
-					</h1>
-				</div>
+			    <div class="gnb">
+			        <h1 class="logo">
+			            <a href="#"><img src="../images/logo.png" alt="로고"></a>
+			        </h1>
+			    </div>
 			</nav>
+
 		
 		
 		

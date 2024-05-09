@@ -18,6 +18,10 @@
 </head>
 <body>
 	<main>
+	
+			<!-- 메인 배너 -->
+			<div class="main-banner">
+			</div>
 		
 		<div class="container">
 			<!-- 로그인 창 -->

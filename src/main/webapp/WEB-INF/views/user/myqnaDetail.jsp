@@ -23,7 +23,6 @@
 	<main>
 	  <!-- 메인 배너 -->
         <div class="main-banner">
-            <h1>굉장히 엄청난 타이포 그래피</h1>
         </div>
 		
         <div class="container">
@@ -182,7 +181,7 @@
 </script>
 
 
-
+</div>
         
 </main>
 	<jsp:include page="/resources/footer.jsp" />

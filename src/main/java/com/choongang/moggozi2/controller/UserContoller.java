@@ -3,6 +3,7 @@ package com.choongang.moggozi2.controller;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -172,6 +173,7 @@ public class UserContoller {
         String username = null;
         String usernick = null;
         String role = null;
+        Date loginTime = null;
 
         if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
             username = authentication.getName();
@@ -184,6 +186,7 @@ public class UserContoller {
             // 사용자의 닉네임 가져오기
             if (authentication.getPrincipal() instanceof UserDetails) {
                 usernick = ((CustomUserDetails) authentication.getPrincipal()).getUsernick();
+                loginTime = ((CustomUserDetails) authentication.getPrincipal()).getLoginTime();
             }
         }
 
@@ -218,6 +221,7 @@ public class UserContoller {
             model.addAttribute("username", username);
             model.addAttribute("role", role);
             model.addAttribute("usernick", usernick);
+            model.addAttribute("loginTime", loginTime); // 로그인 시간 모델에 추가
             return "main"; // 사용자 페이지로 이동
         }
     }

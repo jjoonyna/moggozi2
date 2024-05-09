@@ -53,12 +53,9 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-	// oauth2-client 라이브러리
-	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	
 	//email관련
     //메일서버와 연결해서 메일을 발송하는데 필요한 라이브러리
   	implementation 'org.springframework.boot:spring-boot-starter-mail'
-  	//aws s3를 위한 라이브러리
-  	implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.3.1'
 }
 
