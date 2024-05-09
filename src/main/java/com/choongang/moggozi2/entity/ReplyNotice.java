@@ -26,6 +26,7 @@ public class ReplyNotice {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="replyno")
 	private Integer replyNo;		// 답변번호
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)

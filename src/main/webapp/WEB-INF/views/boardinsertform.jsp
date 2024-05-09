@@ -168,7 +168,7 @@
 								<tr>
 									<td>
 										<input type="hidden" name="boardDate" value="<%= new java.sql.Timestamp(System.currentTimeMillis()) %>">
-										
+										<input type="hidden" name="usernick" value="${usernick }">
 									</td>
 								</tr>
 
