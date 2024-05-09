@@ -11,12 +11,13 @@ java {
 	sourceCompatibility = '17'
 }
 jar {
-    enabled = true
+    manifest {
+        attributes 'Main-Class': 'com.choongang.moggozi2.MokkoziApplication'
+    }
     archiveBaseName.set('myapp')
     archiveVersion.set('0.0.1')
     archiveClassifier.set('release')
-}     
-
+}
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
