@@ -513,7 +513,6 @@ public class UserContoller {
  	        }}
  	    
  	    List<Mokkoji> mokkoji = mokkojiService.findAllMokkoji(usernick);
- 	    System.out.println(mokkoji.get(0).getMokkojiTitle());
  	    model.addAttribute("mokkoji",mokkoji);
  	    
  	    return "user/mymoim";

@@ -11,8 +11,9 @@ java {
 	sourceCompatibility = '17'
 }
 
-jar {
-	enabled = false
+jar{
+    enabled=true
+    archiveClassifier = '' // Classifier 제거 
 }
 
 configurations {
