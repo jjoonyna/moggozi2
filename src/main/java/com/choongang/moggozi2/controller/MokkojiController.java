@@ -76,14 +76,12 @@ public class MokkojiController {
 
    	 	String username = null;
         String usernick = null;
-        String role = null;
 
         if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
             username = authentication.getName();
             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
             if (!authorities.isEmpty()) {
                 GrantedAuthority auth = authorities.iterator().next();
-                role = auth.getAuthority();
             }
 
             // 사용자의 닉네임 가져오기
@@ -91,26 +89,16 @@ public class MokkojiController {
                 usernick = ((CustomUserDetails) authentication.getPrincipal()).getUsernick();
             }
         }
+        
+
+        
+	        Mokkoji mokkoji = new Mokkoji();
+	        
+	        // 내가 정해둔 이미지 경로를 설정
+	        String customImagePath = "../images/thumbnail.jpg";
+	        mokkoji.setMokkojiImages(customImagePath);
 
 
-        if (mokkojiImages.isEmpty()) {
-            // 파일이 비어있을 경우 처리
-            return "redirect:/uploadFailure";
-        }
-
-        try {
-            // 업로드된 파일을 저장할 디렉토리 설정
-            String uploadDir = "C:\\upload";
-            File uploadDirFile = new File(uploadDir);
-            if (!uploadDirFile.exists()) {
-                uploadDirFile.mkdirs(); // 디렉토리가 존재하지 않으면 생성합니다.
-            }
-            String fileName = mokkojiImages.getOriginalFilename();
-            File uploadFile = new File(uploadDir + fileName);
-            mokkojiImages.transferTo(uploadFile);
-            
-            // 파일 업로드 성공 시 파일 정보를 데이터베이스에 저장
-            Mokkoji mokkoji = new Mokkoji();
             
 		     // 현재 시간을 가져옵니다.
 		     Timestamp now = new Timestamp(System.currentTimeMillis());
@@ -120,7 +108,6 @@ public class MokkojiController {
             
 		    
 		    mokkoji.setUsernick(nick);
-            mokkoji.setMokkojiImages(uploadDir + fileName);
             mokkoji.setMokkojiPerson(mokkojiPerson);
             mokkoji.setMokkojiTitle(mokkojiTitle);
             mokkoji.setMokkojiIntro(mokkojiIntro);
@@ -128,11 +115,6 @@ public class MokkojiController {
             mokkojiService.saveMokkoji(mokkoji);
             // 파일 업로드 성공 시 처리
             return "redirect:/main";
-        } catch (IOException e) {
-            e.printStackTrace();
-            // 파일 업로드 실패 시 처리
-            return "redirect:/uploadFailure";
-        }
     }
     
 //    @GetMapping("/main")
@@ -162,11 +144,9 @@ public class MokkojiController {
     	
     	String username = null;
   	    String usernick = null;
-  	    String role = null;
   	    
   	    if (auth != null) {
   	        username = auth.getName();
-  	        role = auth.getAuthorities().stream().findFirst().orElse(null).getAuthority();
   	        
   	        // usernick 가져오기
   	        if (auth.getPrincipal() instanceof CustomUserDetails) {

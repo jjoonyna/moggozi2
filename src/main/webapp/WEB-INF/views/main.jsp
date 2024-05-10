@@ -152,7 +152,7 @@
 		            <div class="card">
 		            
 		                <div class="card__image-holder">
-		                    <img class="card__image" src="${mokkoji.mokkojiImages}" alt="모꼬지이미지" />
+		                    <img class="card__image" src="../images/thumbnail.png" alt="모꼬지이미지" />
 		                </div>
 		                
 		                <div class="card-title">
@@ -161,7 +161,7 @@
 		                        <span class="right"></span>
 		                    </a>
 		                    <h2>[${mokkoji.mokkojiCategory}]${mokkoji.mokkojiTitle}
-		                        <small>닉네임 :${mokkoji.usernick}</small>
+		                        <small>${mokkoji.usernick}님의 방</small>
 		                    </h2>
 		                </div>
 		                
