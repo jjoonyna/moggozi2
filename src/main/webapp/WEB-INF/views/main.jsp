@@ -151,9 +151,51 @@
 		        
 		            <div class="card">
 		            
-		                <div class="card__image-holder">
-		                    <img class="card__image" src="${mokkoji.mokkojiImages}" alt="모꼬지이미지" />
-		                </div>
+	<div class="card__image-holder">
+                          <c:choose>
+                          
+                             <c:when test="${mokkoji.mokkojiCategory eq '스터디'}">
+                                <img class="card__image" src="../images/cate_study.jpg" alt="모꼬지이미지">
+                             </c:when>
+                             <c:when test="${mokkoji.mokkojiCategory eq '운동'}">
+                                <img class="card__image" src="../images/cate_exercise.jpg" alt="모꼬지이미지">
+                             </c:when>
+                             <c:when test="${mokkoji.mokkojiCategory eq '요리'}">
+                                <img class="card__image" src="../images/cate_cooking.jpg" alt="모꼬지이미지">
+                             </c:when>
+                             <c:when test="${mokkoji.mokkojiCategory eq '리뷰'}">
+                                <img class="card__image" src="../images/cate_review.jpg" alt="모꼬지이미지">
+                             </c:when>
+                             <c:when test="${mokkoji.mokkojiCategory eq '시사/재테크'}">
+                                <img class="card__image" src="../images/cate_sisa.jpg" alt="모꼬지이미지">
+                             </c:when>
+                             <c:when test="${mokkoji.mokkojiCategory eq '일상'}">
+                                <img class="card__image" src="../images/cate_daily.jpg" alt="모꼬지이미지">
+                             </c:when>
+                             <c:when test="${mokkoji.mokkojiCategory eq '반려동물'}">
+                                <img class="card__image" src="../images/cate_pet.jpg" alt="모꼬지이미지">
+                             </c:when>
+                             <c:when test="${mokkoji.mokkojiCategory eq '쇼핑'}">
+                                <img class="card__image" src="../images/cate_shopping.jpg" alt="모꼬지이미지">
+                             </c:when>
+                             <c:when test="${mokkoji.mokkojiCategory eq 'DIY'}">
+                                <img class="card__image" src="../images/cate_diy.jpg" alt="모꼬지이미지">
+                             </c:when>
+                             <c:when test="${mokkoji.mokkojiCategory eq '노래'}">
+                                <img class="card__image" src="../images/cate_music.jpg" alt="모꼬지이미지">
+                             </c:when>
+                             <c:when test="${mokkoji.mokkojiCategory eq '키덜트'}">
+                                <img class="card__image" src="../images/cate_kidult.jpg" alt="모꼬지이미지">
+                             </c:when>
+                             <c:when test="${mokkoji.mokkojiCategory eq '게임'}">
+                                <img class="card__image" src="../images/cate_game.jpg" alt="모꼬지이미지">
+                             </c:when>
+                             
+                             <c:otherwise>
+                                <img class="card__image" src="../images/cate_cooking.jpg" alt="모꼬지이미지">
+                             </c:otherwise>
+                          </c:choose>
+                      </div>
 		                
 		                <div class="card-title">
 		                    <a href="#" class="toggle-info btn">
