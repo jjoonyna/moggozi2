@@ -53,9 +53,15 @@
 						<div id="registernow">
 							<div class="input-group margin-bottom-md ">
 								<span class="input-group-addon">방 이름</span> <input
-									autocomplete="off" class="form-control" type="text"
-									name="mokkojiTitle" placeholder="Room Name" id="roomname"
+									 class="form-control" type="text"
+									name="mokkojiTitle" 
 									value="${mokkojiTitle }" />		<!-- readonly -->
+							</div>
+							<div class="input-group margin-bottom-md ">
+								<input
+									autocomplete="off" class="form-control" type="hidden"
+									name="mokkojiNo" placeholder="Room Name" id="roomname"
+									value="${mokkojiNo }" />		<!-- readonly -->
 							</div>
 						</div>
 						<div class="join2">
