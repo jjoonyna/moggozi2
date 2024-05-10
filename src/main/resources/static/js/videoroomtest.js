@@ -392,24 +392,24 @@ function registerUsername() {
          $('#register').removeAttr('disabled').click(registerUsername);
          return;
       } 
-
-      var username = $('#usernick').val();
-      if(username === "") {
-         $('#you')
-            .removeClass().addClass('label label-warning')
-            .html("채팅방에서 사용할 닉네임을 입력해주세요.");
-         $('#usernick').removeAttr('disabled');
-         $('#register').removeAttr('disabled').click(registerUsername);
-         return;
-      }
-      if(/[^a-zA-Z0-9]/.test(username)) {
-         $('#you')
-            .removeClass().addClass('label label-warning')
-            .html('닉네임은 영문만 가능합니다.');
-         $('#usernick').removeAttr('disabled').val("");
-         $('#register').removeAttr('disabled').click(registerUsername);
-         return;
-      }
+//
+//      var username = $('#usernick').val();
+//      if(username === "") {
+//         $('#you')
+//            .removeClass().addClass('label label-warning')
+//            .html("채팅방에서 사용할 닉네임을 입력해주세요.");
+//         $('#usernick').removeAttr('disabled');
+//         $('#register').removeAttr('disabled').click(registerUsername);
+//         return;
+//      }
+//      if(/[^a-zA-Z0-9]/.test(username)) {
+//         $('#you')
+//            .removeClass().addClass('label label-warning')
+//            .html('닉네임은 영문만 가능합니다.');
+//         $('#usernick').removeAttr('disabled').val("");
+//         $('#register').removeAttr('disabled').click(registerUsername);
+//         return;
+//      }
 
         //alert("room id:" + roomname);
         myroom = Number(roomname); //사용자 입력 방 아이디
@@ -530,8 +530,7 @@ function unpublishOwnFeed() {
    sfutest.send({ message: unpublish });
 }
 
-
-    // 화면 공유를 시작하는 함수
+  // 화면 공유를 시작하는 함수
     function startSharingScreen() {
         navigator.mediaDevices.getDisplayMedia({ video: true }) // 화면 캡처
             .then(function(stream) {
@@ -600,13 +599,6 @@ function toggleFullscreen() {
 
 // 비디오 요소를 클릭하면 전체 화면으로 보기 함수 실행
 video.addEventListener('click', toggleFullscreen);
-
-
-
-
-
-
-
 // [jsflux] 새로운 유저 들어왔을때
 function newRemoteFeed(id, display, audio, video) {
    // A new feed has been published, create a new plugin handle and attach to it as a subscriber
