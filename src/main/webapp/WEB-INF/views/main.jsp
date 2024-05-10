@@ -214,7 +214,7 @@
 		                    
 		                    <div class="card-flap flap2">
                      	 	 <div class="card-actions" id="buttonContainer">
-	                           <a href="javascript:join('${mokkoji.mokkojiNo}','${mokkoji.mokkojiTitle}','${mokkoji.usernick}')"
+	                           <a href="javascript:join('${mokkoji.mokkojiNo}','${mokkoji.mokkojiTitle}')"
 	                          class="btn" autocomplete="off" >참가하기</a>
 	                         </div>
 					       </div>
