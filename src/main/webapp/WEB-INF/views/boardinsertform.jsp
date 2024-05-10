@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="../css/mocozi.css">
     <link rel="stylesheet" type="text/css" href="../css/login.css">
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
-<link rel="stylesheet" type="text/css" href="./css/boardcontent.css">
+<link rel="stylesheet" type="text/css" href="./css/boardform.css">
     <link rel="icon"       type="image/x-icon" href="./images/m.png">
  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
