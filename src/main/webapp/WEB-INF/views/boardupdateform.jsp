@@ -63,7 +63,7 @@
                     <tr>
                         <td>
                             <div class="dropdown">
-                                <a class="hover-color" href="#" onclick="return checkCurrentPage()">모임니당</a>
+                                <a class="hover-color" href="boardlist">모임니당</a>
                             </div>
                         </td>
                     </tr>
