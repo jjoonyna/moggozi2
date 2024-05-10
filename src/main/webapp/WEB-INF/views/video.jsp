@@ -42,7 +42,7 @@
 		<div class="container">
 			<div class="col-md-12">
 				<h1>
-				<a href="javascript:registerUsername()">회의 시작</a> <br>
+				회의 시작 <br>
 					<button class="btn btn-default" autocomplete="off" id="start">Start</button>
 				</h1>
 			</div>
@@ -53,9 +53,12 @@
 						<div id="registernow">
 							<div class="input-group margin-bottom-md ">
 								<span class="input-group-addon">방 이름</span> <input
-									autocomplete="off" class="form-control" type="text"
-									name="mokkojiTitle" placeholder="Room Name" id="roomname"
-									value="${mokkojiTitle }" />		<!-- readonly -->
+									 class="form-control" type="text" name="mokkojiTitle"
+									value="${mokkojiTitle }" readonly="readonly" />		<!-- readonly -->
+								 <input
+									autocomplete="off" class="form-control" type="hidden"
+									name="mokkojiNo" placeholder="Room Name" id="roomname"
+									value="${mokkojiNo }" />		<!-- readonly -->
 							</div>
 						</div>
 						<div class="join2">
@@ -65,7 +68,7 @@
 									autocomplete="off" class="form-control" type="text"
 									placeholder="닉네임" id="usernick" name="usernick"
 									onkeypress="return checkEnter(this, event);"
-									value="${usernick }" />	<!-- readonly -->
+									value="${usernick }" />
 							</div>
 						</div>
 						<span class="input-group-btn">
@@ -79,7 +82,7 @@
 			<div class="container hide" id="videos">
 			<div class="joinmain">
 				<div class="joinname">모임명:</div>
-				<div id="joinroom"></div>
+				<div id="joinroom">${ mokkojiTitle}</div>
 
 				<div class="col-md-6">
 					<div class="panel panel-default">
@@ -182,8 +185,9 @@
 					</button>
 
 					<!-- 내 화면 공유 -->
-					<button onclick="shareScreen()" id="shareScreenBtn">화면 공유</button>
-					<video id="myVideo" autoplay muted style="display: none;"></video>
+					<video id="myVideo" autoplay playsinline style="max-width: 50%; display: none;"></video>
+<button id="startSharingButton">화면 공유 시작</button>
+<button id="stopSharingButton" style="display: none;">화면 공유 중지</button>
 
 					<!-- 방 나가기 버튼 -->
 					<div class="btn-group">

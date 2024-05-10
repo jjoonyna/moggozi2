@@ -253,7 +253,6 @@ $(document).ready(function() {
                               $('#unpublish').click(unpublishOwnFeed);
                            }
                            $('#publisher').removeClass('hide').html(myusername).show();
-                           $('#joinroom').removeClass('hide').html(myroom).show();
                            Janus.attachMediaStream($('#myvideo').get(0), stream);
                            $("#myvideo").get(0).muted = "muted";
                            if(sfutest.webrtcStuff.pc.iceConnectionState !== "completed" &&
@@ -385,14 +384,14 @@ function registerUsername() {
          $('#register').removeAttr('disabled').click(registerUsername);
          return;
       }
-      if(/[^0-9]/.test(roomname)) {
+      if(/[^a-zA-Z0-9]/.test(roomname)) {
          $('#room')
             .removeClass().addClass('label label-warning')
             .html('채팅방 아이디는 숫자만 가능합니다.');
          $('#roomname').removeAttr('disabled').val("");
          $('#register').removeAttr('disabled').click(registerUsername);
          return;
-      }
+      } 
 
       var username = $('#usernick').val();
       if(username === "") {
@@ -531,31 +530,82 @@ function unpublishOwnFeed() {
    sfutest.send({ message: unpublish });
 }
 
-/* 내 화면 공유 */
-function shareScreen() {
-    navigator.mediaDevices
-      .getDisplayMedia({
-        video: { cursor: 'always' },
-        audio: { echoCancellation: true, noiseSuppression: true },
-      })
-      .then(function(stream) {
-        myVideo.current.srcObject = stream; // 내 비디오 공유 화면으로 변경
-        const videoTrack = stream.getVideoTracks()[0];
-        connectionRef.current
-          .getSenders()
-          .find(function(sender) { return sender.track.kind === videoTrack.kind; })
-          .replaceTrack(videoTrack);
-        videoTrack.onended = function() {
-          const screenTrack = userStream.current.getVideoTracks()[0];
-          connectionRef.current
-            .getSenders()
-            .find(function(sender) { return sender.track.kind === screenTrack.kind; })
-            .replaceTrack(screenTrack);
-          stream.getTracks().forEach(function(track) { track.stop(); });
-          myVideo.current.srcObject = userStream.current; // 내 비디오로 변경
-        };
-      });
+
+    // 화면 공유를 시작하는 함수
+    function startSharingScreen() {
+        navigator.mediaDevices.getDisplayMedia({ video: true }) // 화면 캡처
+            .then(function(stream) {
+                // 캡처된 화면을 비디오 요소에 연결하여 표시
+                var videoElement = document.getElementById('myVideo');
+                videoElement.srcObject = stream;
+
+                // 비디오 요소 표시
+                videoElement.style.display = 'block';
+
+                // 화면 공유 중지 버튼 표시
+                var stopButton = document.getElementById('stopSharingButton');
+                stopButton.style.display = 'inline';
+
+                // 화면 공유 시작 버튼 숨김
+                var startButton = document.getElementById('startSharingButton');
+                startButton.style.display = 'none';
+
+                // 화면 공유 중지 버튼에 이벤트 리스너 추가
+                stopButton.addEventListener('click', function() {
+                    stopSharingScreen(stream);
+                });
+            })
+            .catch(function(error) {
+                console.error('화면 공유를 시작하는 동안 에러 발생:', error);
+            });
+    }
+
+    // 화면 공유 중지하는 함수
+    function stopSharingScreen(stream) {
+        // 비디오 요소 숨김
+        var videoElement = document.getElementById('myVideo');
+        videoElement.style.display = 'none';
+
+        // 화면 공유 중지 버튼 숨김
+        var stopButton = document.getElementById('stopSharingButton');
+        stopButton.style.display = 'none';
+
+        // 화면 공유 시작 버튼 표시
+        var startButton = document.getElementById('startSharingButton');
+        startButton.style.display = 'inline';
+
+        // MediaStream의 모든 트랙 중지
+        stream.getTracks().forEach(function(track) {
+            track.stop();
+        });
+    }
+
+    // 화면 공유 시작 버튼에 이벤트 리스너 추가
+    var startButton = document.getElementById('startSharingButton');
+    startButton.addEventListener('click', startSharingScreen);
+
+// 비디오 요소 가져오기
+var video = document.getElementById('myVideo');
+
+// 전체 화면으로 보기 버튼 클릭 시 실행되는 함수
+function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+        video.requestFullscreen(); // 전체 화면 요청
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen(); // 전체 화면 종료
+        }
+    }
 }
+
+// 비디오 요소를 클릭하면 전체 화면으로 보기 함수 실행
+video.addEventListener('click', toggleFullscreen);
+
+
+
+
+
+
 
 // [jsflux] 새로운 유저 들어왔을때
 function newRemoteFeed(id, display, audio, video) {
