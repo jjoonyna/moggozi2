@@ -93,7 +93,7 @@
 			
 			
 			<nav>
-                <h1 class="sub-title">내 정보 수정</h1>
+                <h1 class="sub-title">비밀번호 변경</h1>
 				<!-- 내 정보 -->
 				<section>
 				    <div class="cards">
