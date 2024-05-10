@@ -85,7 +85,7 @@
 			<div class="container hide" id="videos">
 			<div class="joinmain">
 				<div class="joinname">모임명:</div>
-				<div id="joinroom"></div>
+				<div id="joinroom">${mokkojiTitle }</div>
 
 				<div class="col-md-6">
 					<div class="panel panel-default">
