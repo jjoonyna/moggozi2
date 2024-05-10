@@ -525,6 +525,15 @@ public class UserContoller {
     }
     
     
+    @PostMapping("/listDelete")
+    public String deleteMokkojis(@RequestParam(name = "mokkojiNosToDelete", required = false) List<Integer> mokkojiNosToDelete) {
+       System.out.println(mokkojiNosToDelete);
+        if (mokkojiNosToDelete != null && !mokkojiNosToDelete.isEmpty()) {
+           mokkojiService.deleteMokkojisByMokkojiNos(mokkojiNosToDelete);
+        }
+        return "redirect:/main"; // 삭제 후 리다이렉트할 URL
+    }
+    
 
     ///////////////////////////////////////////////
     ///////////////////////////////////////////////

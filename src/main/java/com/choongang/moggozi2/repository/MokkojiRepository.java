@@ -40,7 +40,8 @@ public interface MokkojiRepository extends JpaRepository<Mokkoji, Integer> {
     @Query(value="select * from mokkoji where usernick = :usernick", nativeQuery = true)
 	List<Mokkoji> findAll(@Param("usernick") String usernick);
     
-
+    
+    void deleteByMokkojiNo(Integer mokkojiNo);
 	
     
 }

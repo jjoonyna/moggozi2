@@ -65,4 +65,13 @@ public class MokkojiServiceImpl implements MokkojiService {
     public List<Mokkoji> findAllMokkoji(String usernick){
     	return mokkojiRepository.findAll(usernick);
     }
+    
+    @Transactional
+    public void deleteMokkojisByMokkojiNos(List<Integer> mokkojiNos) {
+        for (Integer mokkojiNo : mokkojiNos) {
+           // 1. 해당 usernick 값을 참조하는 mokkoji 테이블의 레코드를 먼저 삭제
+            mokkojiRepository.deleteByMokkojiNo(mokkojiNo);
+
+        }
+    }
 }
